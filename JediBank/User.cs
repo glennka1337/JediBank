@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JediBank
+﻿namespace JediBank
 {
     internal class User
     {
@@ -53,12 +47,17 @@ namespace JediBank
             if (account2.Currency == currency && account1.Balance >= amount)
             {
                 account1.Subtract(amount);
-                account2.Add(amount * rate);
+                account2.Add(amount);
                 return true;
             }
             else return false;
         }
 
+        public bool Login()
+        {
+            UI ui = new UI();
+            return (_password == ui.ReadPassword() ? true : false) ;
+        }
         public void AddAccount()
         {
 
