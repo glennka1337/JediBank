@@ -8,6 +8,9 @@ namespace JediBank
 {
     internal class Account
     {
+        public string Name { get; set; }
+        public decimal Balance { get; set; }
+        public string Currency { get; set; }
         public static void Show()
         {
 
@@ -19,14 +22,14 @@ namespace JediBank
         }
 
         // Måste returna något, de därför de visar fel atm
-        public static bool Add()
+        public bool Add(decimal amount)
         {
             // TASK: CHANGE RETURN 
             return true;
         }
 
         // Samma här
-        public static bool Subtract()
+        public bool Subtract(decimal amount)
         {
             // TASK: CHANGE RETURN 
             return true;
