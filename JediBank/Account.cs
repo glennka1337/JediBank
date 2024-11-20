@@ -21,13 +21,15 @@ namespace JediBank
         // Måste returna något, de därför de visar fel atm
         public static bool Add()
         {
-            
+            // TASK: CHANGE RETURN 
+            return true;
         }
 
         // Samma här
         public static bool Subtract()
         {
-
+            // TASK: CHANGE RETURN 
+            return true;
         }
 
 
