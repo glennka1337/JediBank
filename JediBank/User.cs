@@ -3,12 +3,12 @@
     internal class User
     {
         public string Name { get; set; }
-        private string _password;
+        public string Password { get; set; }
         public bool isAdmin { get; set; }
-        public List<Account> Accounts { get; set; }
+        public List<Account> Accounts { get;} = new();
 
         public void ShowAccounts()
-        {
+        {   
             foreach (var account in Accounts)
             {
                 Console.WriteLine($"{account.Name} - {account.Balance:C}");
@@ -56,7 +56,7 @@
         public bool Login()
         {
             UI ui = new UI();
-            return (_password == ui.ReadPassword() ? true : false) ;
+            return (Password == ui.ReadPassword() ? true : false) ;
         }
         public void AddAccount()
         {
