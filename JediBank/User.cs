@@ -4,8 +4,15 @@
     {
         public string Name { get; set; }
         public string Password { get; set; }
-        public bool isAdmin { get; set; }
+        public bool IsAdmin { get; set; }
         public List<Account> Accounts { get;} = new();
+
+        public User(string name, string password, bool isAdmin)
+        {
+            Name = name;
+            Password = password;
+            IsAdmin = isAdmin;
+        }
 
         public void ShowAccounts()
         {   
@@ -60,7 +67,12 @@
         }
         public void AddAccount()
         {
-
+            Accounts.Add(new Account
+            {
+                Name = "Test",
+                Balance = 9999,
+                Currency = "SEK",
+            });
         }
     }
 }
