@@ -21,12 +21,12 @@ namespace JediBank
 
         public static void ArchiveUsers(List<User> users)
         {
-            WriteToJsonFile("./users.json", users);
+            WriteToJsonFile("..//..//..//Data/users.json", users);
         }
         public static List<User> LoadUsers()
         {
             List<User> users = new List<User>();
-            users = ReadFromJsonFile<List<User>>("./users.json");
+            users = ReadFromJsonFile<List<User>>("..//..//..//Data/users.json");
             return users;
         }
 
