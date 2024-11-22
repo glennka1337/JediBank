@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JediBank
+﻿namespace JediBank
 {
     internal class User
     {
         public string Name { get; set; }
-        private string _password;
+        public string Password { get; set; }
         public bool isAdmin { get; set; }
-        public List<Account> Accounts { get; set; }
+        public List<Account> Accounts { get;} = new();
 
         public void ShowAccounts()
-        {
+        {   
             foreach (var account in Accounts)
             {
                 Console.WriteLine($"{account.Name} - {account.Balance:C}");
@@ -53,12 +47,17 @@ namespace JediBank
             if (account2.Currency == currency && account1.Balance >= amount)
             {
                 account1.Subtract(amount);
-                account2.Add(amount * rate);
+                account2.Add(amount);
                 return true;
             }
             else return false;
         }
 
+        public bool Login()
+        {
+            UI ui = new UI();
+            return (Password == ui.ReadPassword() ? true : false) ;
+        }
         public void AddAccount()
         {
 
