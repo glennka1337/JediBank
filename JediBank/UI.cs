@@ -10,7 +10,8 @@ namespace JediBank
     {
         public string ReadUserName()
         {
-            Console.WriteLine(" Enter your Username: ");
+            Console.CursorVisible = true; 
+            Console.Write("\r Enter your Username: \n");
             ConsoleKey key;
             string input = "";
             do
@@ -33,7 +34,8 @@ namespace JediBank
         }
         public string ReadPassword()
         {
-            Console.WriteLine(" Enter your pin code: ");
+            Console.CursorVisible = true;
+            Console.Write("\r Enter your pin code: \n");
             ConsoleKey key;
             string input = "";
             do
@@ -45,7 +47,7 @@ namespace JediBank
                     input += keyPressed.KeyChar;
                     Console.Write("*");
                 }
-                else if(key == ConsoleKey.Backspace)
+                else if (key == ConsoleKey.Backspace)
                 {
                     input = input.Substring(0, input.Length - 1);
                     Console.Write("\b \b");
@@ -57,6 +59,7 @@ namespace JediBank
 
         public int Menu(string[] items)
         {
+            Console.CursorVisible = false;
             ConsoleKey key;
             int currentSelection = 0;
             do
@@ -64,7 +67,7 @@ namespace JediBank
                 Console.Clear();
                 for (int i = 0; i < items.Length; i++)
                 {
-                    if(i == currentSelection)
+                    if (i == currentSelection)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -87,18 +90,19 @@ namespace JediBank
                     currentSelection = currentSelection == items.Length - 1 ? 0 : currentSelection + 1;
                 }
 
-            } while(key != ConsoleKey.Enter);
+            } while (key != ConsoleKey.Enter);
             return currentSelection;
         }
-        public string MainMenu(Dictionary<string, string[]> menuItems)
+        public string MainMenu(Dictionary<string, string[]> menuItems, string? message)
         {
+            Console.CursorVisible = false;
             int maxLength = menuItems.Keys.Max(key => key.Length);
             Console.OutputEncoding = Encoding.UTF8;
             //initialize the options menu with the head options;
             Dictionary<string, bool> headClicked = new Dictionary<string, bool>();
             List<string> items = new List<string>();
-            foreach (var item in menuItems) 
-            { 
+            foreach (var item in menuItems)
+            {
                 //Add the head options to the list
                 items.Add(item.Key);
                 //add the head options to the list and set all to false since none have been clicked yet.
@@ -113,27 +117,29 @@ namespace JediBank
                 do
                 {
                     Console.Clear();
+                    Console.WriteLine("Välkommen " + message.ToUpper());
                     var time = DateTime.Now.TimeOfDay;
-                    Console.SetCursorPosition(0, Console.GetCursorPosition().Top+Console.WindowHeight-1);
-                    Console.WriteLine($"Time: {DateTime.Now.ToString("HH:mm")}");
-                    Console.SetCursorPosition(0, 0);
+                    Console.SetCursorPosition(Console.WindowWidth - 15, 0);
+                    Console.Write($"Time: {DateTime.Now.ToString("HH:mm")}\n");
+                    Console.SetCursorPosition(0, 1);
                     for (int i = 0; i < items.Count; i++)
                     {
+                        
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
                         if (i == currentSelection)
                         {
                             SetColor(menuItems.ContainsKey(items[i]));
                             Console.BackgroundColor = ConsoleColor.Blue;
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.WriteLine(menuItems.ContainsKey(items[i]) ? $"{items[i]} {new string(' ',maxLength- items[i].Length+4)} {triangle}": $" ◯ {items[i]} {new string(' ', maxLength - items[i].Length+1)}");
-                            
+                            Console.WriteLine(menuItems.ContainsKey(items[i]) ? $"{items[i]} {new string(' ', maxLength - items[i].Length + 4)} {triangle}" : $" ◯ {items[i]} {new string(' ', maxLength - items[i].Length + 1)}");
+
                             Console.ResetColor();
                         }
                         else
                         {
                             SetColor(menuItems.ContainsKey(items[i]));
-                            Console.WriteLine(menuItems.ContainsKey(items[i]) ? $"{items[i]} {new string(' ', maxLength - items[i].Length+4)} {triangle}" : $" ◯ {items[i]} {new string(' ', maxLength - items[i].Length + 1)}");
-                            
+                            Console.WriteLine(menuItems.ContainsKey(items[i]) ? $"{items[i]} {new string(' ', maxLength - items[i].Length + 4)} {triangle}" : $" ◯ {items[i]} {new string(' ', maxLength - items[i].Length + 1)}");
+
                             Console.ResetColor();
                         }
                     }
@@ -162,7 +168,7 @@ namespace JediBank
                         //Remove the sub options from the list for the klicked head option.
                         items.RemoveAll(item => menuItems[items[currentSelection]].Contains(item));
                     }
-                    else 
+                    else
                     {
                         //Adds the string array of the sub options after the head option in the list.
                         items.InsertRange(currentSelection + 1, menuItems[items[currentSelection]]);
@@ -172,7 +178,7 @@ namespace JediBank
                     //change the value of the clicked option, if it was clicked and now clicked again it returns to false. else it is set to true
                     headClicked[items[currentSelection]] = headClicked[items[currentSelection]] ? false : true;
                 }
-                
+
             }
         }
 
@@ -190,6 +196,5 @@ namespace JediBank
                 Console.SetCursorPosition(2, Console.GetCursorPosition().Top);
             }
         }
-
     }
 }
