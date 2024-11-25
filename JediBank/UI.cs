@@ -113,6 +113,10 @@ namespace JediBank
                 do
                 {
                     Console.Clear();
+                    var time = DateTime.Now.TimeOfDay;
+                    Console.SetCursorPosition(0, Console.GetCursorPosition().Top+Console.WindowHeight-1);
+                    Console.WriteLine($"Time: {DateTime.Now.ToString("HH:mm")}");
+                    Console.SetCursorPosition(0, 0);
                     for (int i = 0; i < items.Count; i++)
                     {
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";

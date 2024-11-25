@@ -1,0 +1,14 @@
+[
+  {
+    "name": "hugo",
+    "password": "1234",
+    "isAdmin": false,
+    "accounts": [
+      {
+        "name": "Test",
+        "balance": 9999,
+        "currency": "SEK"
+      }
+    ]
+  }
+]
