@@ -5,7 +5,7 @@
         public string Name { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
-        public List<Account> Accounts { get;} = new();
+        public List<Account> Accounts { get; set; } = new();
 
         public User(string name, string password, bool isAdmin)
         {
@@ -48,7 +48,10 @@
         {
             return true;
         }*/
-
+        public string[] GetAccountNames()
+        {
+            return Accounts.Select(obj => obj.Name).ToList().ToArray();
+        }
         public bool Exchange(decimal amount, string currency, Account account1, Account account2)
         {
             if (account2.Currency == currency && account1.Balance >= amount)
