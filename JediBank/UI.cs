@@ -10,8 +10,9 @@ namespace JediBank
     {
         public string ReadUserName()
         {
-            Console.CursorVisible = true;
-            Console.Write("\r Enter your Username: \n");
+            Console.CursorVisible = true; 
+            Console.Write("\rEnter your Username: \n");
+
             ConsoleKey key;
             string input = "";
             do
@@ -38,7 +39,7 @@ namespace JediBank
         public string ReadPassword()
         {
             Console.CursorVisible = true;
-            Console.Write("\r Enter your pin code: \n");
+            Console.Write("\rEnter your pin code: \n");
             ConsoleKey key;
             string input = "";
             do
