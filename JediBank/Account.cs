@@ -11,30 +11,54 @@ namespace JediBank
         public string Name { get; set; }
         public decimal Balance { get; set; }
         public string Currency { get; set; }
-        public static void Show()
-        {
 
+        // HISTORY PROPERTIE WIP (LEAVE FOR LATER)
+
+        public Account(string name, decimal balance, string currecny)
+        {
+            Name = name;
+            Balance = balance;
+            Currency = currecny;
+        }
+        public void Show()
+        {
+            Console.WriteLine($"{Name},{Balance}");
         }
 
         public static void ShowHistory()
         {
-
+            // WIP
         }
 
-        // Måste returna något, de därför de visar fel atm
         public bool Add(decimal amount)
         {
-            // TASK: CHANGE RETURN 
-            return true;
+            if (amount < 0)
+            {
+                return false;
+            }
+            else
+            {
+                Balance += amount;
+                return true;
+            }
+
         }
 
-        // Samma här
         public bool Subtract(decimal amount)
         {
-            // TASK: CHANGE RETURN 
-            return true;
+            if (amount < 0)
+            {
+                return true;
+            }
+            if (amount > Balance) 
+            {
+                return true;
+            }
+            else
+            {
+                Balance -= amount;
+                return true;
+            }
         }
-
-
     }
 }
