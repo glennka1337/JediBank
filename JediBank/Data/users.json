@@ -5,8 +5,13 @@
     "isAdmin": false,
     "accounts": [
       {
-        "name": "Test",
-        "balance": 9999,
+        "name": "Privatkonto",
+        "balance": 557.23,
+        "currency": "SEK"
+      },
+      {
+        "name": "Sparkonto",
+        "balance": 35000.00,
         "currency": "SEK"
       }
     ]

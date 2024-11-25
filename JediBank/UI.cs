@@ -10,7 +10,7 @@ namespace JediBank
     {
         public string ReadUserName()
         {
-            Console.CursorVisible = true; 
+            Console.CursorVisible = true;
             Console.Write("\r Enter your Username: \n");
             ConsoleKey key;
             string input = "";
@@ -25,8 +25,11 @@ namespace JediBank
                 }
                 else if (key == ConsoleKey.Backspace)
                 {
-                    input = input.Substring(0, input.Length - 1);
-                    Console.Write("\b \b");
+                    if (input.Length > 0)
+                    {
+                        input = input.Substring(0, input.Length - 1);
+                        Console.Write("\b \b");
+                    }
                 }
             } while (key != ConsoleKey.Enter);
             Console.WriteLine();
@@ -49,8 +52,11 @@ namespace JediBank
                 }
                 else if (key == ConsoleKey.Backspace)
                 {
-                    input = input.Substring(0, input.Length - 1);
-                    Console.Write("\b \b");
+                    if (input.Length > 0)
+                    {
+                        input = input.Substring(0, input.Length - 1);
+                        Console.Write("\b \b");
+                    }
                 }
             } while (key != ConsoleKey.Enter);
             Console.WriteLine();
@@ -124,7 +130,7 @@ namespace JediBank
                     Console.SetCursorPosition(0, 1);
                     for (int i = 0; i < items.Count; i++)
                     {
-                        
+
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
                         if (i == currentSelection)
                         {
