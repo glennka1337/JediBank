@@ -13,13 +13,6 @@ namespace JediBank
         public string Currency { get; set; }
 
         // HISTORY PROPERTIE WIP (LEAVE FOR LATER)
-
-        public Account(string name, decimal balance, string currecny)
-        {
-            Name = name;
-            Balance = balance;
-            Currency = currecny;
-        }
         public void Show()
         {
             Console.WriteLine($"{Name},{Balance}");
