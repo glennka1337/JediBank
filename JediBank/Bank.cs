@@ -31,7 +31,7 @@
              {
                  { "💰 Accounts", user.GetAccountNames() },
                  { "💼 mer", ["hej", "hugo"] },
-                 { "🏦 Sign out", ["Log out", "shut down"] }
+                 { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
         }
