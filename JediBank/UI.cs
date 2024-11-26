@@ -203,5 +203,106 @@ namespace JediBank
                 Console.SetCursorPosition(2, Console.GetCursorPosition().Top);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public void TransferMenu(User user)
+        {
+            Account? sender = null;
+            Account? reciever = null;
+
+            Dictionary<string, bool> headClicked = new Dictionary<string, bool>();
+            Dictionary<string, string[]> menuItems = new Dictionary<string, string[]> 
+            { 
+                { "Sender account", user.GetAccountNames() }, 
+                { "Reciever account", user.GetAccountNames() } 
+            };
+            List<string> items = new List<string>();
+            foreach (var item in menuItems)
+            {
+                //Add the head options to the list
+                items.Add(item.Key);
+                //add the head options to the list and set all to false since none have been clicked yet.
+                headClicked.Add(item.Key, false);
+            }
+            List<string> chosenSender = new List<string>();
+            List<string> chosenReciever = new List<string>();
+
+            //Menu loop, exits loop if a sub options is cklicked
+            ConsoleKey key;
+            int currentSelection = 0;
+            while (true)
+            {
+                do
+                {
+                    Console.Clear();
+
+                    for (int i = 0; i < items.Count; i++)
+                    {
+                        string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
+                        if (menuItems.ContainsKey(items[i]))
+                        {
+                            Console.SetCursorPosition(0, Console.GetCursorPosition().Top + i * 5);
+                            Console.BackgroundColor = i == currentSelection ? ConsoleColor.Blue : ConsoleColor.DarkGray;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine($" {items[i]} {triangle}  ");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(3, Console.GetCursorPosition().Top);
+                            Console.BackgroundColor = i == currentSelection ? ConsoleColor.Blue : ConsoleColor.White;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.WriteLine(items[i]);
+                            Console.ResetColor();
+                        }
+                    }
+                    var keyPressed = Console.ReadKey(intercept: true);
+                    key = keyPressed.Key;
+                    if (key == ConsoleKey.UpArrow)
+                    {
+                        currentSelection = currentSelection == 0 ? items.Count - 1 : currentSelection - 1;
+                    }
+                    else if (key == ConsoleKey.DownArrow)
+                    {
+                        currentSelection = currentSelection == items.Count - 1 ? 0 : currentSelection + 1;
+                    }
+                } while (key != ConsoleKey.Enter);
+                //if a sub menu is chosen return the name of that choice
+                if (!menuItems.ContainsKey(items[currentSelection]))
+                {
+                    foreach (var val in headClicked)
+                    {
+                        if (val.Value)
+                        {
+
+                        }
+                    }
+                    chosenSender.Add(items[currentSelection]);
+                    //ändra rubrik
+                }
+                else
+                {
+                    //checks if we clicked a previously clicked head option.
+                    if (headClicked[items[currentSelection]])
+                    {
+                        //Remove the sub options from the list for the klicked head option.
+                        items.RemoveAll(item => menuItems[items[currentSelection]].Contains(item));
+                    }
+                    else
+                    {
+                        //Adds the string array of the sub options after the head option in the list.
+                        items.InsertRange(currentSelection + 1, menuItems[items[currentSelection]]);
+
+                    }
+
+                    //change the value of the clicked option, if it was clicked and now clicked again it returns to false. else it is set to true
+                    headClicked[items[currentSelection]] = headClicked[items[currentSelection]] ? false : true;
+                }
+            }
+        }
     }
 }
