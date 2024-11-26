@@ -213,7 +213,7 @@ namespace JediBank
         {
             Account? sender = null;
             Account? reciever = null;
-
+            Console.OutputEncoding = Encoding.UTF8;
             Dictionary<string, bool> headClicked = new Dictionary<string, bool>();
             Dictionary<string, string[]> menuItems = new Dictionary<string, string[]> 
             { 
@@ -242,21 +242,23 @@ namespace JediBank
 
                     for (int i = 0; i < items.Count; i++)
                     {
+                        int distance = headClicked[items[0]] ?  0 : menuItems["Sender account"].Length;
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
                         if (menuItems.ContainsKey(items[i]))
                         {
-                            Console.SetCursorPosition(0, Console.GetCursorPosition().Top + i * 5);
-                            Console.BackgroundColor = i == currentSelection ? ConsoleColor.Blue : ConsoleColor.DarkGray;
+                            
+                            Console.SetCursorPosition(0, Console.GetCursorPosition().Top + distance*i );
+                            Console.BackgroundColor = i == currentSelection ? ConsoleColor.Blue : ConsoleColor.Green;
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.WriteLine($" {items[i]} {triangle}  ");
+                            Console.Write($" {items[i]} {triangle} \n");
                             Console.ResetColor();
                         }
                         else
                         {
                             Console.SetCursorPosition(3, Console.GetCursorPosition().Top);
                             Console.BackgroundColor = i == currentSelection ? ConsoleColor.Blue : ConsoleColor.White;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.WriteLine(items[i]);
+                            Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.Black;
+                            Console.Write(items[i]+"\n");
                             Console.ResetColor();
                         }
                     }
@@ -286,11 +288,13 @@ namespace JediBank
                 }
                 else
                 {
+                    string thisHead = items[currentSelection];
                     //checks if we clicked a previously clicked head option.
                     if (headClicked[items[currentSelection]])
                     {
                         //Remove the sub options from the list for the klicked head option.
-                        items.RemoveAll(item => menuItems[items[currentSelection]].Contains(item));
+                        //items.RemoveAll(item => menuItems[items[currentSelection]].Contains(item));
+                        items.RemoveRange(currentSelection + 1, menuItems[items[currentSelection]].Length);
                     }
                     else
                     {
@@ -300,7 +304,8 @@ namespace JediBank
                     }
 
                     //change the value of the clicked option, if it was clicked and now clicked again it returns to false. else it is set to true
-                    headClicked[items[currentSelection]] = headClicked[items[currentSelection]] ? false : true;
+                    headClicked[thisHead] = headClicked[thisHead] ? false : true;
+                    currentSelection = items.IndexOf(thisHead);
                 }
             }
         }

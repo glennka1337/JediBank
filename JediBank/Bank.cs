@@ -9,7 +9,7 @@
             
             Users = DataBase.LoadUsers();
             UI uI = new UI();
-            User? currentUser = Users[1];
+            User? currentUser = Users[0];
             uI.TransferMenu(currentUser);
             //starMenu
             /*while (true)
@@ -19,7 +19,7 @@
                     currentUser = Login();
                     while (currentUser != null)
                     {
-                        uI.MainMenu(MainMenuOptions(currentUser),currentUser.Name);
+                        uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
 
                     }
                 }
