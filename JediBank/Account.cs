@@ -29,6 +29,11 @@ namespace JediBank
             {
                 return false;
             }
+            // CHANGE AFTER CURRENCY UPDATE
+            if (amount > 15000)
+            {
+                return false;
+            }
             else
             {
                 Balance += amount;
@@ -41,11 +46,11 @@ namespace JediBank
         {
             if (amount < 0)
             {
-                return true;
+                return false;
             }
             if (amount > Balance) 
             {
-                return true;
+                return false;
             }
             else
             {
