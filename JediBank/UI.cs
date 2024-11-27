@@ -209,7 +209,7 @@ namespace JediBank
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public void TransferMenu(User user)
+        public Account[] TransferMenu(User user)
         {
             Account? sender = null;
             Account? reciever = null;
@@ -321,17 +321,43 @@ namespace JediBank
                     
                     var keyPressed = Console.ReadKey(intercept: true);
                     key = keyPressed.Key;
-                    if (key == ConsoleKey.UpArrow)
+                    if (key == ConsoleKey.UpArrow || key == ConsoleKey.LeftArrow)
                     {
                         currentSelection = currentSelection == 0 ? items.Count - 1 : currentSelection - 1;
                     }
-                    else if (key == ConsoleKey.DownArrow)
+                    else if (key == ConsoleKey.DownArrow || key == ConsoleKey.RightArrow)
                     {
                         currentSelection = currentSelection == items.Count - 1 ? 0 : currentSelection + 1;
                     }
                 } while (key != ConsoleKey.Enter);
                 //if a sub menu is chosen return the name of that choice
-                if (!menuItems.ContainsKey(items[currentSelection]))
+                if (buttonsClicked.ContainsKey(items[currentSelection]))
+                {
+                    //Cancel button is clicked
+                    if (buttonsClicked.Keys.ToList()[0] == items[currentSelection])
+                    {
+                        return [sender, reciever];
+                    }
+                    else if (buttonsClicked.Keys.ToList()[1] == items[currentSelection])
+                    {
+                        //Logic for checking if accounts have been chosen or if they are valid;
+                        sender = chosenSender.Count() > 0 ? user.Accounts.Find(x => x.Name == chosenSender[0]) : sender;
+                        reciever = chosenReciever.Count() > 0 ? user.Accounts.Find(x => x.Name == chosenReciever[0]) : reciever;
+                        if(sender != reciever)
+                        {
+                            return [sender, reciever];
+                        }
+                        ErrorMessage("skicka ej till samma konto!");
+                        Console.ReadKey();
+                        chosenSender.Clear();
+                        chosenReciever.Clear();
+                        sender = null;
+                        reciever = null;
+
+
+                    }
+                }
+                else if (!menuItems.ContainsKey(items[currentSelection]))
                 {
                     if(currentSelection < items.IndexOf(menuItems.Keys.ToList()[1]))
                     {
@@ -381,7 +407,9 @@ namespace JediBank
                     headClicked[thisHead] = headClicked[thisHead] ? false : true;
                     currentSelection = items.IndexOf(thisHead);
                 }
+
             }
+            return [sender, reciever];
 
         }
 
@@ -393,6 +421,23 @@ namespace JediBank
             {
                 Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
                 Console.Write(i == 1 ? $"{new string(' ', (width - message.Length)/2)}{message}{new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
+
+            }
+            Console.ResetColor();
+        }
+
+        public void ErrorMessage(string? message)
+        {
+            int width = 50;
+            int height = 7;
+            Console.Clear();
+            Console.SetCursorPosition(9, 3);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = 0; i < height; i++)
+            {
+                Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
+                Console.Write(i == height/2  ? $"{new string(' ', (width - message.Length) / 2)}{message} {new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
 
             }
             Console.ResetColor();
