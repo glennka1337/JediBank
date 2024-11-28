@@ -246,13 +246,14 @@ namespace JediBank
             int maxL = 17;
             int yStart = 2;
             int width = 26;
+            int height = 11+2*menuItems["Sender account"].Count();
             while (true)
             {
                 do
                 {
                     Console.Clear();
                     Console.SetCursorPosition(9, 2);
-                    PaintBox("Transfer", width);
+                    PaintBox("Transfer", width, height);
                     Console.SetCursorPosition(9, 6);
                     for (int i = 0; i < items.Count; i++)
                     {
@@ -413,11 +414,11 @@ namespace JediBank
 
         }
 
-        public void PaintBox(string? message, int width)
+        public void PaintBox(string? message, int width, int height)
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
-            for(int i = 0; i < 15; i++)
+            for(int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
                 Console.Write(i == 1 ? $"{new string(' ', (width - message.Length)/2)}{message}{new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
