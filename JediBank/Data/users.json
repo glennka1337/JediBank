@@ -13,6 +13,11 @@
         "name": "Sparkonto",
         "balance": 35000.00,
         "currency": "SEK"
+      },
+      {
+        "name": "Pensionskonto",
+        "balance": 205000.00,
+        "currency": "SEK"
       }
     ]
   },
@@ -29,6 +34,11 @@
       {
         "name": "Sparkonto",
         "balance": 135000.00,
+        "currency": "SEK"
+      },
+      {
+        "name": "Pensionskonto",
+        "balance": 185000.00,
         "currency": "SEK"
       }
     ]

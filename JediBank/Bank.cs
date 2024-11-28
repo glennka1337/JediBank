@@ -9,20 +9,21 @@
             
             Users = DataBase.LoadUsers();
             UI uI = new UI();
-            User? currentUser;
+            User? currentUser = Users[0];
+            uI.TransferMenu(currentUser);
             //starMenu
-            while (true)
+            /*while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
                 {
                     currentUser = Login();
                     while (currentUser != null)
                     {
-                        uI.MainMenu(MainMenuOptions(currentUser),currentUser.Name);
+                        uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
 
                     }
                 }
-            }
+            }*/
 
         }
         public Dictionary<string, string[]> MainMenuOptions(User user)
@@ -36,6 +37,24 @@
             return alt;
         }
 
+        public Dictionary<string, Delegate> ActionMap(User user)
+        {
+            Dictionary<string, Delegate> actionMap = new Dictionary<string, Delegate>
+             {
+                 { "💰 Withdraw", Withdraw },
+                 { "💼 Transfer", Transfer }
+             };
+            return actionMap;
+        }
+
+        public void Withdraw()
+        {
+
+        }
+        public void Transfer()
+        {
+
+        }
         private User Login()
         {
             Console.Clear();

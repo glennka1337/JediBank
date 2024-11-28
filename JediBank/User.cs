@@ -7,12 +7,12 @@
         public bool IsAdmin { get; set; }
         public List<Account> Accounts { get; set; } = new();
 
-        public User(string name, string password, bool isAdmin)
+        /*public User(string name, string password, bool isAdmin)
         {
             Name = name;
             Password = password;
             IsAdmin = isAdmin;
-        }
+        }*/
 
         public void ShowAccounts()
         {   
