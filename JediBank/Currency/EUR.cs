@@ -23,12 +23,9 @@ namespace JediBank.Currency
                 return "EUR";
             }
         }
-        public NumberFormatInfo Format
+        public NumberFormatInfo GetOutputFormat()
         {
-            get
-            {
-                return CultureInfo.GetCultureInfo("fi-FI").NumberFormat;
-            }
+            return CultureInfo.GetCultureInfo("fi-FI").NumberFormat;
         }
     }
 }

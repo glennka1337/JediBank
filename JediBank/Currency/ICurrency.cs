@@ -22,6 +22,9 @@ namespace JediBank.Currency
         /// Output Format
         /// https://www.csharp-examples.net/culture-names/
         /// </summary>
-        public NumberFormatInfo Format { get; }
+        public NumberFormatInfo GetOutputFormat()
+        {
+            return NumberFormatInfo.InvariantInfo;
+        }
     }
 }
