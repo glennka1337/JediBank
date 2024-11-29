@@ -1,10 +1,13 @@
-﻿namespace JediBank
+﻿using System.Linq;
+
+namespace JediBank
 {
     class Bank
     {
         public List<User> Users = new List<User>();
-        public User currentUser { get; set; } = null;
-        public string action { get; set;} 
+        public User? currentUser { get; set; } = null;
+        public Account? currentAccount { get; set; } = null;
+        //public string action { get; set;} 
         public void RunProgram()
         {
             
@@ -22,7 +25,9 @@
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
-                        action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                        string action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                        currentAccount = currentUser.Accounts.Find(x => x.Name == action);
+                        action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
                         actionMap[action].DynamicInvoke();
                     }
                 }
@@ -47,6 +52,7 @@
                  { "Withdraw", Withdraw },
                  { "Transfer", Transfer },
                  { "Log out", LogOut },
+                 {"Account", AccountShow }
 
              };
             return actionMap;
@@ -54,8 +60,8 @@
         public void AccountShow()
         {
             UI uI = new UI();
-            Account currentAccount = currentUser.Accounts.Find(x => x.Name == action);
-            //uI.AccountMenu(currentAccount);
+            
+            uI.AccountMenu(currentUser, currentAccount);
         }
         public void Withdraw()
         {
@@ -75,7 +81,7 @@
         {
             Console.Clear();
             UI uI = new UI();
-            User? currentUser = null;
+            //User? currentUser = null;
             do
             {
                 string userName = uI.ReadUserName();
@@ -101,57 +107,7 @@
                 Console.Write("\r                                       ");
                 Console.SetCursorPosition(0, Console.GetCursorPosition().Top-1);
             } while (currentUser == null);
-            return null;
-            
-            
+            return null;    
         }
-        /* public void AddUser(User user)
-         {
-             Users.Add(user);
-             Console.WriteLine($"Användare {user.Username} har lagts till");
-         }*/
-
-        /*public void CreateUser()
-        {
-            Console.WriteLine("Skapa ny användare:");
-            Console.Write("Ange användarnam:");
-            string username = Console.ReadLine();
-            Console.Write("Ange lösenord: ");
-            string password = Console.ReadLine();
-
-            User newUser = new User
-            {
-                Username = username,
-                Password = password
-            };
-            AddUser(newUser);
-
-        }*/
-        /*public void LoadUsers()
-        {
-
-        }*/
-
-        /*public void ArchiveUsers()
-        {
-            Console.WriteLine("Arkiverar användare. ");
-            foreach (User user in Users)
-            {
-                Console.WriteLine($"Användarinfo: {user.Username}, {user.Password}");
-            }
-        }*/
-
-       /* public bool LoanRequirement(User user)
-        {
-            Console.WriteLine("Checkar om användare uppfyller krav: ");
-            decimal totalBalance = 0;
-
-            foreach (var account in user.Accounts)
-            {
-                totalBalance += account.Balance;
-            }
-            decimal maxLoanAmount = totalBalance * 5;
-            return user.LoanAmount <= maxLoanAmount;
-        }*/
     }
 }
