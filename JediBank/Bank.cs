@@ -10,7 +10,7 @@
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             User? currentUser;
-            //starMenu
+            //startMenu
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
@@ -18,22 +18,23 @@
                     currentUser = Login();
                     while (currentUser != null)
                     {
-                        uI.MainMenu(MainMenuOptions(currentUser),currentUser.Name);
-
+                        string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                        if (chosenOption == "🏦 Sign out")
+                        {
+                            currentUser = null;
+                        }
+                        else
+                        {
+                            var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
+                            if (selectedAccount != null)
+                            {
+                                uI.AccountMenu(currentUser, selectedAccount);
+                            }
+                        }
                     }
                 }
             }
 
-        }
-        public Dictionary<string, string[]> MainMenuOptions(User user)
-        {
-             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
-             {
-                 { "💰 Accounts", user.GetAccountNames() },
-                 { "💼 mer", ["hej", "hugo"] },
-                 { "🏦 Sign out", ["Log out", "Shut down"] }
-             };
-            return alt;
         }
 
         private User Login()
@@ -66,10 +67,22 @@
                 Console.Write("\r                                       ");
                 Console.SetCursorPosition(0, Console.GetCursorPosition().Top-1);
             } while (currentUser == null);
-            return null;
-            
-            
+            return null;    
         }
+
+        public Dictionary<string, string[]> MainMenuOptions(User user)
+        {
+            Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+            {
+                 { "💰 Accounts", user.GetAccountNames() },
+                 { "💼 Mer", ["hej", "hugo"] },
+                 { "🏦 Sign out", new string[] { "Log out" } }
+            };
+            return alt;
+        }
+
+
+
         /* public void AddUser(User user)
          {
              Users.Add(user);
