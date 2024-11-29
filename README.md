@@ -1,6 +1,6 @@
 Welcome to the JEDIBank
+![image](https://github.com/user-attachments/assets/9c7c3e22-68a1-45ab-bd6b-0ee1f79a9de3)
 
-![image](https://github.com/user-attachments/assets/c8dbe598-5ad4-4928-8719-4fbeff0ae97e)
 
 
 
