@@ -203,7 +203,110 @@ namespace JediBank
                 Console.SetCursorPosition(2, Console.GetCursorPosition().Top);
             }
         }
+      
+        public void AccountMenu(User user, Account account)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance} {account.Currency} ");
+                Console.WriteLine("--------------------------------------");
 
+                Console.WriteLine("1. Visa senaste transaktioner (WIP) ");
+                Console.WriteLine("2. Ta ut pengar ");
+                Console.WriteLine("3. Överför pengar ");
+                Console.WriteLine("4. Återgå till huvudmenyn ");
+                Console.Write("Välj något av ovanstående alternativ: ");
+
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Här ska historik vara. WIP ");
+                        Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+                        Console.ReadKey();
+                        break;
+
+                    case "2":
+                        ExecuteWithdraw(user, account);
+                        break;   
+                    
+                    case "3":
+                        ExecuteTransfer(user, account);
+                        break;   
+                    
+                    case "4":
+                        return;
+
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Ogiltigt val. Ange ett nummer mellan 1-4. ");
+                        Console.ResetColor();
+                        Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+                        Console.ReadKey();
+                        break;  
+                }
+            }
+        }
+
+        private void ExecuteWithdraw(User user, Account account)
+        {
+            Console.WriteLine("\nAnge belopp som du vill ta ut: ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+            {
+                if (account.Subtract(amount))
+                {
+                    Console.WriteLine($"{amount} {account.Currency} har tagits ut. ");
+                }
+                else
+                {
+                    Console.WriteLine("Ej tillräckligt stort saldo. ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltigt belopp. ");
+            }
+            Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+            Console.ReadKey();
+        }
+
+        private void ExecuteTransfer(User user, Account account)
+        {
+            Console.WriteLine("\nVälj ett konto att överföra till: ");
+            var otherAccounts = user.Accounts.Where(acc => acc != account).ToList();
+            for (int i = 0; i < otherAccounts.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {otherAccounts[i].Name} - {otherAccounts[i].Balance} {otherAccounts[i].Currency}");
+            }
+            Console.WriteLine("\nAnge siffra för att välja konto: ");
+            if (int.TryParse(Console.ReadLine(), out int selected) && selected > 0 && selected <= otherAccounts.Count)
+            {
+                Account toAccount = otherAccounts[selected - 1];
+                Console.Write("Ange belopp att överföra: ");
+                if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+                {
+                    if (account.TransferFunds(amount, toAccount))
+                    {
+                        Console.WriteLine($" {amount} {account.Currency} har överförts till {toAccount.Name}. ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Otillräckligt saldo eller ogiltigt belopp. ");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ogiltigt belopp. ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltigt val. ");
+            }
+            Console.WriteLine("Tryck på valfri tangent för att fortsätta: ");
+            Console.ReadKey();
+        }
         /// <summary>
         /// 
         /// </summary>

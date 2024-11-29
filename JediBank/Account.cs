@@ -58,5 +58,19 @@ namespace JediBank
                 return true;
             }
         }
+
+        public bool TransferFunds (decimal amount, Account toAccount)
+        {
+            if (amount <= 0 || amount > Balance)
+            {
+                return false;
+            }
+            else
+            {
+                Balance -= amount;
+                toAccount.Balance += amount;
+                return true;
+            }
+        }
     }
 }
