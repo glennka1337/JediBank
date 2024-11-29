@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using JediBank.Currency;
 namespace JediBank
 {
     internal class Account
     {
         public string Name { get; set; }
         public decimal Balance { get; set; }
-        public string Currency { get; set; }
+        public ICurrency Currency { get; set; }
 
         // HISTORY PROPERTIE WIP (LEAVE FOR LATER)
         public void Show()
@@ -48,7 +48,7 @@ namespace JediBank
             {
                 return false;
             }
-            if (amount > Balance) 
+            if (amount > Balance)
             {
                 return false;
             }

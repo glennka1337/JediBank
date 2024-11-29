@@ -23,12 +23,9 @@ namespace JediBank.Currency
                 return "SEK";
             }
         }
-        public NumberFormatInfo Format
+        public NumberFormatInfo GetOutputFormat()
         {
-            get
-            {
-                return CultureInfo.GetCultureInfo("sv-SE").NumberFormat;
-            }
+            return CultureInfo.GetCultureInfo("sv-SE").NumberFormat;
         }
     }
 }

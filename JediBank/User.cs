@@ -1,4 +1,6 @@
-﻿namespace JediBank
+﻿using JediBank.Currency;
+
+namespace JediBank
 {
     internal class User
     {
@@ -52,7 +54,7 @@
         {
             return Accounts.Select(obj => obj.Name).ToList().ToArray();
         }
-        public bool Exchange(decimal amount, string currency, Account account1, Account account2)
+        public bool Exchange(decimal amount, ICurrency currency, Account account1, Account account2)
         {
             if (account2.Currency == currency && account1.Balance >= amount)
             {
@@ -74,7 +76,7 @@
             {
                 Name = "Test",
                 Balance = 9999,
-                Currency = "SEK",
+                Currency = new SEK(),
             });
         }
     }
