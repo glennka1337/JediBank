@@ -13,10 +13,7 @@ namespace JediBank
             
             Users = DataBase.LoadUsers();
             UI uI = new UI();
-            
-            /*User? currentUser = Users[0];
-            uI.TransferMenu(currentUser);*/
-            //starMenu
+
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
@@ -44,6 +41,26 @@ namespace JediBank
              };
             return alt;
         }
+  /*
+                        string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                        if (chosenOption == "🏦 Sign out")
+                        {
+                            currentUser = null;
+                        }
+                        else
+                        {
+                            var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
+                            if (selectedAccount != null)
+                            {
+                                uI.AccountMenu(currentUser, selectedAccount);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        */
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {

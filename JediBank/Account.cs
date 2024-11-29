@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JediBank.Currency;
 using JediBank.CurrencyFolder;
 namespace JediBank
 {
@@ -29,6 +30,11 @@ namespace JediBank
             {
                 return false;
             }
+            // CHANGE AFTER CURRENCY UPDATE
+            if (amount > 15000)
+            {
+                return false;
+            }
             else
             {
                 Balance += amount;
@@ -41,15 +47,29 @@ namespace JediBank
         {
             if (amount < 0)
             {
-                return true;
+                return false;
             }
-            if (amount > Balance) 
+            if (amount > Balance)
             {
-                return true;
+                return false;
             }
             else
             {
                 Balance -= amount;
+                return true;
+            }
+        }
+
+        public bool TransferFunds (decimal amount, Account toAccount)
+        {
+            if (amount <= 0 || amount > Balance)
+            {
+                return false;
+            }
+            else
+            {
+                Balance -= amount;
+                toAccount.Balance += amount;
                 return true;
             }
         }

@@ -76,7 +76,7 @@ namespace JediBank
             {
                 Name = "Test",
                 Balance = 9999,
-                Currency = "SEK",
+                Currency = new SEK(),
             });
         }
     }
