@@ -37,6 +37,24 @@
 
         }
 
+        public Dictionary<string, Delegate> ActionMap(User user)
+        {
+            Dictionary<string, Delegate> actionMap = new Dictionary<string, Delegate>
+             {
+                 { "💰 Withdraw", Withdraw },
+                 { "💼 Transfer", Transfer }
+             };
+            return actionMap;
+        }
+
+        public void Withdraw()
+        {
+
+        }
+        public void Transfer()
+        {
+
+        }
         private User Login()
         {
             Console.Clear();

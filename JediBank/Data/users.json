@@ -6,30 +6,11 @@
     "accounts": [
       {
         "name": "Privatkonto",
-        "balance": 557.23,
-        "currency": "SEK"
-      },
-      {
-        "name": "Sparkonto",
-        "balance": 35000.00,
-        "currency": "SEK"
-      }
-    ]
-  },
-  {
-    "name": "edgar",
-    "password": "4321",
-    "isAdmin": false,
-    "accounts": [
-      {
-        "name": "Privatkonto",
-        "balance": 4780.23,
-        "currency": "SEK"
-      },
-      {
-        "name": "Sparkonto",
-        "balance": 135000.00,
-        "currency": "SEK"
+        "balance": 200.00,
+        "currency": {
+          "name": "United States Dollar",
+          "currencyCode": "USD"
+        }
       }
     ]
   }
