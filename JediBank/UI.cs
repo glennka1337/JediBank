@@ -10,11 +10,13 @@ namespace JediBank
     {
         public string ReadUserName()
         {
-            Console.CursorVisible = true; 
-            Console.Write("\rEnter your Username: \n");
+            Console.CursorVisible = true;
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2);
+            Console.Write("Enter your Username: ");
 
             ConsoleKey key;
             string input = "";
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2 + 1);
             do
             {
                 var keyPressed = Console.ReadKey(intercept: true);
@@ -39,9 +41,12 @@ namespace JediBank
         public string ReadPassword()
         {
             Console.CursorVisible = true;
-            Console.Write("\rEnter your pin code: \n");
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.GetCursorPosition().Top);
+            Console.Write("Enter your pin code: \n");
             ConsoleKey key;
             string input = "";
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.GetCursorPosition().Top);
+
             do
             {
                 var keyPressed = Console.ReadKey(intercept: true);
@@ -72,8 +77,10 @@ namespace JediBank
             do
             {
                 Console.Clear();
+                
                 for (int i = 0; i < items.Length; i++)
                 {
+                    Console.SetCursorPosition((Console.WindowWidth - items[0].Length)/2,Console.WindowHeight/2 + i);
                     if (i == currentSelection)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
@@ -128,7 +135,7 @@ namespace JediBank
                     var time = DateTime.Now.TimeOfDay;
                     Console.SetCursorPosition(Console.WindowWidth - 15, 0);
                     Console.Write($"Time: {DateTime.Now.ToString("HH:mm")}\n");
-                    Console.SetCursorPosition(0, 1);
+                    Console.SetCursorPosition(0, 3);
                     for (int i = 0; i < items.Count; i++)
                     {
 

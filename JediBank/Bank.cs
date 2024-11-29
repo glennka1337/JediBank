@@ -3,21 +3,40 @@
     class Bank
     {
         public List<User> Users = new List<User>();
-
+        public User currentUser { get; set; } = null;
+        public string action { get; set;} 
         public void RunProgram()
         {
             
             Users = DataBase.LoadUsers();
             UI uI = new UI();
-            User? currentUser;
-            //startMenu
+
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
                 {
                     currentUser = Login();
+                    Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
+                        action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                        actionMap[action].DynamicInvoke();
+                    }
+                }
+            }
+
+        }
+        public Dictionary<string, string[]> MainMenuOptions(User user)
+        {
+             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+             {
+                 { "💰 Accounts", user.GetAccountNames() },
+                 { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "🏦 Sign out", ["Log out", "Shut down"] }
+             };
+            return alt;
+        }
+  /*
                         string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
                         if (chosenOption == "🏦 Sign out")
                         {
@@ -36,24 +55,38 @@
             }
 
         }
+        */
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {
             Dictionary<string, Delegate> actionMap = new Dictionary<string, Delegate>
              {
-                 { "💰 Withdraw", Withdraw },
-                 { "💼 Transfer", Transfer }
+                 { "Withdraw", Withdraw },
+                 { "Transfer", Transfer },
+                 { "Log out", LogOut },
+
              };
             return actionMap;
         }
-
+        public void AccountShow()
+        {
+            UI uI = new UI();
+            Account currentAccount = currentUser.Accounts.Find(x => x.Name == action);
+            //uI.AccountMenu(currentAccount);
+        }
         public void Withdraw()
         {
 
         }
         public void Transfer()
         {
+            UI uI = new UI();
+            Account[] transferInfo = uI.TransferMenu(currentUser);
 
+        }
+        public void LogOut()
+        {
+            currentUser = null;
         }
         private User Login()
         {
