@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
+using JediBank.CurrencyFolder;
 
 namespace JediBank
 {
@@ -16,7 +17,7 @@ namespace JediBank
             WriteIndented = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
             PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            //PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
         public static void ArchiveUsers(List<User> users)

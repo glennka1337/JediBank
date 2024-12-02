@@ -5,27 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JediBank.Currency
+namespace JediBank.CurrencyFolder
 {
-    internal class USD : ICurrency
+    internal class USD : Currency
     {
-        public string Name
+        public override string Name
         {
             get
             {
                 return "United States Dollar";
             }
         }
-        public string CurrencyCode
+        public override string CurrencyCode
         {
             get
             {
                 return "USD";
             }
-        }
-        public NumberFormatInfo GetOutputFormat()
-        {
-            return CultureInfo.GetCultureInfo("en-US").NumberFormat;
         }
     }
 }
