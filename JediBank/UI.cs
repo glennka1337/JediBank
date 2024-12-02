@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JediBank.CurrencyFolder;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -77,10 +78,10 @@ namespace JediBank
             do
             {
                 Console.Clear();
-                
+
                 for (int i = 0; i < items.Length; i++)
                 {
-                    Console.SetCursorPosition((Console.WindowWidth - items[0].Length)/2,Console.WindowHeight/2 + i);
+                    Console.SetCursorPosition((Console.WindowWidth - items[0].Length) / 2, Console.WindowHeight / 2 + i);
                     if (i == currentSelection)
                     {
                         Console.BackgroundColor = ConsoleColor.Gray;
@@ -210,13 +211,14 @@ namespace JediBank
                 Console.SetCursorPosition(2, Console.GetCursorPosition().Top);
             }
         }
-      
+
         public void AccountMenu(User user, Account account)
         {
             Console.OutputEncoding = Encoding.UTF8;
             while (true)
-            {   Console.Clear();
-                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance.ToString("c" , account.Currency.GetOutputFormat())} ");
+            {
+                Console.Clear();
+                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance.ToString("c", account.Currency.GetOutputFormat())} ");
                 Console.WriteLine("--------------------------------------");
 
                 Console.WriteLine("1. Visa senaste transaktioner (WIP) ");
@@ -236,12 +238,12 @@ namespace JediBank
 
                     case "2":
                         ExecuteWithdraw(user, account);
-                        break;   
-                    
+                        break;
+
                     case "3":
                         ExecuteTransfer(user, account);
-                        break;   
-                    
+                        break;
+
                     case "4":
                         return;
 
@@ -251,7 +253,7 @@ namespace JediBank
                         Console.ResetColor();
                         Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
                         Console.ReadKey();
-                        break;  
+                        break;
                 }
             }
         }
@@ -284,7 +286,7 @@ namespace JediBank
             var otherAccounts = user.Accounts.Where(acc => acc != account).ToList();
             for (int i = 0; i < otherAccounts.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {otherAccounts[i].Name} - {otherAccounts[i].Balance} {otherAccounts[i].Currency}");
+                Console.WriteLine($"{i + 1}. {otherAccounts[i].Name} - {otherAccounts[i].Balance.ToString("c", otherAccounts[i].Currency.GetOutputFormat())}");
             }
             Console.WriteLine("\nAnge siffra för att välja konto: ");
             if (int.TryParse(Console.ReadLine(), out int selected) && selected > 0 && selected <= otherAccounts.Count)
@@ -295,7 +297,7 @@ namespace JediBank
                 {
                     if (account.TransferFunds(amount, toAccount))
                     {
-                        Console.WriteLine($" {amount} {account.Currency} har överförts till {toAccount.Name}. ");
+                        Console.WriteLine($" {amount.ToString("c", account.Currency.GetOutputFormat())} har överförts till {toAccount.Name}. ");
                     }
                     else
                     {
@@ -324,16 +326,16 @@ namespace JediBank
             Account? sender = null;
             Account? reciever = null;
             Console.OutputEncoding = Encoding.UTF8;
-            Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool> 
+            Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool>
             {
                 {"Cancel", false },
                 {"Submit", false }
             };
             Dictionary<string, bool> headClicked = new Dictionary<string, bool>();
-            Dictionary<string, string[]> menuItems = new Dictionary<string, string[]> 
-            { 
-                { "Sender account", user.GetAccountNames() }, 
-                { "Reciever account", user.GetAccountNames() } 
+            Dictionary<string, string[]> menuItems = new Dictionary<string, string[]>
+            {
+                { "Sender account", user.GetAccountNames() },
+                { "Reciever account", user.GetAccountNames() }
             };
             List<string> items = new List<string>();
             foreach (var item in menuItems)
@@ -356,7 +358,7 @@ namespace JediBank
             int maxL = 17;
             int yStart = 2;
             int width = 26;
-            int height = 11+2*menuItems["Sender account"].Count();
+            int height = 11 + 2 * menuItems["Sender account"].Count();
             while (true)
             {
                 do
@@ -367,14 +369,14 @@ namespace JediBank
                     Console.SetCursorPosition(9, 6);
                     for (int i = 0; i < items.Count; i++)
                     {
-                        
-                        int distance = headClicked[items[0]] ?  0 : menuItems["Sender account"].Length;
+
+                        int distance = headClicked[items[0]] ? 0 : menuItems["Sender account"].Length;
                         int space = i == items.IndexOf(menuItems.Keys.ToList()[1]) ? 1 : 0;
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
                         if (menuItems.ContainsKey(items[i]))
                         {
-                            
-                            Console.SetCursorPosition(11,Console.GetCursorPosition().Top + distance*i+space );
+
+                            Console.SetCursorPosition(11, Console.GetCursorPosition().Top + distance * i + space);
                             Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.White;
                             Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.Black;
                             if (chosenSender.Count > 0 && i < items.IndexOf(menuItems.Keys.ToList()[1]))
@@ -393,10 +395,10 @@ namespace JediBank
                                 Console.Write($" {items[i]} {new string(' ', maxL - items[i].Length)} {triangle} \n");
                                 Console.ResetColor();
                             }
-                            
+
                             Console.ResetColor();
                         }
-                        else if(!buttonsClicked.Keys.Contains(items[i]))
+                        else if (!buttonsClicked.Keys.Contains(items[i]))
                         {
                             Console.SetCursorPosition(14, Console.GetCursorPosition().Top);
                             Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
@@ -417,7 +419,7 @@ namespace JediBank
                                 Console.Write($" {buttonsClicked.Keys.ToList()[0]} ");
                                 Console.ResetColor();
                             }
-                            else if(buttonsClicked.Keys.ToList()[1] == items[i])
+                            else if (buttonsClicked.Keys.ToList()[1] == items[i])
                             {
                                 Console.BackgroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.DarkGreen;
                                 Console.ForegroundColor = i == currentSelection ? ConsoleColor.DarkGreen : ConsoleColor.White;
@@ -425,11 +427,11 @@ namespace JediBank
                                 Console.Write($" {buttonsClicked.Keys.ToList()[1]} ");
                                 Console.ResetColor();
                             }
-                            
+
 
                         }
                     }
-                    
+
                     var keyPressed = Console.ReadKey(intercept: true);
                     key = keyPressed.Key;
                     if (key == ConsoleKey.UpArrow || key == ConsoleKey.LeftArrow)
@@ -454,7 +456,7 @@ namespace JediBank
                         //Logic for checking if accounts have been chosen or if they are valid;
                         sender = chosenSender.Count() > 0 ? user.Accounts.Find(x => x.Name == chosenSender[0]) : sender;
                         reciever = chosenReciever.Count() > 0 ? user.Accounts.Find(x => x.Name == chosenReciever[0]) : reciever;
-                        if(sender != reciever)
+                        if (sender != reciever)
                         {
                             return [sender, reciever];
                         }
@@ -470,7 +472,7 @@ namespace JediBank
                 }
                 else if (!menuItems.ContainsKey(items[currentSelection]))
                 {
-                    if(currentSelection < items.IndexOf(menuItems.Keys.ToList()[1]))
+                    if (currentSelection < items.IndexOf(menuItems.Keys.ToList()[1]))
                     {
                         if (chosenSender.Count > 0)
                         {
@@ -528,10 +530,10 @@ namespace JediBank
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
-            for(int i = 0; i < height; i++)
+            for (int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
-                Console.Write(i == 1 ? $"{new string(' ', (width - message.Length)/2)}{message}{new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
+                Console.Write(i == 1 ? $"{new string(' ', (width - message.Length) / 2)}{message}{new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
 
             }
             Console.ResetColor();
@@ -548,7 +550,7 @@ namespace JediBank
             for (int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
-                Console.Write(i == height/2  ? $"{new string(' ', (width - message.Length) / 2)}{message} {new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
+                Console.Write(i == height / 2 ? $"{new string(' ', (width - message.Length) / 2)}{message} {new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
 
             }
             Console.ResetColor();
