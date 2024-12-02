@@ -7,19 +7,13 @@ namespace JediBank
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            var users = DataBase.LoadUsers();
+            Bank bank = new Bank();
+            bank.RunProgram();
 
-            foreach (var user in users)
-            {
-                foreach (Account account in user.Accounts)
-                {
-                    Console.WriteLine(account.Balance.ToString("c", account.Currency.GetOutputFormat()));
-                }
-            }
-            Console.Read();
 
             /*        Bank bank = new Bank();
                     bank.RunProgram();*/
+
         }
     }
 }

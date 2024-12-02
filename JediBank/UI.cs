@@ -83,7 +83,7 @@ namespace JediBank
                     Console.SetCursorPosition((Console.WindowWidth - items[0].Length)/2,Console.WindowHeight/2 + i);
                     if (i == currentSelection)
                     {
-                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine($" {items[i]} ");
                         Console.ResetColor();
@@ -213,10 +213,10 @@ namespace JediBank
       
         public void AccountMenu(User user, Account account)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             while (true)
-            {
-                Console.Clear();
-                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance} {account.Currency} ");
+            {   Console.Clear();
+                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance.ToString("c" , account.Currency.GetOutputFormat())} ");
                 Console.WriteLine("--------------------------------------");
 
                 Console.WriteLine("1. Visa senaste transaktioner (WIP) ");
