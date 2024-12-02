@@ -9,6 +9,11 @@ namespace JediBank
             Console.OutputEncoding = Encoding.UTF8;
             Bank bank = new Bank();
             bank.RunProgram();
+
+
+            /*        Bank bank = new Bank();
+                    bank.RunProgram();*/
+
         }
     }
 }

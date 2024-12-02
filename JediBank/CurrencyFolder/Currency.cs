@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JediBank.CurrencyFolder
 {
-    internal class Currency
+    public class Currency
     {
         /// <summary>
         /// Full Currency name
@@ -18,6 +18,13 @@ namespace JediBank.CurrencyFolder
         /// https://en.wikipedia.org/wiki/ISO_4217
         /// </summary>
         public string CurrencyCode { get; set;  }
+        public virtual string Name { get; set; }
+        /// <summary>
+        /// ISO 4217 Standard
+        /// https://en.wikipedia.org/wiki/ISO_4217
+        /// 
+        /// </summary>
+        public virtual string CurrencyCode { get; set; }
         /// <summary>
         /// Output Format
         /// https://www.csharp-examples.net/culture-names/
@@ -25,6 +32,20 @@ namespace JediBank.CurrencyFolder
         public NumberFormatInfo GetOutputFormat()
         {
             return NumberFormatInfo.InvariantInfo;
+  
+        public CultureInfo GetOutputFormat()
+        {
+            switch (CurrencyCode)
+            {
+                case "USD":
+                    return CultureInfo.GetCultureInfo("en-US");
+                case "EUR":
+                    return CultureInfo.GetCultureInfo("fi-FI");
+                case "SEK":
+                    return CultureInfo.GetCultureInfo("sv-SE");
+                default:
+                    return CultureInfo.InvariantCulture;
+            }
         }
     }
 }

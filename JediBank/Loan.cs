@@ -1,12 +1,14 @@
-﻿
 using JediBank.CurrencyFolder;
+
 namespace JediBank
 {
     internal class Loan
     {
         public decimal Amount { get; set; }
         public string LoanId { get; set; }
-        public CurrencyFolder.Currency Currency { get; set; }
+
+        public Currency Currency { get; set; }
+
         public decimal Interest { get; set; }
         public decimal Total { get; set; }
         public decimal AmountPaid { get; set; }
