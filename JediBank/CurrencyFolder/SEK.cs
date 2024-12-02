@@ -5,27 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JediBank.Currency
+namespace JediBank.CurrencyFolder
 {
-    internal class SEK : ICurrency
+    internal class SEK : Currency
     {
-        public string Name
+        public override string Name
         {
             get
             {
                 return "Svensk krona";
             }
         }
-        public string CurrencyCode
+        public override string CurrencyCode
         {
             get
             {
                 return "SEK";
             }
-        }
-        public NumberFormatInfo GetOutputFormat()
-        {
-            return CultureInfo.GetCultureInfo("sv-SE").NumberFormat;
         }
     }
 }
