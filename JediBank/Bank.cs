@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace JediBank
 {
@@ -101,8 +102,9 @@ namespace JediBank
             };
 
             _TransferQue.Enqueue(transferDetails);
-            _TransferQue.Peek().ExectureTransaction();
+            _TransferQue.Peek().ExecuteTransaction();
             _TransferQue.Dequeue();
+            DataBase.ArchiveUsers(Users);
 
         }
         public void LogOut()

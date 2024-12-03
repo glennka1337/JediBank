@@ -10,14 +10,14 @@ namespace JediBank
 {
     internal class Transaction
     {
-        public Account? SenderAccount { get; set; }
-        public Account? ReciverAccount { get; set; }
+        public Account SenderAccount { get; set; }
+        public Account ReciverAccount { get; set; }
         public decimal Amount { get; set; }
         public DateTime DateTime  { get; set; }
         public Currency Currency { get; set; }
 
 
-        public void ExectureTransaction()
+        public void ExecuteTransaction()
         {
             SenderAccount.Subtract(Amount);
             ReciverAccount.Add(Amount);
@@ -27,7 +27,11 @@ namespace JediBank
 
         public void ShowTransaction()
         {
-            Console.WriteLine($"From: {SenderAccount} To: {ReciverAccount} Amount transfered: {Amount("c", SenderAccount.Currency.GetOutputFormat())} Time of transfer: {DateTime}");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"From: {SenderAccount?.Name} To: {ReciverAccount?.Name} Amount transferred: {Amount.ToString("c", SenderAccount?.Currency.GetOutputFormat())} Time of transfer: {DateTime}\n");
+            Console.ResetColor();
+
         }
     }
 
