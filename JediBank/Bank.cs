@@ -38,6 +38,7 @@ namespace JediBank
              {
                  { "💰 Accounts", user.GetAccountNames() },
                  { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "⚙️ Manage", ["Open account"] },
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
@@ -82,7 +83,8 @@ namespace JediBank
                  { "Log out", LogOut },
                  { "Account", AccountShow },
                  { "Create user", CreateUser },
-                 { "Remove user", RemoveUser }
+                 { "Remove user", RemoveUser },
+                 { "Open account", CreateAccount }
 
              };
             return actionMap;
@@ -106,9 +108,9 @@ namespace JediBank
 
         public void CreateUser()
         {
-            Console.WriteLine("Select name: ");
+            Console.Write("Select name: ");
             string username = Console.ReadLine();
-            Console.WriteLine("Select password: ");
+            Console.Write("Select password: ");
             string password = Console.ReadLine();
             Users.Add(new User
             {
@@ -126,6 +128,12 @@ namespace JediBank
                 Console.WriteLine(user.Name);
             }
             //Users.RemoveAt()
+        }
+
+        public void CreateAccount()
+        {
+            currentUser.AddAccount();
+            DataBase.ArchiveUsers(Users);
         }
         public void LogOut()
         {

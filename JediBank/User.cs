@@ -116,11 +116,13 @@ namespace JediBank
         }
         public void AddAccount()
         {
+            Console.Write("Choose name: ");
+            string name = Console.ReadLine();
             Accounts.Add(new Account
             {
-                Name = "Test",
-                Balance = 9999,
-                Currency = new SEK(),
+                Name = name,
+                Balance = 0,
+                Currency = new SEK()
             });
         }
     }
