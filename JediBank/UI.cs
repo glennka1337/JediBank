@@ -343,6 +343,11 @@ namespace JediBank
             Account? sender = null;
             Account? reciever = null;
             Console.OutputEncoding = Encoding.UTF8;
+            Dictionary<string, string> textButton = new Dictionary<string, bool>
+            {
+                {"Amount", "Enter Amount" },
+                {"Reciever", "Enter account id" }
+            };
             Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool>
             {
                 {"Cancel", false },
@@ -365,7 +370,8 @@ namespace JediBank
             //Lägger till cancel och submit knapparna
             items.Add(buttonsClicked.Keys.ToList()[0]);
             items.Add(buttonsClicked.Keys.ToList()[1]);
-
+            items.Add(textButton.Keys.ToList()[0]);
+            items.Add(textButton.Keys.ToList()[1]);
             List<string> chosenSender = new List<string>();
             List<string> chosenReciever = new List<string>();
 
@@ -417,11 +423,23 @@ namespace JediBank
                         }
                         else if (!buttonsClicked.Keys.Contains(items[i]))
                         {
-                            Console.SetCursorPosition(14, Console.GetCursorPosition().Top);
-                            Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
-                            Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.White;
-                            Console.Write($" ◯ {items[i]} {new string(' ', maxL - items[i].Length - 2)}\n");
-                            Console.ResetColor();
+                            if (textButton.Keys.Contains(items[i]))
+                            {
+                                Console.SetCursorPosition(14, Console.GetCursorPosition().Top);
+                                Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
+                                Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.White;
+                                Console.Write($" ◯ {items[i]} {new string(' ', maxL - items[i].Length - 2)}\n");
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(14, Console.GetCursorPosition().Top);
+                                Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
+                                Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.White;
+                                Console.Write($" ◯ {items[i]} {new string(' ', maxL - items[i].Length - 2)}\n");
+                                Console.ResetColor();
+
+                            }
                         }
                         else
                         {
@@ -574,34 +592,39 @@ namespace JediBank
             Console.ResetColor();
         }
 
-        public void Textbox(string defaultText, int X, int Y)
+        public void Textbox(string defaultText, int X, int Y, bool clicked)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(X, Y);
             Console.Write(defaultText);
-            ConsoleKey key;
-            string input = defaultText;
-            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2 + 1);
-            do
-            {
-                var keyPressed = Console.ReadKey(intercept: true);
-                key = keyPressed.Key;
-                if (char.IsLetter(keyPressed.KeyChar))
+
+            if (clicked) 
+            { 
+                ConsoleKey key;
+                string input = defaultText;
+            
+                do
                 {
-                    input += keyPressed.KeyChar;
-                    Console.Write(keyPressed.KeyChar);
-                }
-                else if (key == ConsoleKey.Backspace)
-                {
-                    if (input.Length > 0)
+                    var keyPressed = Console.ReadKey(intercept: true);
+                    key = keyPressed.Key;
+                    if (char.IsLetter(keyPressed.KeyChar))
                     {
-                        input = input.Substring(0, input.Length - 1);
-                        Console.Write("\b \b");
+                        input += keyPressed.KeyChar;
+                        Console.Write(keyPressed.KeyChar);
                     }
-                }
-            } while (key != ConsoleKey.Enter);
-            Console.WriteLine();
+                    else if (key == ConsoleKey.Backspace)
+                    {
+                        if (input.Length > 0)
+                        {
+                            input = input.Substring(0, input.Length - 1);
+                            Console.Write("\b \b");
+                        }
+                    }
+                } while (key != ConsoleKey.Enter);
+                Console.WriteLine();
+            
+            }
         }
     }
 }
