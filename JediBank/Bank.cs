@@ -22,10 +22,11 @@ namespace JediBank
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
-                            string action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                            string action = currentUser.IsAdmin ? uI.MainMenu(AdminMenuOptions(currentUser), currentUser.Name) : uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
                             currentAccount = currentUser.Accounts.Find(x => x.Name == action);
                             action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
                             actionMap[action].DynamicInvoke();
+
                     }
                 }
             }
@@ -80,7 +81,8 @@ namespace JediBank
                  { "Transfer", Transfer },
                  { "Log out", LogOut },
                  { "Account", AccountShow },
-                 { "Create user", CreateUser }
+                 { "Create user", CreateUser },
+                 { "Remove user", RemoveUser }
 
              };
             return actionMap;
