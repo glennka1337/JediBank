@@ -343,10 +343,10 @@ namespace JediBank
             Account? sender = null;
             Account? reciever = null;
             Console.OutputEncoding = Encoding.UTF8;
-            Dictionary<string, string> textButton = new Dictionary<string, bool>
+            Dictionary<string, bool> textButton = new Dictionary<string, bool>
             {
-                {"Amount", "Enter Amount" },
-                {"Reciever", "Enter account id" }
+                {"Amount", false },
+                {"Reciever", false}
             };
             Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool>
             {
@@ -425,11 +425,9 @@ namespace JediBank
                         {
                             if (textButton.Keys.Contains(items[i]))
                             {
-                                Console.SetCursorPosition(14, Console.GetCursorPosition().Top);
-                                Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
-                                Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.White;
-                                Console.Write($" ◯ {items[i]} {new string(' ', maxL - items[i].Length - 2)}\n");
-                                Console.ResetColor();
+                                /*int k = textButton.Keys.ToList().IndexOf(items[i]);
+                                Textbox(textButton.Keys.ToList()[k], 14, 15, textButton[items[k]]);
+                                Console.ResetColor();*/
                             }
                             else
                             {
@@ -437,9 +435,16 @@ namespace JediBank
                                 Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
                                 Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.White;
                                 Console.Write($" ◯ {items[i]} {new string(' ', maxL - items[i].Length - 2)}\n");
+                               
                                 Console.ResetColor();
 
                             }
+                        }
+                        else if (textButton.Keys.ToList().Contains(items[i]))
+                        {
+                            int k = textButton.Keys.ToList().IndexOf(items[i]);
+                            Textbox(textButton.Keys.ToList()[k], 14, 15, textButton[items[k]]);
+                            Console.ResetColor();
                         }
                         else
                         {
@@ -504,6 +509,10 @@ namespace JediBank
 
 
                     }
+                }
+                else if (textButton.ContainsKey(items[currentSelection]))
+                {
+                    textButton[items[currentSelection]] = !textButton[items[currentSelection]];
                 }
                 else if (!menuItems.ContainsKey(items[currentSelection]))
                 {
@@ -622,9 +631,9 @@ namespace JediBank
                         }
                     }
                 } while (key != ConsoleKey.Enter);
-                Console.WriteLine();
             
             }
+            Console.ResetColor ();
         }
     }
 }
