@@ -5,10 +5,8 @@ namespace JediBank
     internal class Loan
     {
         public decimal Amount { get; set; }
-        public string LoanId { get; set; }
-
+        public int LoanId { get; set; }
         public Currency Currency { get; set; }
-
         public decimal Interest { get; set; }
         public decimal Total { get; set; }
         public decimal AmountPaid { get; set; }
