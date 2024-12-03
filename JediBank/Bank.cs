@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace JediBank
 {
@@ -8,6 +9,8 @@ namespace JediBank
         public User? currentUser { get; set; } = null;
         public Account? currentAccount { get; set; } = null;
         //public string action { get; set;} 
+
+        Queue<Transaction> _TransferQue = new Queue<Transaction>();
         public void RunProgram()
         {
 
@@ -103,6 +106,20 @@ namespace JediBank
         {
             UI uI = new UI();
             Account[] transferInfo = uI.TransferMenu(currentUser);
+            Console.WriteLine("Hur mycket cash");
+            decimal amount = Convert.ToDecimal(Console.ReadLine());
+            Transaction transferDetails = new Transaction
+            {
+                SenderAccount = transferInfo[0], 
+                ReciverAccount = transferInfo[1], 
+                Amount = amount, // Amount behövs läggas in i UI
+                DateTime = DateTime.Now
+            };
+
+            _TransferQue.Enqueue(transferDetails);
+            _TransferQue.Peek().ExecuteTransaction();
+            _TransferQue.Dequeue();
+            DataBase.ArchiveUsers(Users);
 
         }
 

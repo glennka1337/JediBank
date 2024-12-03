@@ -231,7 +231,7 @@ namespace JediBank
                 switch (choice)
                 {
                     case "1":
-                        Console.WriteLine("Här ska historik vara. WIP ");
+                        account.ShowHistory();
                         Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
                         Console.ReadKey();
                         break;
