@@ -31,24 +31,24 @@
     ]
   },
   {
-    "name": "edgar",
-    "password": "4321",
-    "isAdmin": false,
-    "accounts": [
+    "Name": "edgar",
+    "Password": "4321",
+    "IsAdmin": false,
+    "Accounts": [
       {
-        "name": "Privatkonto",
-        "balance": 200.00,
-        "currency": {
-          "name": "United States Dollar",
-          "currencyCode": "USD"
+        "Name": "Privatkonto",
+        "Balance": 200.00,
+        "Currency": {
+          "Name": "United States Dollar",
+          "CurrencyCode": "USD"
         }
       },
       {
-        "name": "Sparkonto",
-        "balance": 500.00,
-        "currency": {
-          "name": "EURO",
-          "currencyCode": "EUR"
+        "Name": "Sparkonto",
+        "Balance": 500.00,
+        "Currency": {
+          "Name": "EURO",
+          "CurrencyCode": "EUR"
         }
       }
     ]

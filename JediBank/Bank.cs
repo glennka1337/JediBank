@@ -26,6 +26,7 @@ namespace JediBank
                         currentAccount = currentUser.Accounts.Find(x => x.Name == action);
                         action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
                         actionMap[action].DynamicInvoke();
+                        DataBase.ArchiveUsers(Users);
                     }
                 }
             }
@@ -40,27 +41,39 @@ namespace JediBank
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
-        }
-  /*
-                        string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                        if (chosenOption == "🏦 Sign out")
-                        {
-                            currentUser = null;
-                        }
-                        else
-                        {
-                            var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
-                            if (selectedAccount != null)
-                            {
-                                uI.AccountMenu(currentUser, selectedAccount);
-                            }
-                        }
-                    }
-                }
-            }
 
         }
-        */
+        public Dictionary<string, string[]> AdminMenuOptions(User user)
+        {
+            Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+             {
+                 { "Handle users",["create", "remove"]},
+                 { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "🏦 Sign out", ["Log out", "Shut down"] }
+             };
+            return alt;
+
+        }
+        /*
+                              string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                              if (chosenOption == "🏦 Sign out")
+                              {
+                                  currentUser = null;
+                              }
+                              else
+                              {
+                                  var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
+                                  if (selectedAccount != null)
+                                  {
+                                      uI.AccountMenu(currentUser, selectedAccount);
+                                  }
+                              }
+                          }
+                      }
+                  }
+
+              }
+              */
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {
@@ -88,7 +101,13 @@ namespace JediBank
         {
             UI uI = new UI();
             Account[] transferInfo = uI.TransferMenu(currentUser);
-
+            /*//Console.WriteLine("Amount = ");
+            //decimal amount = Convert.ToDecimal(Console.ReadLine());
+            if (transferInfo[0].Subtract(amount))
+            {
+                transferInfo[1].Add(amount);
+            }*/
+            
         }
         public void LogOut()
         {
