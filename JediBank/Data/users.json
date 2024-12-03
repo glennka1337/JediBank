@@ -1,7 +1,38 @@
 [
   {
-    "name": "hugo",
-    "password": "1234",
+    "Name": "hugo",
+    "Password": "1234",
+    "IsAdmin": false,
+    "Accounts": [
+      {
+        "Name": "Privatkonto",
+        "Balance": 2000000.00,
+        "Currency": {
+          "Name": "United States Dollar",
+          "CurrencyCode": "USD"
+        }
+      },
+      {
+        "Name": "Sparkonto",
+        "Balance": 2000000.00,
+        "Currency": {
+          "Name": "Swedish Crown",
+          "CurrencyCode": "SEK"
+        }
+      },
+      {
+        "Name": "Eurokonto",
+        "Balance": 200000.00,
+        "Currency": {
+          "Name": "EURO",
+          "CurrencyCode": "EUR"
+        }
+      }
+    ]
+  },
+  {
+    "name": "edgar",
+    "password": "4321",
     "isAdmin": false,
     "accounts": [
       {
@@ -10,6 +41,14 @@
         "currency": {
           "name": "United States Dollar",
           "currencyCode": "USD"
+        }
+      },
+      {
+        "name": "Sparkonto",
+        "balance": 500.00,
+        "currency": {
+          "name": "EURO",
+          "currencyCode": "EUR"
         }
       }
     ]

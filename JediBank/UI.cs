@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JediBank.CurrencyFolder;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,11 +11,13 @@ namespace JediBank
     {
         public string ReadUserName()
         {
-            Console.CursorVisible = true; 
-            Console.Write("\rEnter your Username: \n");
+            Console.CursorVisible = true;
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2);
+            Console.Write("Enter your Username: ");
 
             ConsoleKey key;
             string input = "";
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2 + 1);
             do
             {
                 var keyPressed = Console.ReadKey(intercept: true);
@@ -39,9 +42,12 @@ namespace JediBank
         public string ReadPassword()
         {
             Console.CursorVisible = true;
-            Console.Write("\rEnter your pin code: \n");
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.GetCursorPosition().Top);
+            Console.Write("Enter your pin code: \n");
             ConsoleKey key;
             string input = "";
+            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.GetCursorPosition().Top);
+
             do
             {
                 var keyPressed = Console.ReadKey(intercept: true);
@@ -72,11 +78,13 @@ namespace JediBank
             do
             {
                 Console.Clear();
+
                 for (int i = 0; i < items.Length; i++)
                 {
+                    Console.SetCursorPosition((Console.WindowWidth - items[0].Length) / 2, Console.WindowHeight / 2 + i);
                     if (i == currentSelection)
                     {
-                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine($" {items[i]} ");
                         Console.ResetColor();
@@ -128,7 +136,7 @@ namespace JediBank
                     var time = DateTime.Now.TimeOfDay;
                     Console.SetCursorPosition(Console.WindowWidth - 15, 0);
                     Console.Write($"Time: {DateTime.Now.ToString("HH:mm")}\n");
-                    Console.SetCursorPosition(0, 1);
+                    Console.SetCursorPosition(0, 3);
                     for (int i = 0; i < items.Count; i++)
                     {
 
@@ -204,6 +212,110 @@ namespace JediBank
             }
         }
 
+        public void AccountMenu(User user, Account account)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance.ToString("c", account.Currency.GetOutputFormat())} ");
+                Console.WriteLine("--------------------------------------");
+
+                Console.WriteLine("1. Visa senaste transaktioner (WIP) ");
+                Console.WriteLine("2. Ta ut pengar ");
+                Console.WriteLine("3. Överför pengar ");
+                Console.WriteLine("4. Återgå till huvudmenyn ");
+                Console.Write("Välj något av ovanstående alternativ: ");
+
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Här ska historik vara. WIP ");
+                        Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+                        Console.ReadKey();
+                        break;
+
+                    case "2":
+                        ExecuteWithdraw(user, account);
+                        break;
+
+                    case "3":
+                        ExecuteTransfer(user, account);
+                        break;
+
+                    case "4":
+                        return;
+
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Ogiltigt val. Ange ett nummer mellan 1-4. ");
+                        Console.ResetColor();
+                        Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+
+        private void ExecuteWithdraw(User user, Account account)
+        {
+            Console.WriteLine("\nAnge belopp som du vill ta ut: ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+            {
+                if (account.Subtract(amount))
+                {
+                    Console.WriteLine($"{amount} {account.Currency} har tagits ut. ");
+                }
+                else
+                {
+                    Console.WriteLine("Ej tillräckligt stort saldo. ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltigt belopp. ");
+            }
+            Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+            Console.ReadKey();
+        }
+
+        private void ExecuteTransfer(User user, Account account)
+        {
+            Console.WriteLine("\nVälj ett konto att överföra till: ");
+            var otherAccounts = user.Accounts.Where(acc => acc != account).ToList();
+            for (int i = 0; i < otherAccounts.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {otherAccounts[i].Name} - {otherAccounts[i].Balance.ToString("c", otherAccounts[i].Currency.GetOutputFormat())}");
+            }
+            Console.WriteLine("\nAnge siffra för att välja konto: ");
+            if (int.TryParse(Console.ReadLine(), out int selected) && selected > 0 && selected <= otherAccounts.Count)
+            {
+                Account toAccount = otherAccounts[selected - 1];
+                Console.Write("Ange belopp att överföra: ");
+                if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+                {
+                    if (account.TransferFunds(amount, toAccount))
+                    {
+                        Console.WriteLine($" {amount.ToString("c", account.Currency.GetOutputFormat())} har överförts till {toAccount.Name}. ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Otillräckligt saldo eller ogiltigt belopp. ");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ogiltigt belopp. ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltigt val. ");
+            }
+            Console.WriteLine("Tryck på valfri tangent för att fortsätta: ");
+            Console.ReadKey();
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -214,16 +326,16 @@ namespace JediBank
             Account? sender = null;
             Account? reciever = null;
             Console.OutputEncoding = Encoding.UTF8;
-            Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool> 
+            Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool>
             {
                 {"Cancel", false },
                 {"Submit", false }
             };
             Dictionary<string, bool> headClicked = new Dictionary<string, bool>();
-            Dictionary<string, string[]> menuItems = new Dictionary<string, string[]> 
-            { 
-                { "Sender account", user.GetAccountNames() }, 
-                { "Reciever account", user.GetAccountNames() } 
+            Dictionary<string, string[]> menuItems = new Dictionary<string, string[]>
+            {
+                { "Sender account", user.GetAccountNames() },
+                { "Reciever account", user.GetAccountNames() }
             };
             List<string> items = new List<string>();
             foreach (var item in menuItems)
@@ -246,7 +358,7 @@ namespace JediBank
             int maxL = 17;
             int yStart = 2;
             int width = 26;
-            int height = 11+2*menuItems["Sender account"].Count();
+            int height = 11 + 2 * menuItems["Sender account"].Count();
             while (true)
             {
                 do
@@ -257,14 +369,14 @@ namespace JediBank
                     Console.SetCursorPosition(9, 6);
                     for (int i = 0; i < items.Count; i++)
                     {
-                        
-                        int distance = headClicked[items[0]] ?  0 : menuItems["Sender account"].Length;
+
+                        int distance = headClicked[items[0]] ? 0 : menuItems["Sender account"].Length;
                         int space = i == items.IndexOf(menuItems.Keys.ToList()[1]) ? 1 : 0;
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
                         if (menuItems.ContainsKey(items[i]))
                         {
-                            
-                            Console.SetCursorPosition(11,Console.GetCursorPosition().Top + distance*i+space );
+
+                            Console.SetCursorPosition(11, Console.GetCursorPosition().Top + distance * i + space);
                             Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.White;
                             Console.ForegroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.Black;
                             if (chosenSender.Count > 0 && i < items.IndexOf(menuItems.Keys.ToList()[1]))
@@ -283,10 +395,10 @@ namespace JediBank
                                 Console.Write($" {items[i]} {new string(' ', maxL - items[i].Length)} {triangle} \n");
                                 Console.ResetColor();
                             }
-                            
+
                             Console.ResetColor();
                         }
-                        else if(!buttonsClicked.Keys.Contains(items[i]))
+                        else if (!buttonsClicked.Keys.Contains(items[i]))
                         {
                             Console.SetCursorPosition(14, Console.GetCursorPosition().Top);
                             Console.BackgroundColor = i == currentSelection ? ConsoleColor.Green : ConsoleColor.DarkGray;
@@ -307,7 +419,7 @@ namespace JediBank
                                 Console.Write($" {buttonsClicked.Keys.ToList()[0]} ");
                                 Console.ResetColor();
                             }
-                            else if(buttonsClicked.Keys.ToList()[1] == items[i])
+                            else if (buttonsClicked.Keys.ToList()[1] == items[i])
                             {
                                 Console.BackgroundColor = i == currentSelection ? ConsoleColor.White : ConsoleColor.DarkGreen;
                                 Console.ForegroundColor = i == currentSelection ? ConsoleColor.DarkGreen : ConsoleColor.White;
@@ -315,11 +427,11 @@ namespace JediBank
                                 Console.Write($" {buttonsClicked.Keys.ToList()[1]} ");
                                 Console.ResetColor();
                             }
-                            
+
 
                         }
                     }
-                    
+
                     var keyPressed = Console.ReadKey(intercept: true);
                     key = keyPressed.Key;
                     if (key == ConsoleKey.UpArrow || key == ConsoleKey.LeftArrow)
@@ -344,7 +456,7 @@ namespace JediBank
                         //Logic for checking if accounts have been chosen or if they are valid;
                         sender = chosenSender.Count() > 0 ? user.Accounts.Find(x => x.Name == chosenSender[0]) : sender;
                         reciever = chosenReciever.Count() > 0 ? user.Accounts.Find(x => x.Name == chosenReciever[0]) : reciever;
-                        if(sender != reciever)
+                        if (sender != reciever)
                         {
                             return [sender, reciever];
                         }
@@ -360,7 +472,7 @@ namespace JediBank
                 }
                 else if (!menuItems.ContainsKey(items[currentSelection]))
                 {
-                    if(currentSelection < items.IndexOf(menuItems.Keys.ToList()[1]))
+                    if (currentSelection < items.IndexOf(menuItems.Keys.ToList()[1]))
                     {
                         if (chosenSender.Count > 0)
                         {
@@ -418,10 +530,10 @@ namespace JediBank
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
-            for(int i = 0; i < height; i++)
+            for (int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
-                Console.Write(i == 1 ? $"{new string(' ', (width - message.Length)/2)}{message}{new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
+                Console.Write(i == 1 ? $"{new string(' ', (width - message.Length) / 2)}{message}{new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
 
             }
             Console.ResetColor();
@@ -438,7 +550,7 @@ namespace JediBank
             for (int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(9, Console.GetCursorPosition().Top + 1);
-                Console.Write(i == height/2  ? $"{new string(' ', (width - message.Length) / 2)}{message} {new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
+                Console.Write(i == height / 2 ? $"{new string(' ', (width - message.Length) / 2)}{message} {new string(' ', (width - message.Length) / 2)}" : $"{new string(' ', width)}");
 
             }
             Console.ResetColor();
