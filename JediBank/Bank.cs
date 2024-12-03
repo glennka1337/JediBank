@@ -10,7 +10,7 @@ namespace JediBank
         //public string action { get; set;} 
         public void RunProgram()
         {
-            
+
             Users = DataBase.LoadUsers();
             UI uI = new UI();
 
@@ -22,10 +22,10 @@ namespace JediBank
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
-                        string action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                        currentAccount = currentUser.Accounts.Find(x => x.Name == action);
-                        action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
-                        actionMap[action].DynamicInvoke();
+                            string action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                            currentAccount = currentUser.Accounts.Find(x => x.Name == action);
+                            action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
+                            actionMap[action].DynamicInvoke();
                     }
                 }
             }
@@ -33,7 +33,7 @@ namespace JediBank
         }
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
-             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+            Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
                  { "💰 Accounts", user.GetAccountNames() },
                  { "💼 Transactions", ["Withdraw", "Transfer"] },
@@ -41,26 +41,36 @@ namespace JediBank
              };
             return alt;
         }
-  /*
-                        string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                        if (chosenOption == "🏦 Sign out")
-                        {
-                            currentUser = null;
-                        }
-                        else
-                        {
-                            var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
-                            if (selectedAccount != null)
-                            {
-                                uI.AccountMenu(currentUser, selectedAccount);
-                            }
-                        }
-                    }
-                }
-            }
 
+        public Dictionary<string, string[]> AdminMenuOptions(User user)
+        {
+            Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+             {
+                 { "⚙️ Manage users", ["Create user", "Remove user"] },
+                 { "🏦 Sign out", ["Log out", "Shut down"] }
+             };
+            return alt;
         }
-        */
+        /*
+                              string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                              if (chosenOption == "🏦 Sign out")
+                              {
+                                  currentUser = null;
+                              }
+                              else
+                              {
+                                  var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
+                                  if (selectedAccount != null)
+                                  {
+                                      uI.AccountMenu(currentUser, selectedAccount);
+                                  }
+                              }
+                          }
+                      }
+                  }
+
+              }
+              */
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {
@@ -69,7 +79,8 @@ namespace JediBank
                  { "Withdraw", Withdraw },
                  { "Transfer", Transfer },
                  { "Log out", LogOut },
-                 {"Account", AccountShow }
+                 { "Account", AccountShow },
+                 { "Create user", CreateUser }
 
              };
             return actionMap;
@@ -77,7 +88,7 @@ namespace JediBank
         public void AccountShow()
         {
             UI uI = new UI();
-            
+
             uI.AccountMenu(currentUser, currentAccount);
         }
         public void Withdraw()
@@ -89,6 +100,30 @@ namespace JediBank
             UI uI = new UI();
             Account[] transferInfo = uI.TransferMenu(currentUser);
 
+        }
+
+        public void CreateUser()
+        {
+            Console.WriteLine("Select name: ");
+            string username = Console.ReadLine();
+            Console.WriteLine("Select password: ");
+            string password = Console.ReadLine();
+            Users.Add(new User
+            {
+                Name = username,
+                Password = password
+
+            });
+            DataBase.ArchiveUsers(Users);
+        }
+
+        public void RemoveUser()
+        {
+            foreach (var user in Users)
+            {
+                Console.WriteLine(user.Name);
+            }
+            //Users.RemoveAt()
         }
         public void LogOut()
         {
@@ -122,9 +157,9 @@ namespace JediBank
                 }
                 Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
                 Console.Write("\r                                       ");
-                Console.SetCursorPosition(0, Console.GetCursorPosition().Top-1);
+                Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
             } while (currentUser == null);
-            return null;    
+            return null;
         }
     }
 }
