@@ -12,6 +12,7 @@ namespace JediBank
         public decimal MaxLoan { get; set; }
         public List<Loan> Loans { get; set; } = new();
         public List<Account> Accounts { get; set; } = new();
+        public bool IsLocked { get; internal set; }
 
         /*public User(string name, string password, bool isAdmin)
         {
@@ -19,7 +20,11 @@ namespace JediBank
             Password = password;
             IsAdmin = isAdmin;
         }*/
-
+        public async Task UnlockUser()
+        {
+            await Task.Delay(5000);
+            IsLocked = false;
+        }
         public void CreateLoan(Account toAccount, decimal amount, decimal interest)
         {
             if (amount <= CalculateMaxLoan())
@@ -31,7 +36,6 @@ namespace JediBank
                     LoanId = Loans.Count() + 1,
                 };
                 newLoan.CalculateTotal();
-                Loans.Add(newLoan);
             }
 
         }
@@ -117,13 +121,11 @@ namespace JediBank
         }
         public void AddAccount()
         {
-            Console.Write("Choose name: ");
-            string name = Console.ReadLine();
             Accounts.Add(new Account
             {
-                Name = name,
-                Balance = 0,
-                Currency = new SEK()
+                Name = "Test",
+                Balance = 9999,
+                Currency = new SEK(),
             });
         }
     }
