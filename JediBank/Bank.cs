@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace JediBank
 {
@@ -8,9 +9,11 @@ namespace JediBank
         public User? currentUser { get; set; } = null;
         public Account? currentAccount { get; set; } = null;
         //public string action { get; set;} 
+
+        Queue<Transaction> _TransferQue = new Queue<Transaction>();
         public void RunProgram()
         {
-            
+
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             Window window = new Window();
@@ -33,22 +36,23 @@ namespace JediBank
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
-                        string action = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                        currentAccount = currentUser.Accounts.Find(x => x.Name == action);
-                        action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
-                        actionMap[action].DynamicInvoke();
-                        DataBase.ArchiveUsers(Users);
-                    }*/
+                            string action = currentUser.IsAdmin ? uI.MainMenu(AdminMenuOptions(currentUser), currentUser.Name) : uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                            currentAccount = currentUser.Accounts.Find(x => x.Name == action);
+                            action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
+                            actionMap[action].DynamicInvoke();
+
+                    }
                 }
             }
 
         }
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
-             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+            Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
                  { "💰 Accounts", user.GetAccountNames() },
                  { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "⚙️ Manage", ["Open account"] },
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
@@ -64,6 +68,16 @@ namespace JediBank
              };
             return alt;
 
+        }
+
+        public Dictionary<string, string[]> AdminMenuOptions(User user)
+        {
+            Dictionary<string, string[]> alt = new Dictionary<string, string[]>
+             {
+                 { "⚙️ Manage users", ["Create user", "Remove user"] },
+                 { "🏦 Sign out", ["Log out", "Shut down"] }
+             };
+            return alt;
         }
         /*
                               string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
@@ -93,7 +107,10 @@ namespace JediBank
                  { "Withdraw", Withdraw },
                  { "Transfer", Transfer },
                  { "Log out", LogOut },
-                 {"Account", AccountShow }
+                 { "Account", AccountShow },
+                 { "Create user", CreateUser },
+                 { "Remove user", RemoveUser },
+                 { "Open account", CreateAccount }
 
              };
             return actionMap;
@@ -101,7 +118,7 @@ namespace JediBank
         public void AccountShow()
         {
             UI uI = new UI();
-            
+
             uI.AccountMenu(currentUser, currentAccount);
         }
         public void Withdraw()
@@ -112,13 +129,51 @@ namespace JediBank
         {
             UI uI = new UI();
             Account[] transferInfo = uI.TransferMenu(currentUser);
-            /*//Console.WriteLine("Amount = ");
-            //decimal amount = Convert.ToDecimal(Console.ReadLine());
-            if (transferInfo[0].Subtract(amount))
+            Console.WriteLine("Hur mycket cash");
+            decimal amount = Convert.ToDecimal(Console.ReadLine());
+            Transaction transferDetails = new Transaction
             {
-                transferInfo[1].Add(amount);
-            }*/
-            
+                SenderAccount = transferInfo[0], 
+                ReciverAccount = transferInfo[1], 
+                Amount = amount, // Amount behövs läggas in i UI
+                DateTime = DateTime.Now
+            };
+
+            _TransferQue.Enqueue(transferDetails);
+            _TransferQue.Peek().ExecuteTransaction();
+            _TransferQue.Dequeue();
+            DataBase.ArchiveUsers(Users);
+
+        }
+
+        public void CreateUser()
+        {
+            Console.Write("Select name: ");
+            string username = Console.ReadLine();
+            Console.Write("Select password: ");
+            string password = Console.ReadLine();
+            Users.Add(new User
+            {
+                Name = username,
+                Password = password
+
+            });
+            DataBase.ArchiveUsers(Users);
+        }
+
+        public void RemoveUser()
+        {
+            foreach (var user in Users)
+            {
+                Console.WriteLine(user.Name);
+            }
+            //Users.RemoveAt()
+        }
+
+        public void CreateAccount()
+        {
+            currentUser.AddAccount();
+            DataBase.ArchiveUsers(Users);
         }
         public void LogOut()
         {
@@ -152,9 +207,9 @@ namespace JediBank
                 }
                 Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
                 Console.Write("\r                                       ");
-                Console.SetCursorPosition(0, Console.GetCursorPosition().Top-1);
+                Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
             } while (currentUser == null);
-            return null;    
+            return null;
         }
     }
 }

@@ -238,7 +238,7 @@ namespace JediBank
                 Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance.ToString("c", account.Currency.GetOutputFormat())} ");
                 Console.WriteLine("--------------------------------------");
 
-                Console.WriteLine("1. Visa senaste transaktioner (WIP) ");
+                Console.WriteLine("1. Visa senaste transaktioner ");
                 Console.WriteLine("2. Ta ut pengar ");
                 Console.WriteLine("3. Överför pengar ");
                 Console.WriteLine("4. Återgå till huvudmenyn ");
@@ -248,7 +248,7 @@ namespace JediBank
                 switch (choice)
                 {
                     case "1":
-                        Console.WriteLine("Här ska historik vara. WIP ");
+                        account.ShowHistory();
                         Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
                         Console.ReadKey();
                         break;

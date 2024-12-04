@@ -52,5 +52,42 @@
         }
       }
     ]
+  },
+  {
+    "Name": "admin",
+    "Password": "1337",
+    "IsAdmin": true,
+    "Accounts": [
+      {
+        "Name": "Privatkonto",
+        "Balance": 2000000.00,
+        "Currency": {
+          "Name": "United States Dollar",
+          "CurrencyCode": "USD"
+        }
+      },
+      {
+        "Name": "Sparkonto",
+        "Balance": 2000000.00,
+        "Currency": {
+          "Name": "Swedish Crown",
+          "CurrencyCode": "SEK"
+        }
+      },
+      {
+        "Name": "Eurokonto",
+        "Balance": 200000.00,
+        "Currency": {
+          "Name": "EURO",
+          "CurrencyCode": "EUR"
+        }
+      }
+    ]
+  },
+  {
+    "Name": "Viktor",
+    "Password": "1122",
+    "IsAdmin": false,
+    "Accounts": []
   }
 ]

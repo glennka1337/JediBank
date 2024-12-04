@@ -11,16 +11,18 @@ namespace JediBank
         public string Name { get; set; }
         public decimal Balance { get; set; }
         public Currency Currency { get; set; }
-
-        // HISTORY PROPERTIE WIP (LEAVE FOR LATER)
+        public List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
         public void Show()
         {
             Console.WriteLine($"{Name},{Balance}");
         }
 
-        public static void ShowHistory()
+        public void ShowHistory()
         {
-            // WIP
+            foreach (var t in TransactionHistory)
+            {
+                t.ShowTransaction();
+            }
         }
 
         public bool Add(decimal amount)
