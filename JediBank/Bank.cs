@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 
 namespace JediBank
 {
@@ -58,7 +59,7 @@ namespace JediBank
              {
                  { "💰 Accounts", user.GetAccountNames() },
                  { "💼 Transactions", ["Withdraw", "Transfer"] },
-                 { "⚙️ Manage", ["Open account"] },
+                 { "⚙️ Manage", ["Open account", "Take loan"] },
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
@@ -86,7 +87,9 @@ namespace JediBank
                  { "Account", AccountShow },
                  { "Create user", CreateUser },
                  { "Remove user", RemoveUser },
-                 { "Open account", CreateAccount }
+                 { "Open account", CreateAccount },
+                { "Take loan", TakeLoan }
+
 
              };
             return actionMap;
@@ -99,7 +102,17 @@ namespace JediBank
         }
         public void Withdraw()
         {
+            Window window = new Window();
+            Dictionary<decimal?, Account[]> withdrawInfo = window.RunWithdrawWindow(currentUser);
+            if(!withdrawInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null))) 
+            { 
+                foreach (var kvp in withdrawInfo)
+                {
 
+                    kvp.Value[0].Subtract((decimal)kvp.Key);
+                    DataBase.ArchiveUsers(Users);
+                }
+            } 
         }
         public void Transfer()
         {
@@ -126,7 +139,20 @@ namespace JediBank
             
 
         }
-
+        public void TakeLoan() 
+        {
+            Window window = new Window();
+            Dictionary<decimal?, Account[]> loanInfo = window.RunLoanWindow(currentUser);
+            if (!loanInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null)))
+            {
+                foreach (var kvp in loanInfo)
+                {
+                    currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key, 1.05m);
+                    //kvp.Value[0].Subtract((decimal)kvp.Key);
+                    //taBase.ArchiveUsers(Users);
+                }
+            }
+        }
         public void CreateUser()
         {
             Console.Write("Select name: ");

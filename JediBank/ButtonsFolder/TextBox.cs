@@ -4,9 +4,13 @@ namespace JediBank.ButtonsFolder
 {
     public class TextBox : Button
     {
+        public ConsoleColor BackColor { get; set; } = ConsoleColor.Blue;
+        public ConsoleColor ForeColor { get; set; } = ConsoleColor.White;
         public string Rubric {  get; set; }
         public override void Paint()
         {
+            Console.BackgroundColor = BackColor;
+            Console.ForegroundColor = ForeColor;
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(X, Y - 1);
             Console.Write(Rubric);
@@ -23,7 +27,7 @@ namespace JediBank.ButtonsFolder
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(X + Text.Length, Y);
-            string input = Text;
+            string input = "";
             ConsoleKey key;
             do
             {

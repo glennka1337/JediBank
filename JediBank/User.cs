@@ -31,6 +31,7 @@ namespace JediBank
                     LoanId = Loans.Count() + 1,
                 };
                 newLoan.CalculateTotal();
+                Loans.Add(newLoan);
             }
 
         }

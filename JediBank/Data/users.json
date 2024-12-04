@@ -48,7 +48,7 @@
     "Accounts": [
       {
         "Name": "Privatkonto",
-        "Balance": 100.00,
+        "Balance": 78.00,
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
