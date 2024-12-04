@@ -12,6 +12,7 @@ namespace JediBank
         public decimal MaxLoan { get; set; }
         public List<Loan> Loans { get; set; } = new();
         public List<Account> Accounts { get; set; } = new();
+        public bool IsLocked { get; internal set; }
 
         /*public User(string name, string password, bool isAdmin)
         {
@@ -19,8 +20,12 @@ namespace JediBank
             Password = password;
             IsAdmin = isAdmin;
         }*/
-
-        public void CreateLoan(Account toAccount, decimal amount)
+        public async Task UnlockUser()
+        {
+            await Task.Delay(5000);
+            IsLocked = false;
+        }
+        public void CreateLoan(Account toAccount, decimal amount, decimal interest)
         {
             if (amount <= CalculateMaxLoan())
             {

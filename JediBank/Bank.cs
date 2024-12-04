@@ -10,6 +10,7 @@ namespace JediBank
         public User? currentUser { get; set; } = null;
         public Account? currentAccount { get; set; } = null;
         //public string action { get; set;} 
+        public bool IsLocked { get; internal set; } = false;
 
         Queue<Transaction> _TransferQue = new Queue<Transaction>();
         public void RunProgram()
@@ -113,7 +114,7 @@ namespace JediBank
                 }
             } 
         }
-        public void Transfer()
+        public async Task Transfer()
         {
            // UI uI = new UI();
             //Account[] transferInfo = uI.TransferMenu(currentUser);
@@ -130,7 +131,7 @@ namespace JediBank
 
                 };
                 _TransferQue.Enqueue(transferDetails);
-                _TransferQue.Peek().ExecuteTransaction();
+                await _TransferQue.Peek().ExecuteTransaction();
                 _TransferQue.Dequeue();
                 DataBase.ArchiveUsers(Users);
             }
@@ -196,27 +197,40 @@ namespace JediBank
             {
                 string userName = uI.ReadUserName();
                 currentUser = Users.Find(i => i.Name == userName);
-                int count = 0;
-                while (count < 3 && currentUser != null)
-                {
 
+                if (currentUser.IsLocked) 
+                { 
+                    currentUser.UnlockUser();
+                }
+                if (currentUser == null)
+                {
+                    Console.WriteLine("User not found");
+                    continue; 
+                }
+
+                int count = 0;
+                while (count < 3 && !currentUser.IsLocked)
+                {
                     if (currentUser.Password == uI.ReadPassword())
                     {
                         return currentUser;
                     }
+
                     count++;
                     Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
-                    Console.Write("\r                                      ");
                     Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
                 }
+
                 if (count == 3)
                 {
-                    return null;
+                    currentUser.IsLocked = true;
+                    Console.WriteLine("Too many failed attempts. Locking your account.");
+                    Console.WriteLine("Your account is locked. Please try again later.");
+                    Console.ReadLine();
+                    break;
                 }
-                Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
-                Console.Write("\r                                       ");
-                Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
             } while (currentUser == null);
+
             return null;
         }
 
