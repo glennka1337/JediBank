@@ -22,10 +22,15 @@ namespace JediBank
 
         public static void ArchiveUsers(List<User> users)
         {
+            //string path = Path.Combine("Data", "users.json");  // Korrekt hantering av filvägar
+            //WriteToJsonFile(path, users);
+
             WriteToJsonFile("..//..//..//Data/users.json", users);
         }
         public static List<User> LoadUsers()
         {
+            //string path = Path.Combine("Data", "users.json");  // Korrekt hantering av filvägar
+
             List<User> users = new List<User>();
             users = ReadFromJsonFile<List<User>>("..//..//..//Data/users.json");
             return users;

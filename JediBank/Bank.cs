@@ -16,7 +16,8 @@ namespace JediBank
 
             Users = DataBase.LoadUsers();
             UI uI = new UI();
-
+            Window window = new Window();
+            
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
@@ -25,16 +26,32 @@ namespace JediBank
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
-                            string action = currentUser.IsAdmin ? uI.MainMenu(AdminMenuOptions(currentUser), currentUser.Name) : uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                            currentAccount = currentUser.Accounts.Find(x => x.Name == action);
-                            action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
-                            actionMap[action].DynamicInvoke();
+                        string action = currentUser.IsAdmin ? uI.MainMenu(AdminMenuOptions(currentUser), currentUser.Name) : uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                        currentAccount = currentUser.Accounts.Find(x => x.Name == action);
+                        action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
+                        actionMap[action].DynamicInvoke();
 
                     }
+                    /*
+                    string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
+                    if (chosenOption == "🏦 Sign out")
+                    {
+                        currentUser = null;
+                    }
+                    else
+                    {
+                        var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
+                        if (selectedAccount != null)
+                        {
+                            uI.AccountMenu(currentUser, selectedAccount);
+                        }
+                    }
+                    */
                 }
             }
-
         }
+
+      
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
@@ -45,37 +62,19 @@ namespace JediBank
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
-        }
 
+        }
         public Dictionary<string, string[]> AdminMenuOptions(User user)
         {
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
-                 { "⚙️ Manage users", ["Create user", "Remove user"] },
+                 { "Handle users",["create", "remove"]},
+                 { "💼 Transactions", ["Withdraw", "Transfer"] },
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
-        }
-        /*
-                              string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                              if (chosenOption == "🏦 Sign out")
-                              {
-                                  currentUser = null;
-                              }
-                              else
-                              {
-                                  var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
-                                  if (selectedAccount != null)
-                                  {
-                                      uI.AccountMenu(currentUser, selectedAccount);
-                                  }
-                              }
-                          }
-                      }
-                  }
 
-              }
-              */
+        }
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {
@@ -104,22 +103,27 @@ namespace JediBank
         }
         public void Transfer()
         {
-            UI uI = new UI();
-            Account[] transferInfo = uI.TransferMenu(currentUser);
-            Console.WriteLine("Hur mycket cash");
-            decimal amount = Convert.ToDecimal(Console.ReadLine());
-            Transaction transferDetails = new Transaction
-            {
-                SenderAccount = transferInfo[0], 
-                ReciverAccount = transferInfo[1], 
-                Amount = amount, // Amount behövs läggas in i UI
-                DateTime = DateTime.Now
-            };
+           // UI uI = new UI();
+            //Account[] transferInfo = uI.TransferMenu(currentUser);
+            Window window = new Window();
+            Dictionary<decimal?, Account[]> transferInfo = window.RunTransferWindow(currentUser, Users);
+            foreach(var kvp in transferInfo) 
+            { 
+                Transaction transferDetails = new Transaction
+                {
+                    SenderAccount = kvp.Value[0], 
+                    ReciverAccount = kvp.Value[1], 
+                    Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
+                    DateTime = DateTime.Now
 
-            _TransferQue.Enqueue(transferDetails);
-            _TransferQue.Peek().ExecuteTransaction();
-            _TransferQue.Dequeue();
-            DataBase.ArchiveUsers(Users);
+                };
+                _TransferQue.Enqueue(transferDetails);
+                _TransferQue.Peek().ExecuteTransaction();
+                _TransferQue.Dequeue();
+                DataBase.ArchiveUsers(Users);
+            }
+
+            
 
         }
 

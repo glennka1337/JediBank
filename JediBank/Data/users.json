@@ -3,6 +3,10 @@
     "Name": "hugo",
     "Password": "1234",
     "IsAdmin": false,
+    "TotalBalance": 0,
+    "TotalLoans": 0,
+    "MaxLoan": 0,
+    "Loans": [],
     "Accounts": [
       {
         "Name": "Privatkonto",
@@ -10,7 +14,8 @@
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
-        }
+        },
+        "TransactionHistory": []
       },
       {
         "Name": "Sparkonto",
@@ -18,7 +23,8 @@
         "Currency": {
           "Name": "Swedish Crown",
           "CurrencyCode": "SEK"
-        }
+        },
+        "TransactionHistory": []
       },
       {
         "Name": "Eurokonto",
@@ -26,7 +32,8 @@
         "Currency": {
           "Name": "EURO",
           "CurrencyCode": "EUR"
-        }
+        },
+        "TransactionHistory": []
       }
     ]
   },
@@ -34,22 +41,68 @@
     "Name": "edgar",
     "Password": "4321",
     "IsAdmin": false,
+    "TotalBalance": 0,
+    "TotalLoans": 0,
+    "MaxLoan": 0,
+    "Loans": [],
     "Accounts": [
       {
         "Name": "Privatkonto",
-        "Balance": 200.00,
+        "Balance": 100.00,
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
-        }
+        },
+        "TransactionHistory": [
+          {
+            "SenderAccountName": "Privatkonto",
+            "ReciverAccountName": "Sparkonto",
+            "Amount": 100,
+            "DateTime": "2024-12-04T10:32:55.2194933+01:00",
+            "Currency": null,
+            "SenderAccount": null,
+            "ReciverAccount": {
+              "Name": "Sparkonto",
+              "Balance": 600.00,
+              "Currency": {
+                "Name": "EURO",
+                "CurrencyCode": "EUR"
+              },
+              "TransactionHistory": [
+                null
+              ]
+            }
+          }
+        ]
       },
       {
         "Name": "Sparkonto",
-        "Balance": 500.00,
+        "Balance": 600.00,
         "Currency": {
           "Name": "EURO",
           "CurrencyCode": "EUR"
-        }
+        },
+        "TransactionHistory": [
+          {
+            "SenderAccountName": "Privatkonto",
+            "ReciverAccountName": "Sparkonto",
+            "Amount": 100,
+            "DateTime": "2024-12-04T10:32:55.2194933+01:00",
+            "Currency": null,
+            "SenderAccount": {
+              "Name": "Privatkonto",
+              "Balance": 100.00,
+              "Currency": {
+                "Name": "United States Dollar",
+                "CurrencyCode": "USD"
+              },
+              "TransactionHistory": [
+                null
+              ]
+            },
+            "ReciverAccount": null
+          }
+        ]
       }
     ]
   },
@@ -57,6 +110,10 @@
     "Name": "admin",
     "Password": "1337",
     "IsAdmin": true,
+    "TotalBalance": 0,
+    "TotalLoans": 0,
+    "MaxLoan": 0,
+    "Loans": [],
     "Accounts": [
       {
         "Name": "Privatkonto",
@@ -64,7 +121,8 @@
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
-        }
+        },
+        "TransactionHistory": []
       },
       {
         "Name": "Sparkonto",
@@ -72,7 +130,8 @@
         "Currency": {
           "Name": "Swedish Crown",
           "CurrencyCode": "SEK"
-        }
+        },
+        "TransactionHistory": []
       },
       {
         "Name": "Eurokonto",
@@ -80,7 +139,8 @@
         "Currency": {
           "Name": "EURO",
           "CurrencyCode": "EUR"
-        }
+        },
+        "TransactionHistory": []
       }
     ]
   },
@@ -88,6 +148,10 @@
     "Name": "Viktor",
     "Password": "1122",
     "IsAdmin": false,
+    "TotalBalance": 0,
+    "TotalLoans": 0,
+    "MaxLoan": 0,
+    "Loans": [],
     "Accounts": []
   }
 ]
