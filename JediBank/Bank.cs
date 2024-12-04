@@ -13,12 +13,23 @@ namespace JediBank
             
             Users = DataBase.LoadUsers();
             UI uI = new UI();
-
+            Window window = new Window();
+            
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
                 {
                     currentUser = Login();
+                    Dictionary<decimal?, Account[]> output = window.RunTransferWindow(currentUser, Users);
+                    Console.Clear();
+                    foreach(var kvp in output)
+                    {
+                        Console.WriteLine($"{kvp.Key} : {kvp.Value[0].Name} : {kvp.Value[1].Name}");
+                        Console.ReadLine();
+
+                    }
+
+                    /*
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
                     while (currentUser != null)
                     {
@@ -27,7 +38,7 @@ namespace JediBank
                         action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
                         actionMap[action].DynamicInvoke();
                         DataBase.ArchiveUsers(Users);
-                    }
+                    }*/
                 }
             }
 

@@ -6,14 +6,21 @@ using System.Threading.Tasks;
 
 namespace JediBank
 {
-    class Button
+    public class Button
     {
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
         public string Text {  get; set; }
+        public string Name {get; set;}
+        public bool IsSelected { get; set;} = false;
 
         public virtual void Paint()
+        {
+
+        }
+
+        public virtual void Click()
         {
 
         }
