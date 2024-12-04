@@ -75,15 +75,16 @@
         },
         "TransactionHistory": []
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "edgar",
     "Password": "4321",
     "IsAdmin": false,
-    "TotalBalance": 678.00,
-    "TotalLoans": 0,
-    "MaxLoan": 3390.00,
+    "TotalBalance": 2356.00,
+    "TotalLoans": 1000,
+    "MaxLoan": 5780.00,
     "Loans": [
       {
         "LoanAmount": 1000,
@@ -92,12 +93,20 @@
         "Interest": 1.05,
         "Total": 1050.00,
         "AmountPaid": 0
+      },
+      {
+        "LoanAmount": 300,
+        "LoanId": 2,
+        "Currency": null,
+        "Interest": 1.05,
+        "Total": 315.00,
+        "AmountPaid": 0
       }
     ],
     "Accounts": [
       {
         "Name": "Privatkonto",
-        "Balance": 1078.00,
+        "Balance": 1378.00,
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
@@ -153,7 +162,8 @@
           }
         ]
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "admin",
@@ -191,7 +201,8 @@
         },
         "TransactionHistory": []
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "Viktor",
@@ -201,6 +212,7 @@
     "TotalLoans": 0,
     "MaxLoan": 0,
     "Loans": [],
-    "Accounts": []
+    "Accounts": [],
+    "IsLocked": false
   }
 ]

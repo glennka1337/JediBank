@@ -25,7 +25,7 @@ namespace JediBank
             await Task.Delay(5000);
             IsLocked = false;
         }
-        public void CreateLoan(Account toAccount, decimal amount, decimal interest)
+        public void CreateLoan(Account toAccount, decimal amount)
         {
             if (amount <= CalculateMaxLoan())
             {
