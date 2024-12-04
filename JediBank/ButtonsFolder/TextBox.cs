@@ -1,33 +1,38 @@
 using System;
 
-namespace JediBank
+namespace JediBank.ButtonsFolder
 {
     public class TextBox : Button
     {
-
+        public string Rubric {  get; set; }
         public override void Paint()
         {
-            Console.BackgroundColor = IsSelected ?  ConsoleColor.White : ConsoleColor.Magenta;
-            Console.ForegroundColor = IsSelected ?  ConsoleColor.Black : ConsoleColor.White;
-            Console.SetCursorPosition(X,Y);
-            Console.Write($"{Text} {new string(' ', Math.Abs(Width-Text.Length))}");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(X, Y - 1);
+            Console.Write(Rubric);
+            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Magenta;
+            Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
+            Console.SetCursorPosition(X, Y);
+            Console.Write($"{Text} {new string(' ', Math.Abs(Width - Text.Length))}");
             Console.ResetColor();
         }
 
         public override void Click()
         {
+            
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(X + Text.Length,Y);
+            Console.SetCursorPosition(X + Text.Length, Y);
             string input = Text;
             ConsoleKey key;
             do
             {
+                Console.CursorVisible = true;
                 var keyPressed = Console.ReadKey(intercept: true);
                 key = keyPressed.Key;
                 if (char.IsDigit(keyPressed.KeyChar))
                 {
-                    if(input.Length < Width)
+                    if (input.Length < Width)
                     {
                         input += keyPressed.KeyChar;
                         Console.Write(keyPressed.KeyChar);

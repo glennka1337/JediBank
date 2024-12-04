@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
+using JediBank.ButtonsFolder;
 
 namespace JediBank
 {
@@ -51,6 +52,7 @@ namespace JediBank
                     X = 3,
                     Y = 11,
                     Text = "Kontonummer",
+                    Rubric = "Ange mottagare",
                     Width = 10
                 },
                 new TextBox
@@ -58,6 +60,7 @@ namespace JediBank
                     X = 3,
                     Y = 14,
                     Text = "Belopp",
+                    Rubric = "Ange belopp",
                     Width = 10
                 },
                 new ClickButton
