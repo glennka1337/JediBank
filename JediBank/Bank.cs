@@ -220,13 +220,12 @@ namespace JediBank
                     Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
                 }
 
-
                 if (count == 3)
                 {
-
-                    Console.WriteLine("Too many failed attempts. Locking your account.");
                     currentUser.IsLocked = true;
+                    Console.WriteLine("Too many failed attempts. Locking your account.");
                     Console.WriteLine("Your account is locked. Please try again later.");
+                    Console.ReadLine();
                     break;
                 }
             } while (currentUser == null);

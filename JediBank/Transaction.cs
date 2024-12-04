@@ -26,11 +26,25 @@ namespace JediBank
 
             await Task.Delay(900000); // Millisec
 
-            SenderAccount.Subtract(Amount);
-            ReciverAccount.Add(Amount);
-
             SenderAccountName = SenderAccount.Name;
             ReciverAccountName = ReciverAccount.Name;
+
+            //Auto swap Currencies
+            if (SenderAccount.Currency != ReciverAccount.Currency)
+            {
+                ApiCaller apiCaller = new ApiCaller();
+                decimal convertedAmount = apiCaller.Convert(SenderAccount.Currency, ReciverAccount.Currency, Amount);
+                SenderAccount.Subtract(Amount);
+                ReciverAccount.Add(convertedAmount);
+            }
+            else
+            {
+                SenderAccount.Subtract(Amount);
+                ReciverAccount.Add(Amount);
+            }
+
+
+
 
             SenderAccount.TransactionHistory.Add(this);
             ReciverAccount.TransactionHistory.Add(this);
