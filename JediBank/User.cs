@@ -20,18 +20,19 @@ namespace JediBank
             IsAdmin = isAdmin;
         }*/
 
-        public void CreateLoan(Account toAccount, decimal amount, decimal interest)
+        public void CreateLoan(Account toAccount, decimal amount)
         {
             if (amount <= CalculateMaxLoan())
             {
                 Loan newLoan = new Loan
                 {
                     LoanAmount = amount,
-                    Interest = interest,
                     LoanId = Loans.Count() + 1,
                 };
+                newLoan.CalculateInterest();
                 newLoan.CalculateTotal();
                 Loans.Add(newLoan);
+                toAccount.Add(amount);
             }
 
         }

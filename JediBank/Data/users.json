@@ -41,14 +41,23 @@
     "Name": "edgar",
     "Password": "4321",
     "IsAdmin": false,
-    "TotalBalance": 0,
+    "TotalBalance": 678.00,
     "TotalLoans": 0,
-    "MaxLoan": 0,
-    "Loans": [],
+    "MaxLoan": 3390.00,
+    "Loans": [
+      {
+        "LoanAmount": 1000,
+        "LoanId": 1,
+        "Currency": null,
+        "Interest": 1.05,
+        "Total": 1050.00,
+        "AmountPaid": 0
+      }
+    ],
     "Accounts": [
       {
         "Name": "Privatkonto",
-        "Balance": 78.00,
+        "Balance": 1078.00,
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"

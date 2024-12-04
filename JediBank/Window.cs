@@ -19,19 +19,22 @@ namespace JediBank
         }
         public Dictionary<decimal?, Account[]> RunLoanWindow(User user)
         {
-        int width = 26;
-        Account? Sender = null;
-        decimal? amount = -1;
-        Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
-                { -1, new Account[] { null}  }
-            };
+            int width = 26;
+            int height = 15;//Buttons.Max(b => b.Y);
+            int posX = (Console.WindowWidth - width) / 2;
+            int posY = (Console.WindowHeight - height) / 2;
+            Account? Sender = null;
+            decimal? amount = -1;
+            Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
+                    { -1, new Account[] { null}  }
+                };
 
-        List<Button> Buttons = new List<Button>
+            List<Button> Buttons = new List<Button>
             {
                 new Dropdown
                 {
-                    X = 3,
-                    Y = 5,
+                    X = posX + 3,
+                    Y = posY + 5,
                     Name = "Sender",
                     Text = "Välj konto",
                     subOptions = ToOpList(user)
@@ -39,31 +42,31 @@ namespace JediBank
                 },
                 new TextBox
                 {
-                    X = 3,
-                    Y = 10,
+                    X = posX + 3,
+                    Y = posY + 10,
                     Text = "Belopp",
                     Rubric = "Ange belopp",
                     Width = 10
                 },
                 new ClickButton
                 {
-                    X = 2,
-                    Y = 16,
+                    X = posX +  width/5,
+                    Y = posY +  height-1,
                     Text = "Cancel",
                     BackColor = ConsoleColor.Red,
                     ForeColor = ConsoleColor.White
                 },
                 new ClickButton
                 {
-                    X = 10,
-                    Y = 16,
+                    X = posX + width/5 * 3,
+                    Y = posY +  height-1,
                     Text = "Submit",
                     BackColor = ConsoleColor.Green,
                     ForeColor = ConsoleColor.White
                 }
 
             };
-        int height = Buttons.Max(b => b.Y);
+            
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
@@ -73,7 +76,9 @@ namespace JediBank
                 do
                 {
                     Console.Clear();
-                    PaintBox("Loan", width, height, 0, 0);
+                    Bank bank = new Bank();
+                    bank.DisplayLogo();
+                    PaintBox("Loan", width, height, posX, posY);
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -164,6 +169,9 @@ namespace JediBank
         public Dictionary<decimal?, Account[]> RunWithdrawWindow(User user) 
         {
             int width = 26;
+            int height = 15;//Buttons.Max(b => b.Y);
+            int posX = (Console.WindowWidth - width) / 2;
+            int posY = (Console.WindowHeight - height) / 2;
             Account? Sender = null;
             decimal? amount = -1;
             Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
@@ -174,8 +182,8 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = 3,
-                    Y = 5,
+                    X = posX + 3,
+                    Y = posY + 5,
                     Name = "Sender",
                     Text = "Välj konto",
                     subOptions = ToOpList(user)
@@ -183,31 +191,31 @@ namespace JediBank
                 },
                 new TextBox
                 {
-                    X = 3,
-                    Y = 10,
+                    X = posX + 3,
+                    Y = posY + 7,
                     Text = "Belopp",
                     Rubric = "Ange belopp",
                     Width = 10
                 },
                 new ClickButton
                 {
-                    X = 2,
-                    Y = 16,
+                    X = posX + width/5,
+                    Y = posY+ height-1,
                     Text = "Cancel",
                     BackColor = ConsoleColor.Red,
                     ForeColor = ConsoleColor.White
                 },
                 new ClickButton
                 {
-                    X = 10,
-                    Y = 16,
+                    X = posX + width/5*3,
+                    Y = posY + height-1,
                     Text = "Submit",
                     BackColor = ConsoleColor.Green,
                     ForeColor = ConsoleColor.White
                 }
 
             };
-            int height = Buttons.Max(b => b.Y);
+            //int height = Buttons.Max(b => b.Y);
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
@@ -217,7 +225,9 @@ namespace JediBank
                 do
                 {
                     Console.Clear();
-                    PaintBox("Transfer", width, height, 0, 0);
+                    Bank bank = new Bank();
+                    bank.DisplayLogo();
+                    PaintBox("Withdraw", width, height, posX, posY);
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -307,7 +317,10 @@ namespace JediBank
         }
         public Dictionary<decimal?, Account[]> RunTransferWindow(User user, List<User> Users)
         {
-            int width = 26; 
+            int width = 26;
+            int height = 15;//Buttons.Max(b => b.Y);
+            int posX = (Console.WindowWidth - width) / 2;
+            int posY = (Console.WindowHeight - height) / 2;
             Account? Sender = null;
             Account? Receiver = null;
             decimal? amount = -1;
@@ -319,8 +332,8 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = 3,
-                    Y = 3,
+                    X = posX+ 3,
+                    Y = posY + 3,
                     Name = "Sender",
                     Text = "Välj konto",
                     subOptions = ToOpList(user)
@@ -328,8 +341,8 @@ namespace JediBank
                 },
                 new Dropdown
                 {
-                    X = 3,
-                    Y = 7,
+                    X = posX+3,
+                    Y = posY+7,
                     Name = "Receiver",
                     Text = "Välj mottagare",
                     subOptions = ToOpList(user)
@@ -337,39 +350,39 @@ namespace JediBank
                 },
                 new TextBox
                 {
-                    X = 3,
-                    Y = 11,
+                    X = posX+3,
+                    Y = posY+11,
                     Text = "Kontonummer",
                     Rubric = "Ange mottagare",
                     Width = 10
                 },
                 new TextBox
                 {
-                    X = 3,
-                    Y = 14,
+                    X = posX+3,
+                    Y = posY+14,
                     Text = "Belopp",
                     Rubric = "Ange belopp",
                     Width = 10
                 },
                 new ClickButton
                 {
-                    X = 2,
-                    Y = 16,
+                    X = posX + width/5,
+                    Y = posY + height+1,
                     Text = "Cancel",
                     BackColor = ConsoleColor.Red,
                     ForeColor = ConsoleColor.White
                 },
                 new ClickButton
                 {
-                    X = 10,
-                    Y = 16,
+                    X = posX + width/5*3,
+                    Y = posY + height+1,
                     Text = "Submit",
                     BackColor = ConsoleColor.Green,
                     ForeColor = ConsoleColor.White
                 }
                 
             };
-            int height = Buttons.Max(b => b.Y );
+            //int height = Buttons.Max(b => b.Y );
             
                 
             ConsoleKey key;
@@ -381,7 +394,9 @@ namespace JediBank
                 do
                 {
                     Console.Clear();
-                    PaintBox("Transfer", width, height, 0, 0);
+                    Bank bank = new Bank();
+                    bank.DisplayLogo();
+                    PaintBox("Transfer", width, height, posX, posY);
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -475,6 +490,7 @@ namespace JediBank
             }
             Console.ResetColor();
         }
+       
 
 
     }

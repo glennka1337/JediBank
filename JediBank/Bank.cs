@@ -146,11 +146,11 @@ namespace JediBank
             {
                 foreach (var kvp in loanInfo)
                 {
-                    currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key, 1.05m);
-                    //kvp.Value[0].Subtract((decimal)kvp.Key);
-                    //taBase.ArchiveUsers(Users);
+                    currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key);
+                    DataBase.ArchiveUsers(Users);
                 }
             }
+
         }
         public void CreateUser()
         {
@@ -188,6 +188,8 @@ namespace JediBank
         private User Login()
         {
             Console.Clear();
+
+            DisplayLogo();
             UI uI = new UI();
             //User? currentUser = null;
             do
@@ -217,5 +219,29 @@ namespace JediBank
             } while (currentUser == null);
             return null;
         }
+
+        public void DisplayLogo()
+        {
+            Green(); Console.Write("       __   _______  _______   __ "); Blue(); Console.Write(" .______        ___      .__   __.  __  ___ \r\n");
+            Green(); Console.Write("      |  | |   ____||       \\ |  |"); Blue(); Console.Write(" |   _  \\      /   \\     |  \\ |  | |  |/  / \r\n");
+            Green(); Console.Write("      |  | |  |__   |  .--.  ||  |"); Blue(); Console.Write(" |  |_)  |    /  ^  \\    |   \\|  | |  '  / \r\n");
+            Green(); Console.Write(".--.  |  | |   __|  |  |  |  ||  |"); Blue(); Console.Write(" |   _  <    /  /_\\  \\   |  . `  | |    < \r\n");
+            Green(); Console.Write("|  `--'  | |  |____ |  '--'  ||  |"); Blue(); Console.Write(" |  |_)  |  /  _____  \\  |  |\\   | |  .  \\ \r\n");
+            Green(); Console.Write(" \\______/  |_______||_______/ |__|"); Blue(); Console.Write(" |______/  /__/     \\__\\ |__| \\__| |__|\\__\\ \r\n");
+        }
+
+        public void Green()
+        {
+            Console.SetCursorPosition((Console.WindowWidth / 5)-4, Console.GetCursorPosition().Top);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        public void Blue()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
     }
 }

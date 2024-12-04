@@ -78,7 +78,8 @@ namespace JediBank
             do
             {
                 Console.Clear();
-
+                Bank bank = new Bank();
+                bank.DisplayLogo();
                 for (int i = 0; i < items.Length; i++)
                 {
                     Console.SetCursorPosition((Console.WindowWidth - items[0].Length) / 2, Console.WindowHeight / 2 + i);
