@@ -26,7 +26,7 @@ namespace JediBank
             {
                 Loan newLoan = new Loan
                 {
-                    Amount = amount,
+                    LoanAmount = amount,
                     Interest = interest,
                     LoanId = Loans.Count() + 1,
                 };
@@ -48,7 +48,7 @@ namespace JediBank
         {
             foreach (var loan in Loans)
             {
-                TotalLoans += loan.Amount;
+                TotalLoans += loan.LoanAmount;
             }
         }
 

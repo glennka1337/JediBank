@@ -69,8 +69,7 @@ namespace JediBank
         {
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
-                 { "Handle users",["create", "remove"]},
-                 { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "⚙️ Manage users",["Create user", "Remove user"]},
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
