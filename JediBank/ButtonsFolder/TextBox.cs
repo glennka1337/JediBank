@@ -4,9 +4,10 @@ namespace JediBank.ButtonsFolder
 {
     public class TextBox : Button
     {
-        public ConsoleColor BackColor { get; set; } = ConsoleColor.Blue;
+        public ConsoleColor BackColor { get; set; } = ConsoleColor.Black;
         public ConsoleColor ForeColor { get; set; } = ConsoleColor.White;
-        public string Rubric {  get; set; }
+        public bool OnlyDigits { get; set; } = true;
+        
         public override void Paint()
         {
             Console.BackgroundColor = BackColor;
@@ -14,7 +15,7 @@ namespace JediBank.ButtonsFolder
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(X, Y - 1);
             Console.Write(Rubric);
-            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Magenta;
+            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Blue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);
             Console.Write($"{Text} {new string(' ', Math.Abs(Width - Text.Length))}");
@@ -34,7 +35,15 @@ namespace JediBank.ButtonsFolder
                 Console.CursorVisible = true;
                 var keyPressed = Console.ReadKey(intercept: true);
                 key = keyPressed.Key;
-                if (char.IsDigit(keyPressed.KeyChar))
+                if (!OnlyDigits && (char.IsDigit(keyPressed.KeyChar) || char.IsLetter(keyPressed.KeyChar) || keyPressed.KeyChar == '-'))
+                {
+                    if (input.Length < Width)
+                    {
+                        input += keyPressed.KeyChar;
+                        Console.Write(keyPressed.KeyChar);
+                    }
+                }
+                else if (char.IsDigit(keyPressed.KeyChar) && OnlyDigits)
                 {
                     if (input.Length < Width)
                     {

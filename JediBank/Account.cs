@@ -12,6 +12,8 @@ namespace JediBank
         public string AccountId { get; set; }
         public decimal Balance { get; set; }
         public string IsCheckingaccount { get; set; }
+        public decimal Interest { get; set; }
+
         public Currency Currency
         { get; set; }
         public List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
