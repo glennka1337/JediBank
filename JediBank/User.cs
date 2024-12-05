@@ -121,16 +121,17 @@ namespace JediBank
             UI ui = new UI();
             return (Password == ui.ReadPassword() ? true : false) ;
         }
-        public void AddAccount()
+        public void AddAccount(Account newAccount)
         {
-            Console.Write("Choose name: ");
+            Accounts.Add(newAccount);
+            /*Console.Write("Choose name: ");
             string name = Console.ReadLine();
             Accounts.Add(new Account
             {
                 Name = name,
                 Balance = 0,
                 Currency = new SEK()
-            });
+            });*/
         }
     }
 }

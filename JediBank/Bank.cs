@@ -179,7 +179,12 @@ namespace JediBank
 
         public void CreateAccount()
         {
-            currentUser.AddAccount();
+            Window window = new Window();
+            Account newAccount = window.RunCreateAccountWindow();
+            if(newAccount != null)
+            {
+                currentUser.AddAccount(newAccount);
+            }
             DataBase.ArchiveUsers(Users);
         }
         public void LogOut()

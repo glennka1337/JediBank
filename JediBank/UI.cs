@@ -111,7 +111,9 @@ namespace JediBank
         }
         public string MainMenu(Dictionary<string, string[]> menuItems, string? message)
         {
-            Console.CursorVisible = false;
+            Window window = new Window();
+            return window.RunMainWindow(menuItems, message);
+            /*Console.CursorVisible = false;
             int maxLength = menuItems.Keys.Max(key => key.Length);
             Console.OutputEncoding = Encoding.UTF8;
             //initialize the options menu with the head options;
@@ -155,8 +157,8 @@ namespace JediBank
                         if (selected)
                         {
                             SetColor(menuItems.ContainsKey(items[i]), X, selected);
-                            /*Console.BackgroundColor = ConsoleColor.Green;
-                            Console.ForegroundColor = ConsoleColor.White;*/
+                            *//*Console.BackgroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.White;*//*
                             Console.WriteLine(menuItems.ContainsKey(items[i]) ? $"{items[i]} {new string(' ', maxLength - items[i].Length + 4)} {triangle}" : $" ◯ {items[i]} {new string(' ', maxLength - items[i].Length + 1)}");
 
                             Console.ResetColor();
@@ -205,7 +207,7 @@ namespace JediBank
                     headClicked[items[currentSelection]] = headClicked[items[currentSelection]] ? false : true;
                 }
 
-            }
+            }*/
         }
 
         public void SetColor(bool type, int X, bool selected)
