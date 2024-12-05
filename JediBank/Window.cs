@@ -19,6 +19,8 @@ namespace JediBank
         }
         public Dictionary<decimal?, Account[]> RunLoanWindow(User user)
         {
+
+        Language language = new Language();
         int width = 26;
         Account? Sender = null;
         decimal? amount = -1;
@@ -33,7 +35,7 @@ namespace JediBank
                     X = 3,
                     Y = 5,
                     Name = "Sender",
-                    Text = "Välj konto",
+                    Text = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
 
                 },

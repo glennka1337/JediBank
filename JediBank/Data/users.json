@@ -74,8 +74,18 @@
           "CurrencyCode": "EUR"
         },
         "TransactionHistory": []
+      },
+      {
+        "Name": "Test",
+        "Balance": 9999,
+        "Currency": {
+          "Name": "Svensk krona",
+          "CurrencyCode": "SEK"
+        },
+        "TransactionHistory": []
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "edgar",
@@ -144,7 +154,8 @@
           }
         ]
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "admin",
@@ -182,7 +193,8 @@
         },
         "TransactionHistory": []
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "Viktor",
@@ -192,6 +204,7 @@
     "TotalLoans": 0,
     "MaxLoan": 0,
     "Loans": [],
-    "Accounts": []
+    "Accounts": [],
+    "IsLocked": false
   }
 ]

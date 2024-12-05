@@ -114,10 +114,10 @@ namespace JediBank
             else return false;
         }
 
-        public bool Login()
+        public bool Login(Language language)
         {
             UI ui = new UI();
-            return (Password == ui.ReadPassword() ? true : false) ;
+            return (Password == ui.ReadPassword(language) ? true : false) ;
         }
         public void AddAccount()
         {
