@@ -18,7 +18,7 @@ namespace JediBank.ButtonsFolder
             Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Blue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);
-            Console.Write($"{Text} {new string(' ', Math.Abs(Width - Text.Length))}");
+            Console.Write($" {Text} {new string(' ', Math.Abs(Width - Text.Length))}");
             Console.ResetColor();
         }
 
@@ -27,7 +27,9 @@ namespace JediBank.ButtonsFolder
             
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(X + Text.Length, Y);
+            Console.SetCursorPosition(X , Y);
+            Console.Write(new string(' ', Text.Length+1));
+            Console.SetCursorPosition(X+1, Y);
             string input = "";
             ConsoleKey key;
             do
@@ -60,7 +62,7 @@ namespace JediBank.ButtonsFolder
                     }
                 }
             } while (key != ConsoleKey.Enter);
-            Text = input;
+            Text = input.Length == 0 ? Text : input;
             Paint();
         }
     }
