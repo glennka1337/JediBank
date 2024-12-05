@@ -6,7 +6,7 @@ namespace JediBank
 {
     class Bank
     {
-        public List<User> Users = new List<User>();
+        public static List<User> Users = new List<User>();
         public User? currentUser { get; set; } = null;
         public Account? currentAccount { get; set; } = null;
         //public string action { get; set;} 
