@@ -34,21 +34,7 @@ namespace JediBank
                         actionMap[action].DynamicInvoke();
 
                     }
-                    /*
-                    string chosenOption = uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
-                    if (chosenOption == "🏦 Sign out")
-                    {
-                        currentUser = null;
-                    }
-                    else
-                    {
-                        var selectedAccount = currentUser.Accounts.FirstOrDefault(acc => acc.Name == chosenOption);
-                        if (selectedAccount != null)
-                        {
-                            uI.AccountMenu(currentUser, selectedAccount);
-                        }
-                    }
-                    */
+                    
                 }
             }
         }
@@ -59,7 +45,7 @@ namespace JediBank
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
                  { "💰 Accounts", user.GetAccountNames() },
-                 { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "💼 Transactions", ["Withdraw", "InternalTransfer", "ExternalTransfer"] },
                  { "⚙️ Manage", ["Open account", "Take loan"] },
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
@@ -82,7 +68,8 @@ namespace JediBank
             Dictionary<string, Delegate> actionMap = new Dictionary<string, Delegate>
              {
                  { "Withdraw", Withdraw },
-                 { "Transfer", Transfer },
+                 { "InternalTransfer", InternalTransfer },
+                 { "ExternalTransfer", ExternalTransfer },
                  { "Log out", LogOut },
                  { "Account", AccountShow },
                  { "Create user", CreateUser },
@@ -99,6 +86,7 @@ namespace JediBank
             UI uI = new UI();
 
             uI.AccountMenu(currentUser, currentAccount);
+            Console.Clear();
         }
         public void Withdraw()
         {
@@ -114,12 +102,12 @@ namespace JediBank
                 }
             } 
         }
-        public async Task Transfer()
+        public async Task InternalTransfer()
         {
            // UI uI = new UI();
             //Account[] transferInfo = uI.TransferMenu(currentUser);
             Window window = new Window();
-            Dictionary<decimal?, Account[]> transferInfo = window.RunTransferWindow(currentUser, Users);
+            Dictionary<decimal?, Account[]> transferInfo = window.RunInternalTransferWindow(currentUser, Users);
             foreach(var kvp in transferInfo) 
             { 
                 Transaction transferDetails = new Transaction
@@ -137,6 +125,31 @@ namespace JediBank
             }
 
             
+
+        }
+        public async Task ExternalTransfer()
+        {
+            // UI uI = new UI();
+            //Account[] transferInfo = uI.TransferMenu(currentUser);
+            Window window = new Window();
+            Dictionary<decimal?, Account[]> transferInfo = window.RunExternalTransferWindow(currentUser, Users);
+            foreach (var kvp in transferInfo)
+            {
+                Transaction transferDetails = new Transaction
+                {
+                    SenderAccount = kvp.Value[0],
+                    ReciverAccount = kvp.Value[1],
+                    Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
+                    DateTime = DateTime.Now
+
+                };
+                _TransferQue.Enqueue(transferDetails);
+                await _TransferQue.Peek().ExecuteTransaction();
+                _TransferQue.Dequeue();
+                DataBase.ArchiveUsers(Users);
+            }
+
+
 
         }
         public void TakeLoan() 

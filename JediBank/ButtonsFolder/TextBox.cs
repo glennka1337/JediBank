@@ -6,6 +6,7 @@ namespace JediBank.ButtonsFolder
     {
         public ConsoleColor BackColor { get; set; } = ConsoleColor.Black;
         public ConsoleColor ForeColor { get; set; } = ConsoleColor.White;
+        public bool OnlyDigits { get; set; } = true;
         
         public override void Paint()
         {
@@ -34,7 +35,15 @@ namespace JediBank.ButtonsFolder
                 Console.CursorVisible = true;
                 var keyPressed = Console.ReadKey(intercept: true);
                 key = keyPressed.Key;
-                if (char.IsDigit(keyPressed.KeyChar))
+                if (!OnlyDigits && (char.IsDigit(keyPressed.KeyChar) || char.IsLetter(keyPressed.KeyChar) || keyPressed.KeyChar == '-'))
+                {
+                    if (input.Length < Width)
+                    {
+                        input += keyPressed.KeyChar;
+                        Console.Write(keyPressed.KeyChar);
+                    }
+                }
+                else if (char.IsDigit(keyPressed.KeyChar) && OnlyDigits)
                 {
                     if (input.Length < Width)
                     {

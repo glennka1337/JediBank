@@ -24,7 +24,7 @@ namespace JediBank
         public async Task ExecuteTransaction()
         {
 
-            await Task.Delay(900000); // Millisec
+            await Task.Delay(900); // Millisec
 
             SenderAccountName = SenderAccount.Name;
             ReciverAccountName = ReciverAccount.Name;
