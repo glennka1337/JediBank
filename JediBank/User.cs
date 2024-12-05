@@ -25,17 +25,19 @@ namespace JediBank
             await Task.Delay(5000);
             IsLocked = false;
         }
-        public void CreateLoan(Account toAccount, decimal amount, decimal interest)
+        public void CreateLoan(Account toAccount, decimal amount)
         {
             if (amount <= CalculateMaxLoan())
             {
                 Loan newLoan = new Loan
                 {
-                    Amount = amount,
-                    Interest = interest,
+                    LoanAmount = amount,
                     LoanId = Loans.Count() + 1,
                 };
+                newLoan.CalculateInterest();
                 newLoan.CalculateTotal();
+                Loans.Add(newLoan);
+                toAccount.Add(amount);
             }
 
         }
@@ -52,7 +54,7 @@ namespace JediBank
         {
             foreach (var loan in Loans)
             {
-                TotalLoans += loan.Amount;
+                TotalLoans += loan.LoanAmount;
             }
         }
 
@@ -119,15 +121,18 @@ namespace JediBank
             UI ui = new UI();
             return (Password == ui.ReadPassword() ? true : false) ;
         }
-        public void AddAccount()
+        public void AddAccount(Account newAccount)
         {
+            Accounts.Add(newAccount);
+            /*Console.Write("Choose name: ");
+            string name = Console.ReadLine();
             Accounts.Add(new Account
             {
-                Name = "Test",
-                Balance = 9999,
+                Name = name,
+                Balance = 0,
                 AccountId = Generator.GenerateAccountId(),
-                Currency = new SEK(),
-            });
+                Currency = new SEK()
+            });*/
         }
     }
 }

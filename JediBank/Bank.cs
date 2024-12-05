@@ -70,8 +70,7 @@ namespace JediBank
         {
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
-                 { "Handle users",["create", "remove"]},
-                 { "💼 Transactions", ["Withdraw", "Transfer"] },
+                 { "⚙️ Manage users",["Create user", "Remove user"]},
                  { "🏦 Sign out", ["Log out", "Shut down"] }
              };
             return alt;
@@ -148,11 +147,11 @@ namespace JediBank
             {
                 foreach (var kvp in loanInfo)
                 {
-                    currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key, 1.05m);
-                    //kvp.Value[0].Subtract((decimal)kvp.Key);
-                    //taBase.ArchiveUsers(Users);
+                    currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key);
+                    DataBase.ArchiveUsers(Users);
                 }
             }
+
         }
         public void CreateUser()
         {
@@ -180,7 +179,12 @@ namespace JediBank
 
         public void CreateAccount()
         {
-            currentUser.AddAccount();
+            Window window = new Window();
+            Account newAccount = window.RunCreateAccountWindow();
+            if(newAccount != null)
+            {
+                currentUser.AddAccount(newAccount);
+            }
             DataBase.ArchiveUsers(Users);
         }
         public void LogOut()
@@ -190,6 +194,8 @@ namespace JediBank
         private User Login()
         {
             Console.Clear();
+
+            DisplayLogo();
             UI uI = new UI();
             //User? currentUser = null;
             do
@@ -232,5 +238,29 @@ namespace JediBank
 
             return null;
         }
+
+        public void DisplayLogo()
+        {
+            Green(); Console.Write("       __   _______  _______   __ "); Blue(); Console.Write(" .______        ___      .__   __.  __  ___ \r\n");
+            Green(); Console.Write("      |  | |   ____||       \\ |  |"); Blue(); Console.Write(" |   _  \\      /   \\     |  \\ |  | |  |/  / \r\n");
+            Green(); Console.Write("      |  | |  |__   |  .--.  ||  |"); Blue(); Console.Write(" |  |_)  |    /  ^  \\    |   \\|  | |  '  / \r\n");
+            Green(); Console.Write(".--.  |  | |   __|  |  |  |  ||  |"); Blue(); Console.Write(" |   _  <    /  /_\\  \\   |  . `  | |    < \r\n");
+            Green(); Console.Write("|  `--'  | |  |____ |  '--'  ||  |"); Blue(); Console.Write(" |  |_)  |  /  _____  \\  |  |\\   | |  .  \\ \r\n");
+            Green(); Console.Write(" \\______/  |_______||_______/ |__|"); Blue(); Console.Write(" |______/  /__/     \\__\\ |__| \\__| |__|\\__\\ \r\n");
+        }
+
+        public void Green()
+        {
+            Console.SetCursorPosition((Console.WindowWidth / 5)-4, Console.GetCursorPosition().Top);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        public void Blue()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
     }
 }

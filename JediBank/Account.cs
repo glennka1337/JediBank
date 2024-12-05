@@ -11,7 +11,9 @@ namespace JediBank
         public string Name { get; set; }
         public string AccountId { get; set; }
         public decimal Balance { get; set; }
-        public Currency Currency { get; set; }
+        public string IsCheckingaccount { get; set; }
+        public Currency Currency
+        { get; set; }
         public List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
         public void Show()
         {
@@ -62,7 +64,7 @@ namespace JediBank
             }
         }
 
-        public bool TransferFunds (decimal amount, Account toAccount)
+        public bool TransferFunds(decimal amount, Account toAccount)
         {
             if (amount <= 0 || amount > Balance)
             {
