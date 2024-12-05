@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 using JediBank.CurrencyFolder;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JediBank
 {
@@ -41,6 +42,7 @@ namespace JediBank
 
         private static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
         {
+            Language language = new Language();
             try
             {
                 // serialize to jsoN
@@ -53,12 +55,13 @@ namespace JediBank
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error writing to file: {ex.Message}");
+                Console.WriteLine(language.TranslationTool("Error writing to file:")+$"{ex.Message}");
             }
         }
 
         private static T ReadFromJsonFile<T>(string filePath) where T : new()
         {
+            Language language = new Language();
             try
             {
                 string fileContents;
@@ -71,7 +74,7 @@ namespace JediBank
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading from file: {ex.Message}");
+                Console.WriteLine(language.TranslationTool("Error reading from file:")+$"{ex.Message}");
                 return default;
             }
         }

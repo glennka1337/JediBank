@@ -21,6 +21,7 @@ namespace JediBank
         }
         public string RunMainWindow(Dictionary<string, string[]> menuItems, string? message)
         {
+            Language language = new Language();
             int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -50,7 +51,7 @@ namespace JediBank
                 {
                     //Console.Clear();
                     
-                    PaintBox("Home", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("Home"), width, height, posX, posY);
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -77,10 +78,11 @@ namespace JediBank
                     }
                 }     
             }while(key != ConsoleKey.Escape );
-            return "Log out";
+            return language.TranslationTool("Log out");
         } 
         public Dictionary<decimal?, Account[]> RunLoanWindow(User user)
         {
+            Language language = new Language();
             int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -98,8 +100,8 @@ namespace JediBank
                 {
                     X = posX + 3,
                     Y = posY + 5,
-                    Name = "Sender",
-                    Text = "Välj konto",
+                    Name = language.TranslationTool("Sender"),
+                    Text = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
 
                 },
@@ -107,15 +109,15 @@ namespace JediBank
                 {
                     X = posX + 3,
                     Y = posY + 10,
-                    Text = "Belopp",
-                    Rubric = "Ange belopp",
+                    Text = language.TranslationTool("Belopp"),
+                    Rubric = language.TranslationTool("Enter amount"),
                     Width = 10
                 },
                 new ClickButton
                 {
                     X = posX +  width/5,
                     Y = posY +  height-1,
-                    Text = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
                     BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
@@ -123,7 +125,7 @@ namespace JediBank
                 {
                     X = posX + width/5 * 3,
                     Y = posY +  height-1,
-                    Text = "Submit",
+                    Text = language.TranslationTool("Submit"),
                     BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
@@ -141,7 +143,7 @@ namespace JediBank
                     //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
-                    PaintBox("Loan", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("Loan"), width, height, posX, posY);
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -180,6 +182,7 @@ namespace JediBank
         }
         public Dictionary<decimal?, Account[]> RunWithdrawWindow(User user) 
         {
+            Language language = new Language();
             int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -197,8 +200,8 @@ namespace JediBank
                 {
                     X = posX + 3,
                     Y = posY + 5,
-                    Name = "Sender",
-                    Text = "Välj konto",
+                    Name = language.TranslationTool("Sender"),
+                    Text = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
 
                 },
@@ -206,15 +209,15 @@ namespace JediBank
                 {
                     X = posX + 3,
                     Y = posY + 7,
-                    Text = "Belopp",
-                    Rubric = "Ange belopp",
+                    Text = language.TranslationTool("Belopp"),
+                    Rubric = language.TranslationTool("Enter amount"),
                     Width = 10
                 },
                 new ClickButton
                 {
                     X = posX + width/5,
                     Y = posY+ height-1,
-                    Text = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
                     BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
@@ -222,7 +225,7 @@ namespace JediBank
                 {
                     X = posX + width/5*3,
                     Y = posY + height-1,
-                    Text = "Submit",
+                    Text = language.TranslationTool("Submit"),
                     BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
@@ -240,7 +243,7 @@ namespace JediBank
                     //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
-                    PaintBox("Withdraw", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("Withdraw"), width, height, posX, posY);
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -277,6 +280,7 @@ namespace JediBank
         }
         public Dictionary<decimal?, Account[]> RunExternalTransferWindow(User user, List<User> Users)
         {
+            Language language = new Language();
             int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -295,8 +299,8 @@ namespace JediBank
                 {
                     X = posX + width/5*2,
                     Y = posY + 5,
-                    Name = "Sender",
-                    Text = "Välj konto",
+                    Name = language.TranslationTool("Sender"),
+                    Text = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
 
                 },
@@ -304,9 +308,9 @@ namespace JediBank
                 {
                     X = posX+width/5*2,
                     Y = posY+height/5*2,
-                    Name = "Receiver",
-                    Text = "Kontonummer",
-                    Rubric = "Ange mottagare",
+                    Name = language.TranslationTool("Receiver"),
+                    Text = language.TranslationTool("Kontonummer"),
+                    Rubric = language.TranslationTool("Enter recipient"),
                     Width = 10,
                     OnlyDigits = false
                 },
@@ -314,16 +318,16 @@ namespace JediBank
                 {
                     X = posX+width/5*2,
                     Y = posY+height/5*3,
-                    Name = "Amount",
-                    Text = "Belopp",
-                    Rubric = "Ange belopp",
+                    Name = language.TranslationTool("Amount"),
+                    Text = language.TranslationTool("Belopp"),
+                    Rubric = language.TranslationTool("Enter amount"),
                     Width = 10
                 },
                 new ClickButton
                 {
                     X = posX + width/5,
                     Y = posY + height-2,
-                    Text = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
                     BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
@@ -331,7 +335,7 @@ namespace JediBank
                 {
                     X = posX + width/5*3,
                     Y = posY + height-2,
-                    Text = "Submit",
+                    Text = language.TranslationTool("Submit"),
                     BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
@@ -351,7 +355,7 @@ namespace JediBank
                     //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
-                    PaintBox("External transfer", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("External transfer"), width, height, posX, posY);
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -388,6 +392,7 @@ namespace JediBank
         }
         public Dictionary<decimal?, Account[]> RunInternalTransferWindow(User user, List<User> Users)
         {
+            Language language = new Language();
             int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -405,8 +410,8 @@ namespace JediBank
                 {
                     X = posX+ width/5*3,
                     Y = posY+3,
-                    Name = "Receiver",
-                    Text = "Välj mottagare",
+                    Name = language.TranslationTool("Receiver"),
+                    Text = language.TranslationTool("Välj mottagare"),
                     subOptions = ToOpList(user)
 
                 },
@@ -414,8 +419,8 @@ namespace JediBank
                 {
                     X = posX + width/5,
                     Y = posY + 3,
-                    Name = "Sender",
-                    Text = "Välj konto",
+                    Name = language.TranslationTool("Sender"),
+                    Text = language.TranslationTool("Välj konto"),
                     subOptions = ToOpList(user)
 
                 },
@@ -423,15 +428,15 @@ namespace JediBank
                 {
                     X = posX+width/5*2,
                     Y = posY+height/5*3,
-                    Text = "Belopp",
-                    Rubric = "Ange belopp",
+                    Text = language.TranslationTool("Belopp"),
+                    Rubric = language.TranslationTool("Ange belopp"),
                     Width = 10
                 },
                 new ClickButton
                 {
                     X = posX + width/5*2,
                     Y = posY + height-2,
-                    Text = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
                     BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
@@ -439,7 +444,7 @@ namespace JediBank
                 {
                     X = posX + width/5*3,
                     Y = posY + height-2,
-                    Text = "Submit",
+                    Text = language.TranslationTool("Submit"),
                     BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
@@ -459,7 +464,7 @@ namespace JediBank
                     //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
-                    PaintBox("Transfer", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("Transfer"), width, height, posX, posY);
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -496,6 +501,7 @@ namespace JediBank
         }
         public Account RunCreateAccountWindow() 
         {
+            Language language = new Language();
             int width = 26;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -508,7 +514,7 @@ namespace JediBank
                 {
                     X = posX + 3,
                     Y = posY + 5,
-                    Text = "Type of account",
+                    Text = language.TranslationTool("Type of account"),
                     subOptions = ArrayToSubOp(["Betalkonto", "Sparkonto"])
                 },
                 new TextBox
@@ -516,14 +522,14 @@ namespace JediBank
                     X = posX + 3,
                     Y = posY + 10,
                     Text = " ",
-                    Rubric = "Kontonamn",
+                    Rubric = language.TranslationTool("Kontonamn"),
                     Width = 10
                 },
                 new ClickButton
                 {
                     X = posX +  width/5,
                     Y = posY +  height-1,
-                    Text = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
                     BackColor = ConsoleColor.Red,
                     ForeColor = ConsoleColor.White
                 },
@@ -531,7 +537,7 @@ namespace JediBank
                 {
                     X = posX + width/5 * 3,
                     Y = posY +  height-1,
-                    Text = "Submit",
+                    Text = language.TranslationTool("Submit"),
                     BackColor = ConsoleColor.Green,
                     ForeColor = ConsoleColor.White
                 }
@@ -548,7 +554,7 @@ namespace JediBank
                     //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
-                    PaintBox("Loan", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("Loan"), width, height, posX, posY);
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -579,6 +585,7 @@ namespace JediBank
             return null;
         }
         private void HandleButtonAction(
+
             ref List<Button> Buttons,
             ref int currentSelection,
             ref Account? Sender,
@@ -586,7 +593,9 @@ namespace JediBank
             ref decimal? amount,
             User user,
             out Dictionary<decimal?, Account[]> output)
+
         {
+            Language language = new Language();
             output = new Dictionary<decimal?, Account[]>();
             output.Add(-1, new Account[] { null, null });
             var currentButton = Buttons[currentSelection];
@@ -597,11 +606,11 @@ namespace JediBank
                 {
                     selectedOption.Click();
                     currentSelection = Buttons.IndexOf(selectedOption.ParentDropdown);
-                    if (selectedOption.ParentDropdown.Name == "Sender")
+                    if (selectedOption.ParentDropdown.Name == language.TranslationTool("Sender"))
                     {
                         Sender = user.Accounts.Find(x => x.Name == selectedOption.Option);
                     }
-                    else if (selectedOption.ParentDropdown.Name == "Receiver")
+                    else if (selectedOption.ParentDropdown.Name == language.TranslationTool("Receiver"))
                     {
                         Receiver = user.Accounts.Find(x => x.Name == selectedOption.Option);
                     }
@@ -625,7 +634,7 @@ namespace JediBank
                 currentButton.Click();
                 if (currentButton is TextBox input)
                 {
-                    if(input.Name == "Receiver" && !string.IsNullOrEmpty(input.Text))
+                    if(input.Name == language.TranslationTool("Receiver") && !string.IsNullOrEmpty(input.Text))
                     {
                         User? tempUser = Bank.Users.Find(user  => user.Accounts.Any(x => x.AccountId == input.Text));
                         Receiver = tempUser == null ? Receiver : tempUser.Accounts.Find(x => x.AccountId == input.Text);
@@ -637,7 +646,7 @@ namespace JediBank
                 }
                 else if (currentButton is ClickButton clickButton)
                 {
-                    if (clickButton.Text == "Submit")
+                    if (clickButton.Text == language.TranslationTool("Submit"))
                     {
                         output.Clear(); // Rensa tidigare data
                         output.Add(amount, new Account[] { Sender, Receiver });
@@ -647,7 +656,7 @@ namespace JediBank
                             return;
                         }
                     }
-                    else if (clickButton.Text == "Cancel")
+                    else if (clickButton.Text == language.TranslationTool("Cancel"))
                     {
                         // Reset or perform cancelation; return flow managed in the caller
                         output.Clear();
@@ -685,6 +694,7 @@ namespace JediBank
         }
         public void HandleCreateAccountAction(ref List<Button> Buttons, ref int currentSelection, ref Account newAccount, ref bool submit) 
         {
+            Language language = new Language();
             var currentButton = Buttons[currentSelection];
 
             if (currentButton is Dropdown selectedDropdown)
@@ -721,12 +731,12 @@ namespace JediBank
                 }
                 else if (currentButton is ClickButton clickButton)
                 {
-                    if (clickButton.Text == "Submit")
+                    if (clickButton.Text == language.TranslationTool("Submit"))
                     {
                         submit = true;
                         return;
                     }
-                    else if (clickButton.Text == "Cancel")
+                    else if (clickButton.Text == language.TranslationTool("Cancel"))
                     {
                         // Reset or perform cancelation; return flow managed in the caller
                         newAccount = null;

@@ -11,9 +11,10 @@ namespace JediBank
     {
         public string ReadUserName()
         {
+            Language language = new Language();
             Console.CursorVisible = true;
             Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.WindowHeight / 2);
-            Console.Write("Enter your Username: ");
+            Console.Write(language.TranslationTool("Enter your Username: "));
 
             ConsoleKey key;
             string input = "";
@@ -41,9 +42,10 @@ namespace JediBank
         }
         public string ReadPassword()
         {
+            Language language = new Language();
             Console.CursorVisible = true;
             Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.GetCursorPosition().Top);
-            Console.Write("Enter your pin code: ");
+            Console.Write(language.TranslationTool("Enter your pin code: "));
 
             ConsoleKey key;
             string input = "";
@@ -249,25 +251,26 @@ namespace JediBank
 
         public void AccountMenu(User user, Account account)
         {
+            Language language = new Language();
             Console.OutputEncoding = Encoding.UTF8;
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"Konto: {account.Name} | Saldo: {account.Balance.ToString("c", account.Currency.GetOutputFormat())} ");
+                Console.WriteLine(language.TranslationTool("Account:") + $"{account.Name} | " + language.TranslationTool("Balance:") + $"{account.Balance.ToString("c", account.Currency.GetOutputFormat())} "); 
                 Console.WriteLine("--------------------------------------");
 
-                Console.WriteLine("1. Visa senaste transaktioner ");
-                Console.WriteLine("2. Ta ut pengar ");
-                Console.WriteLine("3. Överför pengar ");
-                Console.WriteLine("4. Återgå till huvudmenyn ");
-                Console.Write("Välj något av ovanstående alternativ: ");
+                Console.WriteLine(language.TranslationTool("1. View recent transactions"));
+                Console.WriteLine(language.TranslationTool("2. Withdraw money"));
+                Console.WriteLine(language.TranslationTool("3. Transfer money"));
+                Console.WriteLine(language.TranslationTool("4. Return to main menu"));
+                Console.Write(language.TranslationTool("Choose one of the above options:"));
 
                 string choice = Console.ReadLine();
                 switch (choice)
                 {
                     case "1":
                         account.ShowHistory();
-                        Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+                        Console.WriteLine(language.TranslationTool("Press any key to continue."));
                         Console.ReadKey();
                         break;
 
@@ -284,9 +287,9 @@ namespace JediBank
 
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Ogiltigt val. Ange ett nummer mellan 1-4. ");
+                        Console.WriteLine(language.TranslationTool("Invalid choice. Enter a number between 1-4."));
                         Console.ResetColor();
-                        Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+                        Console.WriteLine(language.TranslationTool("Press any key to continue."));
                         Console.ReadKey();
                         break;
                 }
@@ -296,60 +299,62 @@ namespace JediBank
 
         private void ExecuteWithdraw(User user, Account account)
         {
-            Console.WriteLine("\nAnge belopp som du vill ta ut: ");
+            Language language = new Language();
+            Console.WriteLine("\n" + language.TranslationTool("Enter the amount you want to withdraw:"));
             if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
             {
                 if (account.Subtract(amount))
                 {
-                    Console.WriteLine($"{amount} {account.Currency} har tagits ut. ");
+                    Console.WriteLine($"{amount} {account.Currency}" + language.TranslationTool("has been withdrawn."));
                 }
                 else
                 {
-                    Console.WriteLine("Ej tillräckligt stort saldo. ");
+                    Console.WriteLine(language.TranslationTool("Insufficient balance."));
                 }
             }
             else
             {
-                Console.WriteLine("Ogiltigt belopp. ");
+                Console.WriteLine(language.TranslationTool("Invalid amount."));
             }
-            Console.WriteLine("Tryck på valfri tangent för att fortsätta. ");
+            Console.WriteLine(language.TranslationTool("Press any key to continue."));
             Console.ReadKey();
         }
 
         private void ExecuteTransfer(User user, Account account)
         {
-            Console.WriteLine("\nVälj ett konto att överföra till: ");
+            Language language = new Language();
+            Console.WriteLine("\n" + language.TranslationTool("Select an account to transfer to:"));
             var otherAccounts = user.Accounts.Where(acc => acc != account).ToList();
             for (int i = 0; i < otherAccounts.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {otherAccounts[i].Name} - {otherAccounts[i].Balance.ToString("c", otherAccounts[i].Currency.GetOutputFormat())}");
             }
-            Console.WriteLine("\nAnge siffra för att välja konto: ");
+            Console.WriteLine("\n*" + language.TranslationTool("Enter the number to choose account:"));
             if (int.TryParse(Console.ReadLine(), out int selected) && selected > 0 && selected <= otherAccounts.Count)
             {
                 Account toAccount = otherAccounts[selected - 1];
-                Console.Write("Ange belopp att överföra: ");
+                Console.Write(language.TranslationTool("Enter the amount to transfer:"));
                 if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
                 {
                     if (account.TransferFunds(amount, toAccount))
                     {
-                        Console.WriteLine($" {amount.ToString("c", account.Currency.GetOutputFormat())} har överförts till {toAccount.Name}. ");
+                        Console.WriteLine($" {amount.ToString("c", account.Currency.GetOutputFormat())}" + language.TranslationTool("has been transferred to") + "{toAccount.Name}. ");
                     }
                     else
                     {
-                        Console.WriteLine("Otillräckligt saldo eller ogiltigt belopp. ");
+                        Console.WriteLine(language.TranslationTool("Insufficient balance or invalid amount."));
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Ogiltigt belopp. ");
+                    Console.WriteLine(language.TranslationTool("Invalid amount."));
                 }
             }
             else
             {
-                Console.WriteLine("Ogiltigt val. ");
+                Console.WriteLine(language.TranslationTool("Invalid choice."));
             }
-            Console.WriteLine("Tryck på valfri tangent för att fortsätta: ");
+            Console.WriteLine(language.TranslationTool("Press any key to continue:"));
             Console.ReadKey();
         }
         /// <summary>
@@ -359,24 +364,25 @@ namespace JediBank
         /// <returns></returns>
         public Account[] TransferMenu(User user)
         {
+            Language language = new Language();
             Account? sender = null;
             Account? reciever = null;
             Console.OutputEncoding = Encoding.UTF8;
             Dictionary<string, bool> textButton = new Dictionary<string, bool>
             {
-                {"Amount", false },
-                {"Reciever", false}
+                {language.TranslationTool("Amount"), false },
+                {language.TranslationTool("Reciever"), false}
             };
             Dictionary<string, bool> buttonsClicked = new Dictionary<string, bool>
             {
-                {"Cancel", false },
-                {"Submit", false }
+                {language.TranslationTool("Cancel"), false },
+                {language.TranslationTool("Submit"), false }
             };
             Dictionary<string, bool> headClicked = new Dictionary<string, bool>();
             Dictionary<string, string[]> menuItems = new Dictionary<string, string[]>
             {
-                { "Sender account", user.GetAccountNames() },
-                { "Reciever account", user.GetAccountNames() }
+                {language.TranslationTool("Sender account"), user.GetAccountNames() },
+                {language.TranslationTool("Reciever account"), user.GetAccountNames() }
             };
             List<string> items = new List<string>();
             foreach (var item in menuItems)
@@ -400,19 +406,19 @@ namespace JediBank
             int maxL = 17;
             int yStart = 2;
             int width = 26;
-            int height = 11 + 2 * menuItems["Sender account"].Count();
+            int height = 11 + 2 * menuItems[language.TranslationTool("Sender account")].Count();
             while (true)
             {
                 do
                 {
                     Console.Clear();
                     Console.SetCursorPosition(9, 2);
-                    PaintBox("Transfer", width, height, 9);
+                    PaintBox(language.TranslationTool("Transfer"), width, height, 9);
                     Console.SetCursorPosition(9, 6);
                     for (int i = 0; i < items.Count; i++)
                     {
 
-                        int distance = headClicked[items[0]] ? 0 : menuItems["Sender account"].Length;
+                        int distance = headClicked[items[0]] ? 0 : menuItems[language.TranslationTool("Sender account")].Length;
                         int space = i == items.IndexOf(menuItems.Keys.ToList()[1]) ? 1 : 0;
                         string triangle = headClicked.ContainsKey(items[i]) ? (headClicked[items[i]] ? "▼" : "▲") : "";
                         if (menuItems.ContainsKey(items[i]))
@@ -468,7 +474,7 @@ namespace JediBank
                         else
                         {
                             //Writes out the buttons cancel and submit
-                            int d1 = headClicked["Reciever account"] ? 0 : menuItems["Reciever account"].Length;
+                            int d1 = headClicked[language.TranslationTool("Reciever account")] ? 0 : menuItems[language.TranslationTool("Reciever account")].Length;
                             //int d2 = i == items.IndexOf(menuItems.Keys.ToList()[1]) ? 3 : 0;
                             if (buttonsClicked.Keys.ToList()[0] == items[i])
                             {
@@ -519,7 +525,7 @@ namespace JediBank
                         {
                             return [sender, reciever];
                         }
-                        ErrorMessage("skicka ej till samma konto!");
+                        ErrorMessage(language.TranslationTool("Don't send to the same account!"));
                         Console.ReadKey();
                         chosenSender.Clear();
                         chosenReciever.Clear();

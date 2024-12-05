@@ -52,9 +52,10 @@ namespace JediBank
 
         public void ShowTransaction()
         {
+            Language language = new Language();
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine($"From: {SenderAccountName} To: {ReciverAccountName} Amount transferred: {Amount.ToString("c", SenderAccount?.Currency.GetOutputFormat())} Time of transfer: {DateTime}\n");
+            Console.WriteLine(language.TranslationTool("From:")+$"{SenderAccountName}"+language.TranslationTool("To:")+$"{ReciverAccountName}"+language.TranslationTool("Amount transferred:")+$"{Amount.ToString("c", SenderAccount?.Currency.GetOutputFormat())}"+language.TranslationTool("Time of transfer:")+$"{DateTime}\n");
             Console.ResetColor();
 
         }
