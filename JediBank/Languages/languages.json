@@ -1,0 +1,6 @@
+{
+  "languages": {
+    "English": [ "Log in", "Withdraw", "Deposit", "Exit" ],
+    "Swedish": [ "Logga in", "Ta ut", "Sätt in", "Avsluta" ]
+  }
+}
