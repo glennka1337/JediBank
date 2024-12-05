@@ -111,18 +111,22 @@ namespace JediBank
             Dictionary<decimal?, Account[]> transferInfo = window.RunInternalTransferWindow(currentUser, Users);
             foreach(var kvp in transferInfo) 
             { 
-                Transaction transferDetails = new Transaction
+                if(kvp.Key != -9 && !kvp.Value.Any(x => x == null))
                 {
-                    SenderAccount = kvp.Value[0],
-                    ReciverAccount = kvp.Value[1],
-                    Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
-                    DateTime = DateTime.Now
+                    Transaction transferDetails = new Transaction
+                    {
+                        SenderAccount = kvp.Value[0], 
+                        ReciverAccount = kvp.Value[1], 
+                        Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
+                        DateTime = DateTime.Now
 
-                };
-                _TransferQue.Enqueue(transferDetails);
-                await _TransferQue.Peek().ExecuteTransaction();
-                _TransferQue.Dequeue();
-                DataBase.ArchiveUsers(Users);
+                    };
+                    _TransferQue.Enqueue(transferDetails);
+                    await _TransferQue.Peek().ExecuteTransaction();
+                    _TransferQue.Dequeue();
+                    DataBase.ArchiveUsers(Users);
+
+                }
             }
 
 
@@ -137,18 +141,22 @@ namespace JediBank
             Dictionary<decimal?, Account[]> transferInfo = window.RunExternalTransferWindow(currentUser, Users);
             foreach (var kvp in transferInfo)
             {
-                Transaction transferDetails = new Transaction
+                if (kvp.Key != -9 && !kvp.Value.Any(x => x == null))
                 {
-                    SenderAccount = kvp.Value[0],
-                    ReciverAccount = kvp.Value[1],
-                    Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
-                    DateTime = DateTime.Now
+                    Transaction transferDetails = new Transaction
+                    {
+                        SenderAccount = kvp.Value[0],
+                        ReciverAccount = kvp.Value[1],
+                        Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
+                        DateTime = DateTime.Now
 
-                };
-                _TransferQue.Enqueue(transferDetails);
-                await _TransferQue.Peek().ExecuteTransaction();
-                _TransferQue.Dequeue();
-                DataBase.ArchiveUsers(Users);
+                    };
+                    _TransferQue.Enqueue(transferDetails);
+                    await _TransferQue.Peek().ExecuteTransaction();
+                    _TransferQue.Dequeue();
+                    DataBase.ArchiveUsers(Users);
+
+                }
             }
 
 

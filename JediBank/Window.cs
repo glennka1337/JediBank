@@ -540,20 +540,26 @@ namespace JediBank
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
             ConsoleKey key;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
             do
             {
-
+                
+                PaintBox("Create account", width, height, posX, posY);
                 do
                 {
                     //Console.Clear();
-                    Bank bank = new Bank();
-                    bank.DisplayLogo();
-                    PaintBox("Loan", width, height, posX, posY);
+                    
+                    
+                    
                     foreach (var button in Buttons)
                     {
                         button.Paint();
                         if (button is Dropdown thisDropdown)
                         {
+                            Console.SetCursorPosition(posX + 3, posY + 4);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write(thisDropdown.SetText == "Betalkonto" ? "Interest : 0 %" : (thisDropdown.SetText == "Sparkonto" ? "Interest : 4 %" : "")) ;
                             thisDropdown.PositionSubOptions();
                         }
                     }
@@ -740,16 +746,25 @@ namespace JediBank
             ref int currentSelection,
             ConsoleKey key) 
         {
+            
             if (key == ConsoleKey.UpArrow)
             {
                 Buttons[currentSelection].IsSelected = false;
                 currentSelection = currentSelection == 0 ? Buttons.Count - 1 : currentSelection - 1;
+                if (Buttons[currentSelection] is Label label)
+                {
+                    currentSelection = currentSelection == 0 ? Buttons.Count - 1 : currentSelection - 1;
+                }
                 Buttons[currentSelection].IsSelected = true;
             }
             else if (key == ConsoleKey.DownArrow)
             {
                 Buttons[currentSelection].IsSelected = false;
                 currentSelection = currentSelection == Buttons.Count - 1 ? 0 : currentSelection + 1;
+                if (Buttons[currentSelection] is Label label)
+                {
+                    currentSelection = currentSelection == Buttons.Count - 1 ? 0 : currentSelection + 1;
+                }
                 Buttons[currentSelection].IsSelected = true;
             }
 

@@ -18,7 +18,7 @@ namespace JediBank.ButtonsFolder
 
         public override void Click()
         {
-            Console.WriteLine("Du klickade på clickbutton");
+            //Console.WriteLine("Du klickade på clickbutton");
         }
     }
 }
