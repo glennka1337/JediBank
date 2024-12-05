@@ -21,6 +21,7 @@ namespace JediBank
         }
         public string RunMainWindow(Dictionary<string, string[]> menuItems, string? message)
         {
+            Language language = new Language();
             int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
@@ -50,7 +51,7 @@ namespace JediBank
                 {
                     //Console.Clear();
                     
-                    PaintBox("Home", width, height, posX, posY);
+                    PaintBox(language.TranslationTool("Home"), width, height, posX, posY);
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -77,7 +78,7 @@ namespace JediBank
                     }
                 }     
             }while(key != ConsoleKey.Escape );
-            return "Log out";
+            return language.TranslationTool("Log out");
         } 
         public Dictionary<decimal?, Account[]> RunLoanWindow(User user)
         {

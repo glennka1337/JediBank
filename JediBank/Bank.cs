@@ -15,14 +15,14 @@ namespace JediBank
         Queue<Transaction> _TransferQue = new Queue<Transaction>();
         public void RunProgram()
         {
-
+            Language language = new Language();
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             Window window = new Window();
 
             while (true)
             {
-                if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
+                 if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
                 {
                     currentUser = Login();
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
@@ -30,7 +30,7 @@ namespace JediBank
                     {
                         string action = currentUser.IsAdmin ? uI.MainMenu(AdminMenuOptions(currentUser), currentUser.Name) : uI.MainMenu(MainMenuOptions(currentUser), currentUser.Name);
                         currentAccount = currentUser.Accounts.Find(x => x.Name == action);
-                        action = currentUser.Accounts.Contains(currentAccount) ? "Account" : action;
+                        action = currentUser.Accounts.Contains(currentAccount) ? language.TranslationTool("Account") : action;
                         actionMap[action].DynamicInvoke();
 
                     }
@@ -42,22 +42,24 @@ namespace JediBank
 
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
+            Language language = new Language();
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
-                 { "💰 Accounts", user.GetAccountNames() },
-                 { "💼 Transactions", ["Withdraw", "InternalTransfer", "ExternalTransfer"] },
-                 { "⚙️ Manage", ["Open account", "Take loan"] },
-                 { "🏦 Sign out", ["Log out", "Shut down"] }
+                 { language.TranslationTool("💰 Accounts"), user.GetAccountNames() },
+                 { language.TranslationTool("💼 Transactions"), [language.TranslationTool("Withdraw"), language.TranslationTool("InternalTransfer"), language.TranslationTool("ExternalTransfer")] },
+                 { language.TranslationTool("⚙️ Manage"), [language.TranslationTool("Open account"), language.TranslationTool("Take loan")] },
+                 { language.TranslationTool("🏦 Sign out"), [language.TranslationTool("Log out"), language.TranslationTool("Shut down")] }
              };
             return alt;
 
         }
         public Dictionary<string, string[]> AdminMenuOptions(User user)
         {
+            Language language = new Language();
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
-                 { "⚙️ Manage users",["Create user", "Remove user"]},
-                 { "🏦 Sign out", ["Log out", "Shut down"] }
+                 { language.TranslationTool("⚙️ Manage users"),[language.TranslationTool("Create user"), language.TranslationTool("Remove user")]},
+                 { language.TranslationTool("🏦 Sign out"), [language.TranslationTool("Log out"), language.TranslationTool("Shut down")] }
              };
             return alt;
 
@@ -65,17 +67,18 @@ namespace JediBank
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {
+            Language language = new Language()
             Dictionary<string, Delegate> actionMap = new Dictionary<string, Delegate>
              {
-                 { "Withdraw", Withdraw },
-                 { "InternalTransfer", InternalTransfer },
-                 { "ExternalTransfer", ExternalTransfer },
-                 { "Log out", LogOut },
-                 { "Account", AccountShow },
-                 { "Create user", CreateUser },
-                 { "Remove user", RemoveUser },
-                 { "Open account", CreateAccount },
-                { "Take loan", TakeLoan }
+                 { language.TranslationTool("Withdraw"), Withdraw },
+                 { language.TranslationTool("InternalTransfer"), InternalTransfer },
+                 { language.TranslationTool("ExternalTransfer"), ExternalTransfer },
+                 { language.TranslationTool("Log out"), LogOut },
+                 { language.TranslationTool("Account"), AccountShow },
+                 { language.TranslationTool("Create user"), CreateUser },
+                 { language.TranslationTool("Remove user"), RemoveUser },
+                 { language.TranslationTool("Open account"), CreateAccount },
+                 { language.TranslationTool("Take loan"), TakeLoan }
 
 
              };
@@ -178,9 +181,10 @@ namespace JediBank
         }
         public void CreateUser()
         {
-            Console.Write("Select name: ");
+            Language language = new Language();
+            Console.Write(language.TranslationTool("Select name: "));
             string username = Console.ReadLine();
-            Console.Write("Select password: ");
+            Console.Write(language.TranslationTool("Select password: "));
             string password = Console.ReadLine();
             Users.Add(new User
             {
@@ -216,6 +220,7 @@ namespace JediBank
         }
         private User Login()
         {
+            Language language = new Language();
             Console.Clear();
 
             DisplayLogo();
@@ -228,7 +233,7 @@ namespace JediBank
 
                 if (currentUser == null)
                 {
-                    Console.WriteLine("User not found");
+                    Console.WriteLine(language.TranslationTool("User not found"));
                     continue;
                 }
                 else if (currentUser.IsLocked)
@@ -251,10 +256,10 @@ namespace JediBank
                 if (count == 3)
                 {
                     Console.Clear();
-                    Console.SetCursorPosition((Console.WindowWidth - "Too manu failed attempts. Locking your account.".Length) / 2, Console.WindowHeight / 2 - 1);
-                    Console.WriteLine("Too many failed attempts. Locking your account.");
-                    Console.SetCursorPosition((Console.WindowWidth - "Your account is locked. Please try again later.".Length) / 2, Console.WindowHeight / 2);
-                    Console.WriteLine("Your account is locked. Please try again later.");
+                    Console.SetCursorPosition((Console.WindowWidth - language.TranslationTool("Too many failed attempts. Locking your account.").Length) / 2, Console.WindowHeight / 2 - 1);
+                    Console.WriteLine(language.TranslationTool("Too many failed attempts. Locking your account."));
+                    Console.SetCursorPosition((Console.WindowWidth - language.TranslationTool("Your account is locked. Please try again later.").Length) / 2, Console.WindowHeight / 2);
+                    Console.WriteLine(language.TranslationTool("Your account is locked. Please try again later."));
                     Console.ReadLine();
                     currentUser.IsLocked = true;
                     break;
