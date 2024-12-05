@@ -19,7 +19,7 @@ namespace JediBank
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             Window window = new Window();
-            
+
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
@@ -39,7 +39,7 @@ namespace JediBank
             }
         }
 
-      
+
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
@@ -92,21 +92,22 @@ namespace JediBank
         {
             Window window = new Window();
             Dictionary<decimal?, Account[]> withdrawInfo = window.RunWithdrawWindow(currentUser);
-            if(!withdrawInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null))) 
-            { 
+            if (!withdrawInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null)))
+            {
                 foreach (var kvp in withdrawInfo)
                 {
 
                     kvp.Value[0].Subtract((decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
-            } 
+            }
         }
         public async Task InternalTransfer()
         {
-           // UI uI = new UI();
+            // UI uI = new UI();
             //Account[] transferInfo = uI.TransferMenu(currentUser);
             Window window = new Window();
+
             Dictionary<decimal?, Account[]> transferInfo = window.RunInternalTransferWindow(currentUser, Users);
             foreach(var kvp in transferInfo) 
             { 
@@ -128,9 +129,10 @@ namespace JediBank
                 }
             }
 
-            
+
 
         }
+
         public async Task ExternalTransfer()
         {
             // UI uI = new UI();
@@ -160,7 +162,7 @@ namespace JediBank
 
 
         }
-        public void TakeLoan() 
+        public void TakeLoan()
         {
             Window window = new Window();
             Dictionary<decimal?, Account[]> loanInfo = window.RunLoanWindow(currentUser);
@@ -202,7 +204,7 @@ namespace JediBank
         {
             Window window = new Window();
             Account newAccount = window.RunCreateAccountWindow();
-            if(newAccount != null)
+            if (newAccount != null)
             {
                 currentUser.AddAccount(newAccount);
             }
@@ -224,16 +226,15 @@ namespace JediBank
                 string userName = uI.ReadUserName();
                 currentUser = Users.Find(i => i.Name == userName);
 
-                if (currentUser.IsLocked) 
-                { 
-                    currentUser.UnlockUser();
-                }
                 if (currentUser == null)
                 {
                     Console.WriteLine("User not found");
-                    continue; 
+                    continue;
                 }
-
+                else if (currentUser.IsLocked)
+                {
+                    currentUser.UnlockUser();
+                }
                 int count = 0;
                 while (count < 3 && !currentUser.IsLocked)
                 {
@@ -249,12 +250,19 @@ namespace JediBank
 
                 if (count == 3)
                 {
-                    currentUser.IsLocked = true;
+                    Console.Clear();
+                    Console.SetCursorPosition((Console.WindowWidth - "Too manu failed attempts. Locking your account.".Length) / 2, Console.WindowHeight / 2 - 1);
                     Console.WriteLine("Too many failed attempts. Locking your account.");
+                    Console.SetCursorPosition((Console.WindowWidth - "Your account is locked. Please try again later.".Length) / 2, Console.WindowHeight / 2);
                     Console.WriteLine("Your account is locked. Please try again later.");
                     Console.ReadLine();
+                    currentUser.IsLocked = true;
                     break;
                 }
+
+                Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
+                Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
+
             } while (currentUser == null);
 
             return null;
