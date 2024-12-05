@@ -4,7 +4,7 @@ namespace JediBank.ButtonsFolder
 {
     public class TextBox : Button
     {
-        public ConsoleColor BackColor { get; set; } = ConsoleColor.Blue;
+        public ConsoleColor BackColor { get; set; } = ConsoleColor.Black;
         public ConsoleColor ForeColor { get; set; } = ConsoleColor.White;
         public string Rubric {  get; set; }
         public override void Paint()
@@ -14,7 +14,7 @@ namespace JediBank.ButtonsFolder
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(X, Y - 1);
             Console.Write(Rubric);
-            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Magenta;
+            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Blue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);
             Console.Write($"{Text} {new string(' ', Math.Abs(Width - Text.Length))}");

@@ -115,7 +115,7 @@ namespace JediBank
                     X = posX +  width/5,
                     Y = posY +  height-1,
                     Text = "Cancel",
-                    BackColor = ConsoleColor.Red,
+                    BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
                 new ClickButton
@@ -123,7 +123,7 @@ namespace JediBank
                     X = posX + width/5 * 3,
                     Y = posY +  height-1,
                     Text = "Submit",
-                    BackColor = ConsoleColor.Green,
+                    BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
 
@@ -214,7 +214,7 @@ namespace JediBank
                     X = posX + width/5,
                     Y = posY+ height-1,
                     Text = "Cancel",
-                    BackColor = ConsoleColor.Red,
+                    BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
                 new ClickButton
@@ -222,7 +222,7 @@ namespace JediBank
                     X = posX + width/5*3,
                     Y = posY + height-1,
                     Text = "Submit",
-                    BackColor = ConsoleColor.Green,
+                    BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
 
@@ -291,7 +291,7 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX+ 3,
+                    X = posX,
                     Y = posY + 3,
                     Name = "Sender",
                     Text = "Välj konto",
@@ -300,8 +300,8 @@ namespace JediBank
                 },
                 new Dropdown
                 {
-                    X = posX+3,
-                    Y = posY+7,
+                    X = posX+width/2 + 3,
+                    Y = posY+3,
                     Name = "Receiver",
                     Text = "Välj mottagare",
                     subOptions = ToOpList(user)
@@ -328,7 +328,7 @@ namespace JediBank
                     X = posX + width/5,
                     Y = posY + height+1,
                     Text = "Cancel",
-                    BackColor = ConsoleColor.Red,
+                    BackColor = ConsoleColor.DarkRed,
                     ForeColor = ConsoleColor.White
                 },
                 new ClickButton
@@ -336,7 +336,7 @@ namespace JediBank
                     X = posX + width/5*3,
                     Y = posY + height+1,
                     Text = "Submit",
-                    BackColor = ConsoleColor.Green,
+                    BackColor = ConsoleColor.DarkGreen,
                     ForeColor = ConsoleColor.White
                 }
                 
@@ -647,8 +647,8 @@ namespace JediBank
         }
         public void PaintBox(string? message, int width, int height, int X, int Y)
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Blue;
             int center = width - message.Length;
             for (int i = 0; i < height+3; i++)
             {

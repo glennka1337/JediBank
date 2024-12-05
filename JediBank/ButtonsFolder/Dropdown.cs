@@ -9,6 +9,7 @@ namespace JediBank.ButtonsFolder
         public bool IsOpen { get; set; } = false;
         public List<SubOptions> subOptions { get; set; } = new List<SubOptions>();
 
+        public int width { get; set; }
         /*
             public Dropdown(int x, int y, User? user)
             {
@@ -35,7 +36,7 @@ namespace JediBank.ButtonsFolder
         }
         public override void Paint()
         {
-            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Green;
+            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.DarkBlue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);
             if (SetText == default)
@@ -45,7 +46,7 @@ namespace JediBank.ButtonsFolder
             }
             else
             {
-                Console.Write($" {SetText} ");
+                Console.Write($" {SetText}  ✔️ ");
             }
             Console.ResetColor();
         }

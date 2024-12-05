@@ -253,7 +253,7 @@ namespace JediBank
         {
             Console.SetCursorPosition((Console.WindowWidth / 5)-4, Console.GetCursorPosition().Top);
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Blue;
         }
 
         public void Blue()

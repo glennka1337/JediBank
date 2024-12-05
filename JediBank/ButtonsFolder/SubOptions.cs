@@ -12,7 +12,7 @@ namespace JediBank.ButtonsFolder
 
         public override void Paint()
         {
-            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Cyan;
+            Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Blue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);
             Console.Write($" {Option} ");
