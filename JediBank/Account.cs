@@ -9,6 +9,7 @@ namespace JediBank
     internal class Account
     {
         public string Name { get; set; }
+        public string AccountId { get; set; }
         public decimal Balance { get; set; }
         public string IsCheckingaccount { get; set; }
         public Currency Currency
