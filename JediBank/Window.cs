@@ -21,7 +21,7 @@ namespace JediBank
         }
         public string RunMainWindow(Dictionary<string, string[]> menuItems, string? message)
         {
-            int width = 26;
+            int width = 52;
             int height = 15;//Buttons.Max(b => b.Y);
             int posX = (Console.WindowWidth - width) / 2;
             int posY = (Console.WindowHeight - height) / 2;
@@ -31,7 +31,7 @@ namespace JediBank
             {
                 Buttons.Add(new Dropdown
                 {
-                    X = posX + 3,
+                    X = posX + width/3,
                     Y = posY + 5 + index,
                     Text = item.Key,
                     subOptions = ArrayToSubOp(item.Value)
@@ -41,15 +41,16 @@ namespace JediBank
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
             do
             {
                 
                 do
                 {
-                    Console.Clear();
-                    Bank bank = new Bank();
-                    bank.DisplayLogo();
-                    PaintBox(message, width, height, posX, posY);
+                    //Console.Clear();
+                    
+                    PaintBox("Home", width, height, posX, posY);
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -137,7 +138,7 @@ namespace JediBank
 
                 do
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
                     PaintBox("Loan", width, height, posX, posY);
@@ -236,7 +237,7 @@ namespace JediBank
 
                 do
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
                     PaintBox("Withdraw", width, height, posX, posY);
@@ -352,7 +353,7 @@ namespace JediBank
                 
                 do
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
                     PaintBox("Transfer", width, height, posX, posY);
@@ -441,7 +442,7 @@ namespace JediBank
 
                 do
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Bank bank = new Bank();
                     bank.DisplayLogo();
                     PaintBox("Loan", width, height, posX, posY);
@@ -650,10 +651,34 @@ namespace JediBank
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Blue;
             int center = width - message.Length;
-            for (int i = 0; i < height+3; i++)
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(X, Y);
+            Console.Write(new string(' ',width+2));
+            Console.SetCursorPosition(X, Y+height);
+            Console.Write(new string(' ', width+2));
+            for (int i = 1; i < height; i++)
             {
-                Console.SetCursorPosition(X, Y + i);
-                Console.Write(i == 1 ? $"{new string(' ', (center/2))}{message}{new string(' ', (center / 2 + (center % 2)))}" : $"{new string(' ', width)}");
+                
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.SetCursorPosition(X,Y+i);
+                Console.Write("  ");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Write(new string(' ',width-4));
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.SetCursorPosition(X+width, Y + i);
+                Console.Write("  ");
+                if(i == 2)
+                {
+                    Console.SetCursorPosition(X + center/2, Y + i);
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"{message}");
+
+                }
+
+                
+                //Console.Write(j == 0 || j == width+1 ? " " : "");
+
 
             }
             Console.ResetColor();

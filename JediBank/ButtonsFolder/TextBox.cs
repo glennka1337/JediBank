@@ -6,7 +6,7 @@ namespace JediBank.ButtonsFolder
     {
         public ConsoleColor BackColor { get; set; } = ConsoleColor.Black;
         public ConsoleColor ForeColor { get; set; } = ConsoleColor.White;
-        public string Rubric {  get; set; }
+        
         public override void Paint()
         {
             Console.BackgroundColor = BackColor;

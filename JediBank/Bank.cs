@@ -241,17 +241,22 @@ namespace JediBank
 
         public void DisplayLogo()
         {
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 0);
             Green(); Console.Write("       __   _______  _______   __ "); Blue(); Console.Write(" .______        ___      .__   __.  __  ___ \r\n");
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 1);
             Green(); Console.Write("      |  | |   ____||       \\ |  |"); Blue(); Console.Write(" |   _  \\      /   \\     |  \\ |  | |  |/  / \r\n");
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 2);
             Green(); Console.Write("      |  | |  |__   |  .--.  ||  |"); Blue(); Console.Write(" |  |_)  |    /  ^  \\    |   \\|  | |  '  / \r\n");
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 3);
             Green(); Console.Write(".--.  |  | |   __|  |  |  |  ||  |"); Blue(); Console.Write(" |   _  <    /  /_\\  \\   |  . `  | |    < \r\n");
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 4);
             Green(); Console.Write("|  `--'  | |  |____ |  '--'  ||  |"); Blue(); Console.Write(" |  |_)  |  /  _____  \\  |  |\\   | |  .  \\ \r\n");
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 5);
             Green(); Console.Write(" \\______/  |_______||_______/ |__|"); Blue(); Console.Write(" |______/  /__/     \\__\\ |__| \\__| |__|\\__\\ \r\n");
         }
 
         public void Green()
         {
-            Console.SetCursorPosition((Console.WindowWidth / 5)-4, Console.GetCursorPosition().Top);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Blue;
         }
