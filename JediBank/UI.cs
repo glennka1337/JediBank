@@ -12,12 +12,12 @@ namespace JediBank
         public string ReadUserName()
         {
             Console.CursorVisible = true;
-            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2);
+            Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.WindowHeight / 2);
             Console.Write("Enter your Username: ");
 
             ConsoleKey key;
             string input = "";
-            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.WindowHeight / 2 + 1);
+            Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.WindowHeight / 2 + 1);
             do
             {
                 var keyPressed = Console.ReadKey(intercept: true);
@@ -42,16 +42,19 @@ namespace JediBank
         public string ReadPassword()
         {
             Console.CursorVisible = true;
-            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.GetCursorPosition().Top);
-            Console.Write("Enter your pin code: \n");
+            Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.GetCursorPosition().Top);
+            Console.Write("Enter your pin code: ");
+
             ConsoleKey key;
             string input = "";
-            Console.SetCursorPosition((Console.WindowWidth - "\rEnter your Username: \n".Length) / 2, Console.GetCursorPosition().Top);
+
+            Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.GetCursorPosition().Top + 1);
 
             do
             {
                 var keyPressed = Console.ReadKey(intercept: true);
                 key = keyPressed.Key;
+
                 if (char.IsDigit(keyPressed.KeyChar))
                 {
                     input += keyPressed.KeyChar;
@@ -64,6 +67,18 @@ namespace JediBank
                         input = input.Substring(0, input.Length - 1);
                         Console.Write("\b \b");
                     }
+                }
+
+                if (key == ConsoleKey.Enter)
+                {
+                    int cursorLeft = Console.CursorLeft;
+                    int cursorTop = Console.CursorTop;
+                    Console.SetCursorPosition(cursorLeft - input.Length, cursorTop);
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        Console.Write(" ");
+                    }
+                    Console.SetCursorPosition(cursorLeft - input.Length, cursorTop);
                 }
             } while (key != ConsoleKey.Enter);
             Console.WriteLine();
