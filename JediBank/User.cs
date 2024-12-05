@@ -125,6 +125,7 @@ namespace JediBank
             {
                 Name = "Test",
                 Balance = 9999,
+                AccountId = Generator.GenerateAccountId(),
                 Currency = new SEK(),
             });
         }

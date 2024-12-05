@@ -10,76 +10,40 @@
     "Accounts": [
       {
         "Name": "Privatkonto",
-        "Balance": 1998766.00,
+        "AccountId": "A-3443",
+        "Balance": 500,
+        "Currency": {
+          "Name": "Svensk krona",
+          "CurrencyCode": "SEK"
+        },
+        "TransactionHistory": []
+      },
+      {
+        "Name": "Sparkonto",
+        "AccountId": "A-9655",
+        "Balance": 1500,
+        "Currency": {
+          "Name": "Svensk krona",
+          "CurrencyCode": "SEK"
+        },
+        "TransactionHistory": []
+      },
+      {
+        "Name": "DollarKonto",
+        "AccountId": "A-1585",
+        "Balance": 25,
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
         },
-        "TransactionHistory": [
-          {
-            "SenderAccountName": "Privatkonto",
-            "ReciverAccountName": "Sparkonto",
-            "Amount": 1234,
-            "DateTime": "2024-12-04T14:16:34.0389529+01:00",
-            "Currency": null,
-            "SenderAccount": null,
-            "ReciverAccount": {
-              "Name": "Sparkonto",
-              "Balance": 2001234.00,
-              "Currency": {
-                "Name": "Swedish Crown",
-                "CurrencyCode": "SEK"
-              },
-              "TransactionHistory": [
-                null
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "Name": "Sparkonto",
-        "Balance": 2001234.00,
-        "Currency": {
-          "Name": "Swedish Crown",
-          "CurrencyCode": "SEK"
-        },
-        "TransactionHistory": [
-          {
-            "SenderAccountName": "Privatkonto",
-            "ReciverAccountName": "Sparkonto",
-            "Amount": 1234,
-            "DateTime": "2024-12-04T14:16:34.0389529+01:00",
-            "Currency": null,
-            "SenderAccount": {
-              "Name": "Privatkonto",
-              "Balance": 1998766.00,
-              "Currency": {
-                "Name": "United States Dollar",
-                "CurrencyCode": "USD"
-              },
-              "TransactionHistory": [
-                null
-              ]
-            },
-            "ReciverAccount": null
-          }
-        ]
-      },
-      {
-        "Name": "Eurokonto",
-        "Balance": 200000.00,
-        "Currency": {
-          "Name": "EURO",
-          "CurrencyCode": "EUR"
-        },
         "TransactionHistory": []
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "edgar",
-    "Password": "4321",
+    "Password": "1234",
     "IsAdmin": false,
     "TotalBalance": 0,
     "TotalLoans": 0,
@@ -88,63 +52,36 @@
     "Accounts": [
       {
         "Name": "Privatkonto",
-        "Balance": 78.00,
+        "AccountId": "A-5662",
+        "Balance": 500,
         "Currency": {
-          "Name": "United States Dollar",
-          "CurrencyCode": "USD"
+          "Name": "Svensk krona",
+          "CurrencyCode": "SEK"
         },
-        "TransactionHistory": [
-          {
-            "SenderAccountName": "Privatkonto",
-            "ReciverAccountName": "Sparkonto",
-            "Amount": 100,
-            "DateTime": "2024-12-04T10:32:55.2194933+01:00",
-            "Currency": null,
-            "SenderAccount": null,
-            "ReciverAccount": {
-              "Name": "Sparkonto",
-              "Balance": 600.00,
-              "Currency": {
-                "Name": "EURO",
-                "CurrencyCode": "EUR"
-              },
-              "TransactionHistory": [
-                null
-              ]
-            }
-          }
-        ]
+        "TransactionHistory": []
       },
       {
         "Name": "Sparkonto",
-        "Balance": 600.00,
+        "AccountId": "A-5343",
+        "Balance": 1500,
         "Currency": {
-          "Name": "EURO",
+          "Name": "Svensk krona",
+          "CurrencyCode": "SEK"
+        },
+        "TransactionHistory": []
+      },
+      {
+        "Name": "DollarKonto",
+        "AccountId": "A-6121",
+        "Balance": 250,
+        "Currency": {
+          "Name": "Euro",
           "CurrencyCode": "EUR"
         },
-        "TransactionHistory": [
-          {
-            "SenderAccountName": "Privatkonto",
-            "ReciverAccountName": "Sparkonto",
-            "Amount": 100,
-            "DateTime": "2024-12-04T10:32:55.2194933+01:00",
-            "Currency": null,
-            "SenderAccount": {
-              "Name": "Privatkonto",
-              "Balance": 100.00,
-              "Currency": {
-                "Name": "United States Dollar",
-                "CurrencyCode": "USD"
-              },
-              "TransactionHistory": [
-                null
-              ]
-            },
-            "ReciverAccount": null
-          }
-        ]
+        "TransactionHistory": []
       }
-    ]
+    ],
+    "IsLocked": false
   },
   {
     "Name": "admin",
@@ -154,44 +91,7 @@
     "TotalLoans": 0,
     "MaxLoan": 0,
     "Loans": [],
-    "Accounts": [
-      {
-        "Name": "Privatkonto",
-        "Balance": 2000000.00,
-        "Currency": {
-          "Name": "United States Dollar",
-          "CurrencyCode": "USD"
-        },
-        "TransactionHistory": []
-      },
-      {
-        "Name": "Sparkonto",
-        "Balance": 2000000.00,
-        "Currency": {
-          "Name": "Swedish Crown",
-          "CurrencyCode": "SEK"
-        },
-        "TransactionHistory": []
-      },
-      {
-        "Name": "Eurokonto",
-        "Balance": 200000.00,
-        "Currency": {
-          "Name": "EURO",
-          "CurrencyCode": "EUR"
-        },
-        "TransactionHistory": []
-      }
-    ]
-  },
-  {
-    "Name": "Viktor",
-    "Password": "1122",
-    "IsAdmin": false,
-    "TotalBalance": 0,
-    "TotalLoans": 0,
-    "MaxLoan": 0,
-    "Loans": [],
-    "Accounts": []
+    "Accounts": [],
+    "IsLocked": false
   }
 ]
