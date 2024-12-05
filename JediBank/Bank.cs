@@ -19,7 +19,7 @@ namespace JediBank
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             Window window = new Window();
-            
+
             while (true)
             {
                 if (uI.Menu(new string[] { "Login", "Exit" }) == 0)
@@ -53,7 +53,7 @@ namespace JediBank
             }
         }
 
-      
+
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
@@ -104,28 +104,28 @@ namespace JediBank
         {
             Window window = new Window();
             Dictionary<decimal?, Account[]> withdrawInfo = window.RunWithdrawWindow(currentUser);
-            if(!withdrawInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null))) 
-            { 
+            if (!withdrawInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null)))
+            {
                 foreach (var kvp in withdrawInfo)
                 {
 
                     kvp.Value[0].Subtract((decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
-            } 
+            }
         }
         public async Task Transfer()
         {
-           // UI uI = new UI();
+            // UI uI = new UI();
             //Account[] transferInfo = uI.TransferMenu(currentUser);
             Window window = new Window();
             Dictionary<decimal?, Account[]> transferInfo = window.RunTransferWindow(currentUser, Users);
-            foreach(var kvp in transferInfo) 
-            { 
+            foreach (var kvp in transferInfo)
+            {
                 Transaction transferDetails = new Transaction
                 {
-                    SenderAccount = kvp.Value[0], 
-                    ReciverAccount = kvp.Value[1], 
+                    SenderAccount = kvp.Value[0],
+                    ReciverAccount = kvp.Value[1],
                     Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
                     DateTime = DateTime.Now
 
@@ -136,10 +136,10 @@ namespace JediBank
                 DataBase.ArchiveUsers(Users);
             }
 
-            
+
 
         }
-        public void TakeLoan() 
+        public void TakeLoan()
         {
             Window window = new Window();
             Dictionary<decimal?, Account[]> loanInfo = window.RunLoanWindow(currentUser);
@@ -181,7 +181,7 @@ namespace JediBank
         {
             Window window = new Window();
             Account newAccount = window.RunCreateAccountWindow();
-            if(newAccount != null)
+            if (newAccount != null)
             {
                 currentUser.AddAccount(newAccount);
             }
@@ -203,16 +203,15 @@ namespace JediBank
                 string userName = uI.ReadUserName();
                 currentUser = Users.Find(i => i.Name == userName);
 
-                if (currentUser.IsLocked) 
-                { 
-                    currentUser.UnlockUser();
-                }
                 if (currentUser == null)
                 {
                     Console.WriteLine("User not found");
-                    continue; 
+                    continue;
                 }
-
+                else if (currentUser.IsLocked)
+                {
+                    currentUser.UnlockUser();
+                }
                 int count = 0;
                 while (count < 3 && !currentUser.IsLocked)
                 {
@@ -251,7 +250,7 @@ namespace JediBank
 
         public void Green()
         {
-            Console.SetCursorPosition((Console.WindowWidth / 5)-4, Console.GetCursorPosition().Top);
+            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, Console.GetCursorPosition().Top);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Green;
         }
