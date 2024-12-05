@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JediBank.Currency;
+using JediBank.CurrencyFolder;
 namespace JediBank
 {
     internal class Account
     {
         public string Name { get; set; }
         public decimal Balance { get; set; }
-        public ICurrency Currency { get; set; }
-
-        // HISTORY PROPERTIE WIP (LEAVE FOR LATER)
+        public Currency Currency { get; set; }
+        public List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
         public void Show()
         {
             Console.WriteLine($"{Name},{Balance}");
         }
 
-        public static void ShowHistory()
+        public void ShowHistory()
         {
-            // WIP
+            foreach (var t in TransactionHistory)
+            {
+                t.ShowTransaction();
+            }
         }
 
         public bool Add(decimal amount)

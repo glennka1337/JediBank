@@ -1,4 +1,4 @@
-﻿using JediBank.Currency;
+﻿using JediBank.CurrencyFolder;
 
 namespace JediBank
 {
@@ -7,7 +7,12 @@ namespace JediBank
         public string Name { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
+        public decimal TotalBalance { get; set; }
+        public decimal TotalLoans { get; set; }
+        public decimal MaxLoan { get; set; }
+        public List<Loan> Loans { get; set; } = new();
         public List<Account> Accounts { get; set; } = new();
+        public bool IsLocked { get; internal set; }
 
         /*public User(string name, string password, bool isAdmin)
         {
@@ -15,7 +20,49 @@ namespace JediBank
             Password = password;
             IsAdmin = isAdmin;
         }*/
+        public async Task UnlockUser()
+        {
+            await Task.Delay(5000);
+            IsLocked = false;
+        }
+        public void CreateLoan(Account toAccount, decimal amount, decimal interest)
+        {
+            if (amount <= CalculateMaxLoan())
+            {
+                Loan newLoan = new Loan
+                {
+                    Amount = amount,
+                    Interest = interest,
+                    LoanId = Loans.Count() + 1,
+                };
+                newLoan.CalculateTotal();
+            }
 
+        }
+
+        public void CalculateBalance()
+        {
+            foreach (var account in Accounts)
+            {
+                TotalBalance += account.Balance;
+            }
+        }
+
+        public void CalculateLoans()
+        {
+            foreach (var loan in Loans)
+            {
+                TotalLoans += loan.Amount;
+            }
+        }
+
+        public decimal CalculateMaxLoan()
+        {
+            CalculateBalance();
+            CalculateLoans();
+            MaxLoan = (TotalBalance - TotalLoans) * 5 - TotalLoans;
+            return MaxLoan;
+        }
         public void ShowAccounts()
         {   
             foreach (var account in Accounts)
@@ -54,7 +101,9 @@ namespace JediBank
         {
             return Accounts.Select(obj => obj.Name).ToList().ToArray();
         }
-        public bool Exchange(decimal amount, ICurrency currency, Account account1, Account account2)
+
+        public bool Exchange(decimal amount, Currency currency, Account account1, Account account2)
+
         {
             if (account2.Currency == currency && account1.Balance >= amount)
             {
