@@ -14,7 +14,7 @@ namespace JediBank.ButtonsFolder
         public string Text { get; set; }
         public string Name { get; set; }
         public bool IsSelected { get; set; } = false;
-
+        public string Rubric { get; set; }
         public virtual void Paint()
         {
 
