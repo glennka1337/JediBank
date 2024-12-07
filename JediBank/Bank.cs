@@ -22,7 +22,7 @@ namespace JediBank
 
             while (true)
             {
-                 if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
+                if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
                 {
                     currentUser = Login();
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
@@ -275,17 +275,18 @@ namespace JediBank
 
         public void DisplayLogo()
         {
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 0);
+            int Xpos = (Console.WindowWidth/2 - "       __   _______  _______   __ ".Length);
+            Console.SetCursorPosition(Xpos, 0);
             Green(); Console.Write("       __   _______  _______   __ "); Blue(); Console.Write(" .______        ___      .__   __.  __  ___ \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 1);
+            Console.SetCursorPosition(Xpos, 1);
             Green(); Console.Write("      |  | |   ____||       \\ |  |"); Blue(); Console.Write(" |   _  \\      /   \\     |  \\ |  | |  |/  / \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 2);
+            Console.SetCursorPosition(Xpos, 2);
             Green(); Console.Write("      |  | |  |__   |  .--.  ||  |"); Blue(); Console.Write(" |  |_)  |    /  ^  \\    |   \\|  | |  '  / \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 3);
+            Console.SetCursorPosition(Xpos, 3);
             Green(); Console.Write(".--.  |  | |   __|  |  |  |  ||  |"); Blue(); Console.Write(" |   _  <    /  /_\\  \\   |  . `  | |    < \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 4);
+            Console.SetCursorPosition(Xpos, 4);
             Green(); Console.Write("|  `--'  | |  |____ |  '--'  ||  |"); Blue(); Console.Write(" |  |_)  |  /  _____  \\  |  |\\   | |  .  \\ \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 5);
+            Console.SetCursorPosition(Xpos, 5);
             Green(); Console.Write(" \\______/  |_______||_______/ |__|"); Blue(); Console.Write(" |______/  /__/     \\__\\ |__| \\__| |__|\\__\\ \r\n");
         }
 

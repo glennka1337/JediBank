@@ -10,7 +10,7 @@ namespace JediBank.ButtonsFolder
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public int Width { get; set; }
+        public int Width { get; set; } = 0;
         public string Text { get; set; }
         public string Name { get; set; }
         public bool IsSelected { get; set; } = false;
