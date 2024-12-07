@@ -41,7 +41,7 @@ namespace JediBank
 
         private static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             try
             {
                 // serialize to jsoN
@@ -60,7 +60,7 @@ namespace JediBank
 
         private static T ReadFromJsonFile<T>(string filePath) where T : new()
         {
-            Language language = new Language(); 
+            Language language = new Language(Program.ChoosenLangugage); 
             try
             {
                 string fileContents;

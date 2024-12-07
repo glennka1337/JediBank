@@ -11,7 +11,7 @@ namespace JediBank
     {
         public string ReadUserName()
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.CursorVisible = true;
             Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.WindowHeight / 2);
             Console.Write(language.TranslationTool("Enter your Username: "));
@@ -42,7 +42,7 @@ namespace JediBank
         }
         public string ReadPassword()
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.CursorVisible = true;
             Console.SetCursorPosition((Console.WindowWidth - "Enter your Username: ".Length) / 2, Console.GetCursorPosition().Top);
             Console.Write(language.TranslationTool("Enter your pin code: "));
@@ -251,7 +251,7 @@ namespace JediBank
 
         public void AccountMenu(User user, Account account)
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.OutputEncoding = Encoding.UTF8;
             while (true)
             {
@@ -298,7 +298,7 @@ namespace JediBank
 
         private void ExecuteWithdraw(User user, Account account)
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.WriteLine("\n" + language.TranslationTool("Enter the amount you want to withdraw:"));
             if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
             {
@@ -321,7 +321,7 @@ namespace JediBank
 
         private void ExecuteTransfer(User user, Account account)
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.WriteLine("\n" + language.TranslationTool("Select an account to transfer to:"));
             var otherAccounts = user.Accounts.Where(acc => acc != account).ToList();
             for (int i = 0; i < otherAccounts.Count; i++)
@@ -366,7 +366,7 @@ namespace JediBank
         /// <returns></returns>
         public Account[] TransferMenu(User user)
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Account? sender = null;
             Account? reciever = null;
             Console.OutputEncoding = Encoding.UTF8;
