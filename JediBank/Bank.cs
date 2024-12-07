@@ -15,7 +15,7 @@ namespace JediBank
         Queue<Transaction> _TransferQue = new Queue<Transaction>();
         public void RunProgram()
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             Window window = new Window();
@@ -42,7 +42,7 @@ namespace JediBank
 
         public Dictionary<string, string[]> MainMenuOptions(User user)
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
                  { language.TranslationTool("💰 Accounts"), user.GetAccountNames() },
@@ -55,7 +55,7 @@ namespace JediBank
         }
         public Dictionary<string, string[]> AdminMenuOptions(User user)
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Dictionary<string, string[]> alt = new Dictionary<string, string[]>
              {
                  { language.TranslationTool("⚙️ Manage users"),[language.TranslationTool("Create user"), language.TranslationTool("Remove user")]},
@@ -67,7 +67,7 @@ namespace JediBank
 
         public Dictionary<string, Delegate> ActionMap(User user)
         {
-            Language language = new Language()
+            Language language = new Language(Program.ChoosenLangugage);
             Dictionary<string, Delegate> actionMap = new Dictionary<string, Delegate>
              {
                  { language.TranslationTool("Withdraw"), Withdraw },
@@ -181,7 +181,7 @@ namespace JediBank
         }
         public void CreateUser()
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.Write(language.TranslationTool("Select name: "));
             string username = Console.ReadLine();
             Console.Write(language.TranslationTool("Select password: "));
@@ -220,7 +220,7 @@ namespace JediBank
         }
         private User Login()
         {
-            Language language = new Language();
+            Language language = new Language(Program.ChoosenLangugage);
             Console.Clear();
 
             DisplayLogo();

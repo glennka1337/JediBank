@@ -5,10 +5,12 @@
       "Enter your pin code: ": [ "Enter your pin code:", "Ange din pinkod:" ],
       "Main Menu": [ "Main Menu", "Huvudmeny" ],
       "Time:": [ "Time:", "Tid:" ],
-      "Account": [ "Account", "Konto:" ],
-      "Balance": [ "Balance", "Saldo:" ],
+      "Account:": [ "Account: ", "Konto: " ],
+      "Account": [ "Account", "Konto " ],
+      "Balance:": [ "Balance: ", "Saldo: " ],
+      "Balance": [ "Balance", "Saldo" ],
       "1. View recent transactions": [ "1. View recent transactions", "1. Visa senaste transaktioner" ],
-      "2. Withdraw money": [ "2. Withdraw money", "2. Ta ut pengar" ],
+      "2. Withdraw money": [ "2. Withdraw money", "2. kontoutdrag" ],
       "3. Transfer money": [ "3. Transfer money", "3. Överför pengar" ],
       "4. Return to main menu": [ "4. Return to main menu", "4. Återgå till huvudmenyn" ],
       "Press any key to continue:": [ "Press any key to continue:", "Tryck på valfri tangent för att fortsätta:" ],
@@ -25,7 +27,7 @@
       "Amount": [ "Amount", "Belopp" ],
       "Receiver": [ "Receiver", "Mottagare" ],
       "Cancel": [ "Cancel", "Avbryt" ],
-      "Submit": [ "Submit", "Skicka" ],
+      "Submit": [ "Submit", "Godkänn" ],
       "Sender account": [ "Sender account", "Avsändarkonto" ],
       "Receiver account": [ "Receiver account", "Mottagarkonto" ],
       "Transfer": [ "Transfer", "Överför" ],
@@ -70,7 +72,10 @@
       "InternalTransfer": [ "InternalTransfer", "Internöverföring" ],
       "ExternalTransfer": [ "ExternalTransfer", "Extern överföring" ],
       "Home": [ "Home", "Hem" ],
-      "Log out":  [ "Log out", "Logga ut"]
-
+      "Log out": [ "Log out", "Logga ut" ],
+      "Choose one of the above options:": [ "Choose one of the above options:", "Välj ett av alternativen ovan:" ],
+      "Press any key to continue.": [ "Press any key to continue.", "Tryck på valfri tangent för att fortsätta." ],
+      "Create account": [ "Create account", "Skapa konto" ]
     }
   }
+}
