@@ -11,7 +11,7 @@ namespace JediBank
     internal class Window
     {
         public int width {get; set;} = 52;
-        public int height {get; set;} = 30;
+        public int height {get; set;} = 20;
         public List<SubOptions> ToOpList(User user)
         {
             List<SubOptions> newList = new List<SubOptions>();
@@ -23,33 +23,38 @@ namespace JediBank
             }
             return newList;
         }
+        //int startY = 6;
         public string RunLoginWindow()
         {
             Language language = new Language(Program.ChoosenLangugage);
             
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;// (Console.WindowHeight - height) / 2;
             List<Button> Buttons = new List<Button>
             {//Translate
                 new ClickButton
                 {
                     X = posX + width/3,
                     Y = posY + 5,
-                    Text = "Login"
+                    Text = language.TranslationTool("Login"),
+                    BackColor = ConsoleColor.DarkBlue,
+                    ForeColor = ConsoleColor.White
 
                 },
                 new ClickButton
                 {
                     X = posX + width/3,
                     Y = posY + 6,
-                    Text = "Exit"
+                    Text = language.TranslationTool("Exit"),
+                    BackColor = ConsoleColor.DarkBlue,
+                    ForeColor = ConsoleColor.White
 
                 },
                 new Dropdown
                 {
                     X = posX + width/3,
                     Y = posY + 7,
-                    Text = "Language",
+                    Text = language.TranslationTool("Language"),
                     subOptions = ArrayToSubOp(["Svenska", "English"])// Add emojis (country flag)
 
                 }
@@ -86,6 +91,7 @@ namespace JediBank
                 { 
                     if(dropdown is SubOptions option) 
                     {
+                        Program.ChoosenLangugage = option.Option;
                         return option.Option;
                     }
                     for(int i = 0; i < Buttons.Count-1; i++) 
@@ -105,7 +111,7 @@ namespace JediBank
             Language language = new Language(Program.ChoosenLangugage);
             
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;//(Console.WindowHeight - height) / 2;
             List<Button> Buttons = new List<Button>();
             int index = 0;
             foreach (var item in menuItems) 
@@ -165,7 +171,7 @@ namespace JediBank
             Language language = new Language(Program.ChoosenLangugage);
             Loan newLoan = new Loan();
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;// (Console.WindowHeight - height) / 2;
             Account? Sender = null;
             Account? Receiver = null;
             decimal? amount = 0;
@@ -271,7 +277,7 @@ namespace JediBank
         {
             Language language = new Language(Program.ChoosenLangugage);
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;// (Console.WindowHeight - height) / 2;
             Account? Sender = null;
             Account Receiver = user.Accounts[0];
             decimal? amount = -1;
@@ -374,7 +380,7 @@ namespace JediBank
             Language language = new Language(Program.ChoosenLangugage);
             
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;// (Console.WindowHeight - height) / 2;
             Account? Sender = null;
             Account? Receiver = null;
             string accountID;
@@ -489,7 +495,7 @@ namespace JediBank
             Language language = new Language(Program.ChoosenLangugage);
             
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;//(Console.WindowHeight - height) / 2;
             Account? Sender = null;
             Account? Receiver = null;
             decimal? amount = -1;
@@ -601,7 +607,7 @@ namespace JediBank
             Language language = new Language(Program.ChoosenLangugage);
             
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;// (Console.WindowHeight - height) / 2;
             bool submit = false;
             Account newAccount = new Account();
             List<Button> Buttons = new List<Button>
@@ -705,7 +711,7 @@ namespace JediBank
         {
             Language language = new Language(Program.ChoosenLangugage);
             int posX = (Console.WindowWidth - width) / 2;
-            int posY = (Console.WindowHeight - height) / 2;
+            int posY = 7;// (Console.WindowHeight - height) / 2;
             string Username = default;
             string Password = default;
 
@@ -783,7 +789,6 @@ namespace JediBank
                 if (Buttons[currentSelection] is TextBox textbox)
                 {
                     textbox.Click();
-                    Console.WriteLine("HELLO");
                     if(textbox.Name == "Username")
                     {
                         Username = textbox.Text;
@@ -1120,11 +1125,14 @@ namespace JediBank
             Console.ForegroundColor = ConsoleColor.Blue;
             int center = width - message.Length;
             Console.BackgroundColor = ConsoleColor.Cyan;
+            
             Console.SetCursorPosition(X, Y);
             Console.Write(new string(' ',width+2));
-            Console.SetCursorPosition(X, Y+height);
+            int setHeight = height < Console.WindowHeight ? Console.WindowHeight : height;
+            setHeight = height < Console.WindowHeight/2 ? Console.WindowHeight/2 : height;
+            Console.SetCursorPosition(X, Y + setHeight);//
             Console.Write(new string(' ', width+2));
-            for (int i = 1; i < height; i++)
+            for (int i = 1; i < setHeight; i++)
             {
                 
                 Console.BackgroundColor = ConsoleColor.Cyan;
