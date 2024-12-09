@@ -199,20 +199,8 @@ namespace JediBank
             if (window.RunCreateUserWindow(Users)) 
             {
                 DisplayMessage("Success");
+                DataBase.ArchiveUsers(Users);
             }
-            /*
-            Console.Write(language.TranslationTool("Select name: "));
-            string username = Console.ReadLine();
-            Console.Write(language.TranslationTool("Select password: "));
-            string password = Console.ReadLine();
-            Users.Add(new User
-            {
-                Name = username,
-                Password = password
-
-            });
-            DisplayMessage("Success");
-            DataBase.ArchiveUsers(Users);*/
         }
 
         public void RemoveUser()
