@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
@@ -22,7 +23,7 @@ namespace JediBank
 
             while (true)
             {
-                 if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
+                if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
                 {
                     currentUser = Login();
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
@@ -103,6 +104,7 @@ namespace JediBank
                     kvp.Value[0].Subtract((decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
+                DisplayMessage("Success");
             }
         }
         public async Task InternalTransfer()
@@ -128,7 +130,7 @@ namespace JediBank
                     await _TransferQue.Peek().ExecuteTransaction();
                     _TransferQue.Dequeue();
                     DataBase.ArchiveUsers(Users);
-
+                    DisplayMessage("Success");
                 }
             }
 
@@ -158,7 +160,7 @@ namespace JediBank
                     await _TransferQue.Peek().ExecuteTransaction();
                     _TransferQue.Dequeue();
                     DataBase.ArchiveUsers(Users);
-
+                    DisplayMessage("Success");
                 }
             }
 
@@ -176,12 +178,19 @@ namespace JediBank
                     currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
+                DisplayMessage("Success");
             }
 
         }
         public void CreateUser()
         {
             Language language = new Language(Program.ChoosenLangugage);
+            Window window = new Window();
+            if (window.RunCreateUserWindow(Users)) 
+            {
+                DisplayMessage("Success");
+            }
+            /*
             Console.Write(language.TranslationTool("Select name: "));
             string username = Console.ReadLine();
             Console.Write(language.TranslationTool("Select password: "));
@@ -192,15 +201,18 @@ namespace JediBank
                 Password = password
 
             });
-            DataBase.ArchiveUsers(Users);
+            DisplayMessage("Success");
+            DataBase.ArchiveUsers(Users);*/
         }
 
         public void RemoveUser()
         {
-            foreach (var user in Users)
+            Window window = new Window();
+            window.RunRemoveUserWindow(Users);
+            /*foreach (var user in Users)
             {
                 Console.WriteLine(user.Name);
-            }
+            }*/
             //Users.RemoveAt()
         }
 
@@ -211,6 +223,7 @@ namespace JediBank
             if (newAccount != null)
             {
                 currentUser.AddAccount(newAccount);
+                DisplayMessage("Success");
             }
             DataBase.ArchiveUsers(Users);
         }
@@ -272,20 +285,32 @@ namespace JediBank
 
             return null;
         }
+        public void DisplayMessage(string text)
+        {
+            Console.Clear();
+            //Translation
+            Console.SetCursorPosition((Console.WindowWidth - text.Length)/2, Console.WindowHeight/2);
+            Console.WriteLine(text);
+            Thread.Sleep(1000);
+        }
+
+      
+
 
         public void DisplayLogo()
         {
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 0);
+            int Xpos = (Console.WindowWidth/2 - "       __   _______  _______   __ ".Length);
+            Console.SetCursorPosition(Xpos, 0);
             Green(); Console.Write("       __   _______  _______   __ "); Blue(); Console.Write(" .______        ___      .__   __.  __  ___ \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 1);
+            Console.SetCursorPosition(Xpos, 1);
             Green(); Console.Write("      |  | |   ____||       \\ |  |"); Blue(); Console.Write(" |   _  \\      /   \\     |  \\ |  | |  |/  / \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 2);
+            Console.SetCursorPosition(Xpos, 2);
             Green(); Console.Write("      |  | |  |__   |  .--.  ||  |"); Blue(); Console.Write(" |  |_)  |    /  ^  \\    |   \\|  | |  '  / \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 3);
+            Console.SetCursorPosition(Xpos, 3);
             Green(); Console.Write(".--.  |  | |   __|  |  |  |  ||  |"); Blue(); Console.Write(" |   _  <    /  /_\\  \\   |  . `  | |    < \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 4);
+            Console.SetCursorPosition(Xpos, 4);
             Green(); Console.Write("|  `--'  | |  |____ |  '--'  ||  |"); Blue(); Console.Write(" |  |_)  |  /  _____  \\  |  |\\   | |  .  \\ \r\n");
-            Console.SetCursorPosition((Console.WindowWidth / 5) - 4, 5);
+            Console.SetCursorPosition(Xpos, 5);
             Green(); Console.Write(" \\______/  |_______||_______/ |__|"); Blue(); Console.Write(" |______/  /__/     \\__\\ |__| \\__| |__|\\__\\ \r\n");
         }
 

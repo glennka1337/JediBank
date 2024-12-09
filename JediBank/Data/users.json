@@ -12,6 +12,8 @@
         "Name": "Privatkonto",
         "AccountId": "A-3443",
         "Balance": 500,
+        "IsCheckingaccount": null,
+        "Interest": 0,
         "Currency": {
           "Name": "Svensk krona",
           "CurrencyCode": "SEK"
@@ -22,6 +24,8 @@
         "Name": "Sparkonto",
         "AccountId": "A-9655",
         "Balance": 1500,
+        "IsCheckingaccount": null,
+        "Interest": 0,
         "Currency": {
           "Name": "Svensk krona",
           "CurrencyCode": "SEK"
@@ -32,6 +36,8 @@
         "Name": "DollarKonto",
         "AccountId": "A-1585",
         "Balance": 25,
+        "IsCheckingaccount": null,
+        "Interest": 0,
         "Currency": {
           "Name": "United States Dollar",
           "CurrencyCode": "USD"
@@ -54,6 +60,8 @@
         "Name": "Privatkonto",
         "AccountId": "A-5662",
         "Balance": 500,
+        "IsCheckingaccount": null,
+        "Interest": 0,
         "Currency": {
           "Name": "Svensk krona",
           "CurrencyCode": "SEK"
@@ -64,6 +72,8 @@
         "Name": "Sparkonto",
         "AccountId": "A-5343",
         "Balance": 1500,
+        "IsCheckingaccount": null,
+        "Interest": 0,
         "Currency": {
           "Name": "Svensk krona",
           "CurrencyCode": "SEK"
@@ -74,6 +84,8 @@
         "Name": "DollarKonto",
         "AccountId": "A-6121",
         "Balance": 250,
+        "IsCheckingaccount": null,
+        "Interest": 0,
         "Currency": {
           "Name": "Euro",
           "CurrencyCode": "EUR"

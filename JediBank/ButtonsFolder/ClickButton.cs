@@ -12,7 +12,16 @@ namespace JediBank.ButtonsFolder
             Console.BackgroundColor = IsSelected ? ConsoleColor.White : BackColor;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ForeColor;
             Console.SetCursorPosition(X, Y);
-            Console.Write(Text);
+            if(Width > 0)
+            {
+                string space = new string(' ', (Math.Abs(Width-Text.Length)/2));
+                Console.Write($"{space}{Text}{space}");
+
+            }
+            else
+            {
+                Console.Write($"{Text}");
+            }
             Console.ResetColor();
         }
 

@@ -10,21 +10,7 @@ namespace JediBank.ButtonsFolder
         public List<SubOptions> subOptions { get; set; } = new List<SubOptions>();
 
         public int width { get; set; }
-        /*
-            public Dropdown(int x, int y, User? user)
-            {
-                X = X;
-                Y = Y;
-                if(user != default)
-                {
-                    foreach(var account in user.Accounts)
-                    {
-                        subOptions.Add(new SubOptions{ Text = $" {account.Name} : {account.Balance} " });
-                    }
-                }
-
-            }
-            */
+        
         public void PositionSubOptions()
         {
             foreach (var option in subOptions)
@@ -36,6 +22,13 @@ namespace JediBank.ButtonsFolder
         }
         public override void Paint()
         {
+            if(Rubric != default)
+            {
+                Console.BackgroundColor = ConsoleColor.Black; 
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(X, Y-1);
+                Console.Write(Rubric);
+            }
             Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.DarkBlue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);

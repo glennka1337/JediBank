@@ -17,10 +17,10 @@ namespace JediBank
         public Language(string? choosenLanguage = null)
         {
 
-
+            string path = Path.Combine("Languages", "languages.json");
             // Read and load JSON content
-            string jsonContent = File.ReadAllText("..//..//..//Languages/languages.json");
-
+            //string jsonContent = File.ReadAllText("..//..//..//Languages/languages.json");
+            string jsonContent = File.ReadAllText(path);
             // Deserialize JSON into a nested dictionary
             _data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>(jsonContent);
 
