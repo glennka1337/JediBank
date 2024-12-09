@@ -132,12 +132,12 @@ namespace JediBank
             bank.DisplayLogo();
             do
             {
-                
+
+                PaintBox(language.TranslationTool("Home"), width, height, posX, posY);
                 do
                 {
                     //Console.Clear();
                     
-                    PaintBox(language.TranslationTool("Home"), width, height, posX, posY);
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -224,16 +224,18 @@ namespace JediBank
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
             do
             {
+                PaintBox(language.TranslationTool("Loan"), width, height, posX, posY);
                 newLoan.LoanAmount = (decimal)amount;
 
                 do
                 {
                     //Console.Clear();
-                    Bank bank = new Bank();
-                    bank.DisplayLogo();
-                    PaintBox(language.TranslationTool("Loan"), width, height, posX, posY);
+                    
+                    
                     foreach (var button in Buttons)
                     {
                         if (button is Dropdown thisDropdown)
@@ -447,15 +449,16 @@ namespace JediBank
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
             do
             {
-                
+                PaintBox(language.TranslationTool("External transfer"), width, height, posX, posY);
                 do
                 {
                     //Console.Clear();
-                    Bank bank = new Bank();
-                    bank.DisplayLogo();
-                    PaintBox(language.TranslationTool("External transfer"), width, height, posX, posY);
+                    
+                    
                     foreach(var button in Buttons)
                     {
                         button.Paint();
@@ -559,15 +562,16 @@ namespace JediBank
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
             do
             {
-
+                PaintBox(language.TranslationTool("Transfer"), width, height, posX, posY);
                 do
                 {
                     //Console.Clear();
-                    Bank bank = new Bank();
-                    bank.DisplayLogo();
-                    PaintBox(language.TranslationTool("Transfer"), width, height, posX, posY);
+                    
+                    
                     foreach (var button in Buttons)
                     {
                         button.Paint();
