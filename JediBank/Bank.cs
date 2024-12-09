@@ -20,10 +20,14 @@ namespace JediBank
             Users = DataBase.LoadUsers();
             UI uI = new UI();
             Window window = new Window();
-
-            while (true)
+            //Console.SetWindowSize(100,100);
+            //Console.SetBufferSize(100, 100);
+            string loginAction = default;
+            while (loginAction != language.TranslationTool("Exit"))
             {
-                if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
+                loginAction = window.RunLoginWindow();
+                //if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
+                if(loginAction == language.TranslationTool("Login"))
                 {
                     currentUser = Login();
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
@@ -128,7 +132,7 @@ namespace JediBank
                     {
                         SenderAccount = kvp.Value[0],
                         ReciverAccount = kvp.Value[1],
-                        Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
+                        Amount = (decimal)kvp.Key, 
                         DateTime = DateTime.Now
 
                     };
@@ -306,18 +310,19 @@ namespace JediBank
 
         public void DisplayLogo()
         {
+            Console.Clear();
             int Xpos = (Console.WindowWidth/2 - "       __   _______  _______   __ ".Length);
-            Console.SetCursorPosition(Xpos, 0);
+            Console.SetCursorPosition(Xpos-2, 0);
             Green(); Console.Write("       __   _______  _______   __ "); Blue(); Console.Write(" .______        ___      .__   __.  __  ___ \r\n");
-            Console.SetCursorPosition(Xpos, 1);
+            Console.SetCursorPosition(Xpos - 2, 1);
             Green(); Console.Write("      |  | |   ____||       \\ |  |"); Blue(); Console.Write(" |   _  \\      /   \\     |  \\ |  | |  |/  / \r\n");
-            Console.SetCursorPosition(Xpos, 2);
+            Console.SetCursorPosition(Xpos - 2, 2);
             Green(); Console.Write("      |  | |  |__   |  .--.  ||  |"); Blue(); Console.Write(" |  |_)  |    /  ^  \\    |   \\|  | |  '  / \r\n");
-            Console.SetCursorPosition(Xpos, 3);
+            Console.SetCursorPosition(Xpos - 2, 3);
             Green(); Console.Write(".--.  |  | |   __|  |  |  |  ||  |"); Blue(); Console.Write(" |   _  <    /  /_\\  \\   |  . `  | |    < \r\n");
-            Console.SetCursorPosition(Xpos, 4);
+            Console.SetCursorPosition(Xpos - 2, 4);
             Green(); Console.Write("|  `--'  | |  |____ |  '--'  ||  |"); Blue(); Console.Write(" |  |_)  |  /  _____  \\  |  |\\   | |  .  \\ \r\n");
-            Console.SetCursorPosition(Xpos, 5);
+            Console.SetCursorPosition(Xpos - 2, 5);
             Green(); Console.Write(" \\______/  |_______||_______/ |__|"); Blue(); Console.Write(" |______/  /__/     \\__\\ |__| \\__| |__|\\__\\ \r\n");
         }
 
