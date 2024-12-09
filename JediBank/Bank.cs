@@ -22,7 +22,7 @@ namespace JediBank
 
             while (true)
             {
-                 if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
+                if (uI.Menu(new string[] { language.TranslationTool("Login"), language.TranslationTool("Exit") }) == 0)
                 {
                     currentUser = Login();
                     Dictionary<string, Delegate> actionMap = ActionMap(currentUser);
@@ -34,7 +34,7 @@ namespace JediBank
                         actionMap[action].DynamicInvoke();
 
                     }
-                    
+
                 }
             }
         }
@@ -112,14 +112,14 @@ namespace JediBank
             Window window = new Window();
 
             Dictionary<decimal?, Account[]> transferInfo = window.RunInternalTransferWindow(currentUser, Users);
-            foreach(var kvp in transferInfo) 
-            { 
-                if(kvp.Key != -9 && !kvp.Value.Any(x => x == null))
+            foreach (var kvp in transferInfo)
+            {
+                if (kvp.Key != -9 && !kvp.Value.Any(x => x == null))
                 {
                     Transaction transferDetails = new Transaction
                     {
-                        SenderAccount = kvp.Value[0], 
-                        ReciverAccount = kvp.Value[1], 
+                        SenderAccount = kvp.Value[0],
+                        ReciverAccount = kvp.Value[1],
                         Amount = (decimal)kvp.Key, // Amount behövs läggas in i UI
                         DateTime = DateTime.Now
 
@@ -210,6 +210,7 @@ namespace JediBank
             Account newAccount = window.RunCreateAccountWindow();
             if (newAccount != null)
             {
+                newAccount.AccountId = Generator.GenerateAccountId();
                 currentUser.AddAccount(newAccount);
             }
             DataBase.ArchiveUsers(Users);
