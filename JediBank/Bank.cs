@@ -79,11 +79,17 @@ namespace JediBank
                  { language.TranslationTool("Create user"), CreateUser },
                  { language.TranslationTool("Remove user"), RemoveUser },
                  { language.TranslationTool("Open account"), CreateAccount },
-                 { language.TranslationTool("Take loan"), TakeLoan }
+                 { language.TranslationTool("Take loan"), TakeLoan },
+                 { language.TranslationTool("Shut down"), Exit }
 
 
              };
             return actionMap;
+        }
+        public void Exit()
+        {
+            Console.Clear();
+            Environment.Exit(0);
         }
         public void AccountShow()
         {
@@ -319,7 +325,6 @@ namespace JediBank
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Blue;
         }
-
         public void Blue()
         {
             Console.ForegroundColor = ConsoleColor.White;
