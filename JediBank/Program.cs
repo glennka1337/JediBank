@@ -8,7 +8,7 @@ namespace JediBank
         static void Main(string[] args)
         {
             var language = new Language();
-            ChoosenLangugage = "English";//language.ChooseLanguage();
+            ChoosenLangugage = "English";
             Console.OutputEncoding = Encoding.UTF8;
             Bank bank = new Bank();
             bank.RunProgram();

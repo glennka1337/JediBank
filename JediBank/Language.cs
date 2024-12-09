@@ -12,7 +12,7 @@ namespace JediBank
     {
         private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> _data; // Full JSON data
         private Dictionary<string, List<string>> _translations; // Store only the translations
-        public string SelectedLanguage { get; set; } = "English"; // Default language
+        public static string SelectedLanguage { get; set; } = "English"; // Default language
 
         public Language(string? choosenLanguage = null)
         {

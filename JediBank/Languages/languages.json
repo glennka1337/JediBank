@@ -75,7 +75,9 @@
       "Log out": [ "Log out", "Logga ut" ],
       "Choose one of the above options:": [ "Choose one of the above options:", "Välj ett av alternativen ovan:" ],
       "Press any key to continue.": [ "Press any key to continue.", "Tryck på valfri tangent för att fortsätta." ],
-      "Create account": [ "Create account", "Skapa konto" ]
+      "Create account": [ "Create account", "Skapa konto" ],
+      "Language": [ "Language", "Språk" ],
+      "Interest on loan:": [ "Interest on loan:", "Ränta på lån:" ]
     }
   }
 }

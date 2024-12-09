@@ -31,7 +31,7 @@ namespace JediBank
             int posX = (Console.WindowWidth - width) / 2;
             int posY = 7;// (Console.WindowHeight - height) / 2;
             List<Button> Buttons = new List<Button>
-            {//Translate
+            {
                 new ClickButton
                 {
                     X = posX + (width-20)/2,
@@ -249,8 +249,7 @@ namespace JediBank
                         if (button is Dropdown thisDropdown)
                         {
                             newLoan.CalculateInterest();
-                            //Translate
-                            thisDropdown.Rubric = $"Interest on loan : {newLoan.Interest*100 - 100}%";
+                            thisDropdown.Rubric = language.TranslationTool("Interest on loan:")+$"{newLoan.Interest*100 - 100}%";
                             thisDropdown.PositionSubOptions();
                         }
                         button.Paint();
@@ -644,7 +643,7 @@ namespace JediBank
                     Y = posY + 5,
                     Width = 20,
                     Name = "Currency",
-                    Text = "Type of currency", //Translate
+                    Text = language.TranslationTool("Type of currency"),
                     subOptions = ArrayToSubOp(["SEK", "USD","EUR"])
                 },
                 new TextBox
