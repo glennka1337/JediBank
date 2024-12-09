@@ -1034,7 +1034,7 @@ namespace JediBank
                     selectedOption.Click();
                     if(selectedOption.ParentDropdown.Name == "Currency")
                     {
-                        switch (selectedOption.Text)
+                        switch (selectedOption.Option)
                         {
                             case "SEK":
                                 newAccount.Currency = new SEK();
