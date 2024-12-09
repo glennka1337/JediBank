@@ -15,7 +15,8 @@ namespace JediBank.ButtonsFolder
             Console.BackgroundColor = IsSelected ? ConsoleColor.White : ConsoleColor.Blue;
             Console.ForegroundColor = IsSelected ? ConsoleColor.Black : ConsoleColor.White;
             Console.SetCursorPosition(X, Y);
-            Console.Write($" {Option} ");
+            string addLength = new string(' ', Math.Abs(ParentDropdown.Width - Option.Length-1)); 
+            Console.Write($" {Option} {addLength}");
             Console.ResetColor();
         }
 

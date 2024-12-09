@@ -34,8 +34,10 @@ namespace JediBank
             {//Translate
                 new ClickButton
                 {
-                    X = posX + width/3,
+                    X = posX + (width-20)/2,
                     Y = posY + 5,
+                    Width = 22,
+                    center = false,
                     Text = language.TranslationTool("Login"),
                     BackColor = ConsoleColor.DarkBlue,
                     ForeColor = ConsoleColor.White
@@ -43,8 +45,10 @@ namespace JediBank
                 },
                 new ClickButton
                 {
-                    X = posX + width/3,
+                    X = posX + (width-20)/2,
                     Y = posY + 6,
+                    Width = 22,
+                    center = false,
                     Text = language.TranslationTool("Exit"),
                     BackColor = ConsoleColor.DarkBlue,
                     ForeColor = ConsoleColor.White
@@ -52,8 +56,9 @@ namespace JediBank
                 },
                 new Dropdown
                 {
-                    X = posX + width/3,
+                    X = posX + (width-20)/2,
                     Y = posY + 7,
+                    Width = 20,
                     Text = language.TranslationTool("Language"),
                     subOptions = ArrayToSubOp(["Svenska", "English"])// Add emojis (country flag)
 
@@ -118,9 +123,10 @@ namespace JediBank
             {
                 Buttons.Add(new Dropdown
                 {
-                    X = posX + width/3,
-                    Y = posY + 5 + index,
+                    X = posX + width / 3,
+                    Y = posY + 4 + index,
                     Text = item.Key,
+                    Width = 18,
                     subOptions = ArrayToSubOp(item.Value)
                 });
                 index++;
@@ -183,20 +189,22 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX + width/2 - 6,
+                    X = posX + (width-20)/2,
                     Y = posY + 6,
+                    Width = 20,
                     Name = "Sender",
-                    Text = language.TranslationTool("Select account"),
+                    Rubric = language.TranslationTool("Select account"),
+                    Text = language.TranslationTool("Account"),
                     subOptions = ToOpList(user)
 
                 },
                 new TextBox
                 {
-                    X = posX + width/2 - 6,
-                    Y = posY+ height-4,
+                    X = posX + (width-20)/2,
+                    Y = posY+ height-5,
                     Text = language.TranslationTool("Amount"),
                     Rubric = language.TranslationTool("Enter amount"),
-                    Width = 10
+                    Width = 20
                 },
                new ClickButton
                 {
@@ -291,20 +299,21 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX + width/2 - 5,
+                    X = posX + (width-20)/2,
                     Y = posY + 5,
                     Name = "Sender",
+                    Width = 20,
                     Text = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
 
                 },
                 new TextBox
                 {
-                    X = posX + width/2 - 5,
+                    X = posX + (width-20)/2,
                     Y = posY + height-4,
                     Text = language.TranslationTool("Amount"),
                     Rubric = language.TranslationTool("Enter amount"),
-                    Width = 10
+                    Width = 20
                 },
                 new ClickButton
                 {
@@ -395,31 +404,33 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX + width/5*2,
+                    X = posX + 3,
                     Y = posY + 5,
+                    Width = 20,
                     Name = "Sender",
-                    Text = language.TranslationTool("Select account"),
+                    Text = language.TranslationTool("Account"),
+                    Rubric = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
 
                 },
                 new TextBox
                 {
-                    X = posX+width/5*2,
-                    Y = posY+height/5*2,
+                    X = posX+width/2+1,
+                    Y = posY+5,
                     Name = "Receiver",
                     Text = language.TranslationTool("Account number"),
                     Rubric = language.TranslationTool("Enter recipient"),
-                    Width = 10,
+                    Width = 20,
                     OnlyDigits = false
                 },
                 new TextBox
                 {
-                    X = posX+width/5*2,
-                    Y = posY+height/5*3,
+                    X = posX+width/2+1,
+                    Y = posY+9,
                     Name = "Amount",
                     Text = language.TranslationTool("Amount"),
                     Rubric = language.TranslationTool("Enter amount"),
-                    Width = 10
+                    Width = 20
                 },
                 new ClickButton
                 {
@@ -510,8 +521,9 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX+ width/5*3,
-                    Y = posY+3,
+                    X = posX + 3,
+                    Y = posY + 5,
+                    Width = 20,
                     Name = "Receiver",
                     Text = language.TranslationTool("Select recipient"),
                     subOptions = ToOpList(user)
@@ -519,8 +531,9 @@ namespace JediBank
                 },
                 new Dropdown
                 {
-                    X = posX + width/5,
-                    Y = posY + 3,
+                    X = posX + width/2 +1,
+                    Y = posY + 5,
+                    Width = 20,
                     Name = "Sender",
                     Text = language.TranslationTool("Select account"),
                     subOptions = ToOpList(user)
@@ -528,11 +541,11 @@ namespace JediBank
                 },
                 new TextBox
                 {
-                    X = posX+width/5*2,
-                    Y = posY+height/5*3,
+                    X = posX+(width-20)/2,
+                    Y = posY+height-5,
                     Text = language.TranslationTool("Amount"),
                     Rubric = language.TranslationTool("Enter amount"),
-                    Width = 10
+                    Width = 20
                 },
                 new ClickButton
                 {
@@ -618,9 +631,10 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX + width/2 - 17,
+                    X = posX + 3,
                     Y = posY + 5,
                     Name = "AccountType",
+                    Width = 20,
                     Text = language.TranslationTool("Type of account"),
                     subOptions = ArrayToSubOp(["Betalkonto", "Sparkonto"])
                 },
@@ -628,17 +642,18 @@ namespace JediBank
                 {
                     X = posX + width/2 + 2,
                     Y = posY + 5,
+                    Width = 20,
                     Name = "Currency",
                     Text = "Type of currency", //Translate
                     subOptions = ArrayToSubOp(["SEK", "USD","EUR"])
                 },
                 new TextBox
                 {
-                    X = posX + width/2 - 5,
-                    Y = posY + height-4,
+                    X = posX + (width-20)/2,
+                    Y = posY + height/2+1,
                     Text = " ",
                     Rubric = language.TranslationTool("Account Name"),
-                    Width = 10,
+                    Width = 20,
                     OnlyDigits = false
                 },
                 new ClickButton
@@ -723,22 +738,22 @@ namespace JediBank
             {
                 new TextBox
                 {
-                    X = posX + width/5,//width/5,
-                    Y = posY + height/5,
+                    X = posX + (width-20)/2,//width/5,
+                    Y = posY +  height/2 - 2,
                     Name = "Username",
                     Text = "Enter username",
                     Rubric = "Enter username",
                     OnlyDigits = false,
-                    Width=10
+                    Width=20
                 },
                 new TextBox
                 {
-                    X = posX + width/5,//width/5,
-                    Y = posY + height/5*2,
+                    X = posX + (width-20)/2,//width/5,
+                    Y = posY + height/2 +2,
                     Name = "Password",
                     Text = "Enter password",
                     Rubric = "Enter password",
-                    Width=10
+                    Width=20
                 },
                 new ClickButton
                 {
@@ -839,8 +854,9 @@ namespace JediBank
             {
                 new Dropdown
                 {
-                    X = posX+ width/5,
+                    X = posX+ (width-20)/2,
                     Y = posY+5,
+                    Width = 20,
                     Name = "RemoveUser",
                     Text = "Välj användare att ta bort", //language.TranslationTool("Select recipient"),
                     subOptions = ArrayToSubOp(Users.FindAll(x => x.IsAdmin == false).Select(p => p.Name).ToArray())

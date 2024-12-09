@@ -36,11 +36,6 @@ namespace JediBank
             {
                 return false;
             }
-            // CHANGE AFTER CURRENCY UPDATE
-            if (amount > 15000)
-            {
-                return false;
-            }
             else
             {
                 Balance += amount;

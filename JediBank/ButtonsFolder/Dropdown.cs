@@ -34,12 +34,15 @@ namespace JediBank.ButtonsFolder
             Console.SetCursorPosition(X, Y);
             if (SetText == default)
             {
-                Console.Write(IsOpen ? Text + " ▼ " : Text + " ▲ ");
+                string addLength = new string(' ', Math.Abs(Width - Text.Length-1));
+                Console.Write(IsOpen ?' ' + Text + addLength+ " ▼ " : ' ' + Text + addLength + " ▲ ");
 
             }
             else
             {
-                Console.Write($" {SetText}  ✔️ ");
+
+                string addLength = new string(' ', Math.Abs(Width - SetText.Length));
+                Console.Write($" {SetText} {addLength}  ✔️ ");
             }
             Console.ResetColor();
         }
