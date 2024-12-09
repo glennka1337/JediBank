@@ -286,11 +286,18 @@ namespace JediBank
         }
         public void DisplayMessage(string text)
         {
+            Console.CursorVisible = false;
             Console.Clear();
             //Translation
             Console.SetCursorPosition((Console.WindowWidth - text.Length)/2, Console.WindowHeight/2);
             Console.WriteLine(text);
-            Thread.Sleep(1000);
+            for (int i = 0; i < 30; i++) 
+            {
+                Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2 + text.Length - i, (Console.WindowHeight / 2) -1);
+                Console.Write(i % 2 == 0 ? "\U0001f9ce‍  🚑" : "\U0001f9cd  🚑💨 ‍");
+                Thread.Sleep(100);//🚑💨"🧍‍"
+            }
+            
         }
 
       
