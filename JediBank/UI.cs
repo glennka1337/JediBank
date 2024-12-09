@@ -256,7 +256,7 @@ namespace JediBank
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine(language.TranslationTool("Account:") + $"{account.Name} | " + language.TranslationTool("Balance:") + $"{account.Balance.ToString("c", account.Currency.GetOutputFormat())} ");
+                Console.WriteLine(language.TranslationTool("Account:") + $"{account.Name} | " + language.TranslationTool("Balance:") + $"{account.Balance.ToString("c", account.Currency.GetOutputFormat())} ID:{account.AccountId}");
                 Console.WriteLine("--------------------------------------");
 
                 Console.WriteLine(language.TranslationTool("1. View recent transactions"));
