@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using JediBank.ButtonsFolder;
+using JediBank.CurrencyFolder;
 
 namespace JediBank
 {
@@ -272,7 +273,7 @@ namespace JediBank
             int posX = (Console.WindowWidth - width) / 2;
             int posY = (Console.WindowHeight - height) / 2;
             Account? Sender = null;
-            Account? Receiver = null;
+            Account Receiver = user.Accounts[0];
             decimal? amount = -1;
             Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
                 { -1, new Account[] { null}  }
@@ -323,15 +324,17 @@ namespace JediBank
             ConsoleKey key;
             int currentSelection = 0;
             Buttons[currentSelection].IsSelected = true;
+
+            Bank bank = new Bank();
+            bank.DisplayLogo();
             do
             {
-
+                PaintBox(language.TranslationTool("Withdraw"), width, height, posX, posY);
                 do
                 {
                     //Console.Clear();
-                    Bank bank = new Bank();
-                    bank.DisplayLogo();
-                    PaintBox(language.TranslationTool("Withdraw"), width, height, posX, posY);
+                    
+                    
                     foreach (var button in Buttons)
                     {
                         button.Paint();
@@ -607,6 +610,7 @@ namespace JediBank
                 {
                     X = posX + width/2 - 17,
                     Y = posY + 5,
+                    Name = "AccountType",
                     Text = language.TranslationTool("Type of account"),
                     subOptions = ArrayToSubOp(["Betalkonto", "Sparkonto"])
                 },
@@ -614,8 +618,9 @@ namespace JediBank
                 {
                     X = posX + width/2 + 2,
                     Y = posY + 5,
+                    Name = "Currency",
                     Text = "Type of currency", //Translate
-                    subOptions = ArrayToSubOp(["Kronor", "Dollar","Euro"])
+                    subOptions = ArrayToSubOp(["SEK", "USD","EUR"])
                 },
                 new TextBox
                 {
@@ -623,7 +628,8 @@ namespace JediBank
                     Y = posY + height-4,
                     Text = " ",
                     Rubric = language.TranslationTool("Account Name"),
-                    Width = 10
+                    Width = 10,
+                    OnlyDigits = false
                 },
                 new ClickButton
                 {
@@ -694,6 +700,215 @@ namespace JediBank
             } while (key != ConsoleKey.Escape);
             return null;
         }
+
+        public bool RunCreateUserWindow(List<User> Users)
+        {
+            Language language = new Language(Program.ChoosenLangugage);
+            int posX = (Console.WindowWidth - width) / 2;
+            int posY = (Console.WindowHeight - height) / 2;
+            string Username = default;
+            string Password = default;
+
+            List<Button> Buttons = new List<Button>
+            {
+                new TextBox
+                {
+                    X = posX + width/5,//width/5,
+                    Y = posY + height/5,
+                    Name = "Username",
+                    Text = "Enter username",
+                    Rubric = "Enter username",
+                    OnlyDigits = false,
+                    Width=10
+                },
+                new TextBox
+                {
+                    X = posX + width/5,//width/5,
+                    Y = posY + height/5*2,
+                    Name = "Password",
+                    Text = "Enter password",
+                    Rubric = "Enter password",
+                    Width=10
+                },
+                new ClickButton
+                {
+                    X = posX + 3,//width/5,
+                    Y = posY+ height-2,
+                    Width = width/2 - 3,
+                    Name = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
+                    BackColor = ConsoleColor.DarkRed,
+                    ForeColor = ConsoleColor.White
+                },
+                new ClickButton
+                {
+                    X = posX + width/2+1,
+                    Y = posY + height-2,
+                    Width = width/2-3,
+                    Name = "Submit",
+                    Text = language.TranslationTool("Submit"),
+                    BackColor = ConsoleColor.DarkGreen,
+                    ForeColor = ConsoleColor.White
+                }
+
+            };
+            //int height = Buttons.Max(b => b.Y );
+            ConsoleKey key;
+            int currentSelection = 0;
+            Buttons[currentSelection].IsSelected = true;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
+            do
+            {
+                PaintBox(language.TranslationTool("Add user"), width, height, posX, posY);
+                do
+                {
+                    //Console.Clear();
+
+
+                    foreach (var button in Buttons)
+                    {
+                        if (button is Dropdown thisDropdown)
+                        {
+                            thisDropdown.PositionSubOptions();
+                        }
+                        button.Paint();
+                    }
+                    var keyPressed = Console.ReadKey(intercept: true);
+                    key = keyPressed.Key;
+                    HandleMoveAction(ref Buttons, ref currentSelection, key);
+
+                } while (key != ConsoleKey.Enter);
+                //Buttons[currentSelection].Click();
+                if (Buttons[currentSelection] is TextBox textbox)
+                {
+                    textbox.Click();
+                    Console.WriteLine("HELLO");
+                    if(textbox.Name == "Username")
+                    {
+                        Username = textbox.Text;
+
+                    }
+                    else if (textbox.Name == "Password")
+                    {
+                        Password = textbox.Text;
+
+                    }
+
+                }
+                else if (Buttons[currentSelection].Name == "Submit")
+                {
+                    if (Username != default && Password != default )
+                    {
+                        Users.Add(new User {Name = Username, Password = Password});
+                        return true;
+
+                    }
+                }
+                else if (Buttons[currentSelection].Name == "Cancel")
+                {
+                    return false;
+                }
+
+            } while (key != ConsoleKey.Escape);
+            return false;
+        
+        }
+        public bool RunRemoveUserWindow(List<User> Users)
+        {
+            Language language = new Language(Program.ChoosenLangugage);
+            int posX = (Console.WindowWidth - width) / 2;
+            int posY = (Console.WindowHeight - height) / 2;
+            Account? Sender = null;
+            Account? Receiver = null;
+            decimal? amount = -1;
+            Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
+                { amount, new Account[] { Sender, Receiver } }
+            };
+
+            List<Button> Buttons = new List<Button>
+            {
+                new Dropdown
+                {
+                    X = posX+ width/5,
+                    Y = posY+5,
+                    Name = "RemoveUser",
+                    Text = "Välj användare att ta bort", //language.TranslationTool("Select recipient"),
+                    subOptions = ArrayToSubOp(Users.FindAll(x => x.IsAdmin == false).Select(p => p.Name).ToArray())
+
+                },
+                new ClickButton
+                {
+                    X = posX + 3,//width/5,
+                    Y = posY+ height-2,
+                    Width = width/2 - 3,
+                    Name = "Cancel",
+                    Text = language.TranslationTool("Cancel"),
+                    BackColor = ConsoleColor.DarkRed,
+                    ForeColor = ConsoleColor.White
+                },
+                new ClickButton
+                {
+                    X = posX + width/2+1,
+                    Y = posY + height-2,
+                    Width = width/2-3,
+                    Name = "Submit",
+                    Text = language.TranslationTool("Submit"),
+                    BackColor = ConsoleColor.DarkGreen,
+                    ForeColor = ConsoleColor.White
+                }
+
+            };
+            //int height = Buttons.Max(b => b.Y );
+            ConsoleKey key;
+            int currentSelection = 0;
+            Buttons[currentSelection].IsSelected = true;
+            Bank bank = new Bank();
+            bank.DisplayLogo();
+            do
+            {
+                PaintBox(language.TranslationTool("Remove user"), width, height, posX, posY);
+                do
+                {
+                    //Console.Clear();
+                    
+                    
+                    foreach (var button in Buttons)
+                    {
+                        if (button is Dropdown thisDropdown)
+                        {
+                            thisDropdown.PositionSubOptions();
+                        }
+                        button.Paint();
+                    }
+                    var keyPressed = Console.ReadKey(intercept: true);
+                    key = keyPressed.Key;
+                    HandleMoveAction(ref Buttons, ref currentSelection, key);
+
+                } while (key != ConsoleKey.Enter);
+
+                //Dictionary<decimal?, Account[]> output = new ;
+                HandleDropdown(ref Buttons, ref currentSelection);
+                if (Buttons[currentSelection].Name == "Submit")
+                {
+                    if(((Dropdown)Buttons[0]).SetText != default)
+                    {
+                        Users.Remove(Users.Find(x => x.Name == ((Dropdown)Buttons[0]).SetText));
+                        return true;
+
+                    }
+                }
+                else if (Buttons[currentSelection].Name == "Cancel")
+                {
+                    return false;
+                }
+
+            } while (key != ConsoleKey.Escape);
+            return false;
+        }
+        // Methods for interacting with buttons
+
+
         private void HandleButtonAction(
             ref List<Button> Buttons,
             ref int currentSelection,
@@ -808,7 +1023,27 @@ namespace JediBank
                 if (currentButton is SubOptions selectedOption)
                 {
                     selectedOption.Click();
-                    newAccount.IsCheckingaccount = selectedOption.Option == "Betalkonto" ? "Betalkonto" : "Sparkonto";
+                    if(selectedOption.ParentDropdown.Name == "Currency")
+                    {
+                        switch (selectedOption.Text)
+                        {
+                            case "SEK":
+                                newAccount.Currency = new SEK();
+                                break;
+                            case "USD":
+                                newAccount.Currency = new USD();
+                                break;
+                            case "EUR":
+                                newAccount.Currency = new EUR();
+                                break;
+
+                        }
+                    }
+                    else
+                    {
+                        newAccount.IsCheckingaccount = selectedOption.Option == "Betalkonto" ? "Betalkonto" : "Sparkonto";
+                    }
+                    
                     
                     // Close dropdown
                     Buttons.RemoveRange(Buttons.IndexOf(selectedOption.ParentDropdown) + 1, selectedOption.ParentDropdown.subOptions.Count);

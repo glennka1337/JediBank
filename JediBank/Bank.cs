@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
@@ -103,6 +104,7 @@ namespace JediBank
                     kvp.Value[0].Subtract((decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
+                DisplayMessage("Success");
             }
         }
         public async Task InternalTransfer()
@@ -128,7 +130,7 @@ namespace JediBank
                     await _TransferQue.Peek().ExecuteTransaction();
                     _TransferQue.Dequeue();
                     DataBase.ArchiveUsers(Users);
-
+                    DisplayMessage("Success");
                 }
             }
 
@@ -158,7 +160,7 @@ namespace JediBank
                     await _TransferQue.Peek().ExecuteTransaction();
                     _TransferQue.Dequeue();
                     DataBase.ArchiveUsers(Users);
-
+                    DisplayMessage("Success");
                 }
             }
 
@@ -176,12 +178,19 @@ namespace JediBank
                     currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
+                DisplayMessage("Success");
             }
 
         }
         public void CreateUser()
         {
             Language language = new Language(Program.ChoosenLangugage);
+            Window window = new Window();
+            if (window.RunCreateUserWindow(Users)) 
+            {
+                DisplayMessage("Success");
+            }
+            /*
             Console.Write(language.TranslationTool("Select name: "));
             string username = Console.ReadLine();
             Console.Write(language.TranslationTool("Select password: "));
@@ -192,15 +201,18 @@ namespace JediBank
                 Password = password
 
             });
-            DataBase.ArchiveUsers(Users);
+            DisplayMessage("Success");
+            DataBase.ArchiveUsers(Users);*/
         }
 
         public void RemoveUser()
         {
-            foreach (var user in Users)
+            Window window = new Window();
+            window.RunRemoveUserWindow(Users);
+            /*foreach (var user in Users)
             {
                 Console.WriteLine(user.Name);
-            }
+            }*/
             //Users.RemoveAt()
         }
 
@@ -211,6 +223,7 @@ namespace JediBank
             if (newAccount != null)
             {
                 currentUser.AddAccount(newAccount);
+                DisplayMessage("Success");
             }
             DataBase.ArchiveUsers(Users);
         }
@@ -272,6 +285,17 @@ namespace JediBank
 
             return null;
         }
+        public void DisplayMessage(string text)
+        {
+            Console.Clear();
+            //Translation
+            Console.SetCursorPosition((Console.WindowWidth - text.Length)/2, Console.WindowHeight/2);
+            Console.WriteLine(text);
+            Thread.Sleep(1000);
+        }
+
+      
+
 
         public void DisplayLogo()
         {
