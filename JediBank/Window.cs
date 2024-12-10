@@ -179,7 +179,7 @@ namespace JediBank
             int posX = (Console.WindowWidth - width) / 2;
             int posY = 7;// (Console.WindowHeight - height) / 2;
             Account? Sender = null;
-            Account? Receiver = null;
+            Account? Receiver = new Account();
             decimal? amount = 0;
             Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
                     { -1, new Account[] { null}  }
