@@ -104,6 +104,7 @@ namespace JediBank
         }
         public void Withdraw()
         {
+            Language language = new Language(Program.ChoosenLangugage);
             Window window = new Window();
             Dictionary<decimal?, Account[]> withdrawInfo = window.RunWithdrawWindow(currentUser);
             if (!withdrawInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null)))
@@ -114,13 +115,14 @@ namespace JediBank
                     kvp.Value[0].Subtract((decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
-                DisplayMessage("Success");
+                DisplayMessage(language.TranslationTool("Success"));
             }
         }
         public async Task InternalTransfer()
         {
             // UI uI = new UI();
             //Account[] transferInfo = uI.TransferMenu(currentUser);
+            Language language = new Language(Program.ChoosenLangugage);
             Window window = new Window();
 
             Dictionary<decimal?, Account[]> transferInfo = window.RunInternalTransferWindow(currentUser, Users);
@@ -140,7 +142,7 @@ namespace JediBank
                     await _TransferQue.Peek().ExecuteTransaction();
                     _TransferQue.Dequeue();
                     DataBase.ArchiveUsers(Users);
-                    DisplayMessage("Success");
+                    DisplayMessage(language.TranslationTool("Success"));
                 }
             }
 
@@ -152,6 +154,7 @@ namespace JediBank
         {
             // UI uI = new UI();
             //Account[] transferInfo = uI.TransferMenu(currentUser);
+            Language language = new Language(Program.ChoosenLangugage);
             Window window = new Window();
             Dictionary<decimal?, Account[]> transferInfo = window.RunExternalTransferWindow(currentUser, Users);
             foreach (var kvp in transferInfo)
@@ -170,7 +173,7 @@ namespace JediBank
                     await _TransferQue.Peek().ExecuteTransaction();
                     _TransferQue.Dequeue();
                     DataBase.ArchiveUsers(Users);
-                    DisplayMessage("Success");
+                    DisplayMessage(language.TranslationTool("Success"));
                 }
             }
 
@@ -179,6 +182,7 @@ namespace JediBank
         }
         public void TakeLoan()
         {
+            Language language = new Language(Program.ChoosenLangugage);
             Window window = new Window();
             Dictionary<decimal?, Account[]> loanInfo = window.RunLoanWindow(currentUser);
             if (!loanInfo.Any(kvp => kvp.Key == -1 || kvp.Value.Any(item => item == null)))
@@ -188,7 +192,7 @@ namespace JediBank
                     currentUser.CreateLoan(kvp.Value[0], (decimal)kvp.Key);
                     DataBase.ArchiveUsers(Users);
                 }
-                DisplayMessage("Success");
+                DisplayMessage(language.TranslationTool("Success"));
             }
 
         }
@@ -198,7 +202,7 @@ namespace JediBank
             Window window = new Window();
             if (window.RunCreateUserWindow(Users)) 
             {
-                DisplayMessage("Success");
+                DisplayMessage(language.TranslationTool("Success"));
                 DataBase.ArchiveUsers(Users);
             }
         }
@@ -216,13 +220,14 @@ namespace JediBank
 
         public void CreateAccount()
         {
+            Language language = new Language(Program.ChoosenLangugage);
             Window window = new Window();
             Account newAccount = window.RunCreateAccountWindow();
             if (newAccount != null)
             {
                 newAccount.AccountId = Generator.GenerateAccountId();
                 currentUser.AddAccount(newAccount);
-                DisplayMessage("Success");
+                DisplayMessage(language.TranslationTool("Success"));
             }
             DataBase.ArchiveUsers(Users);
         }
