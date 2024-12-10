@@ -179,7 +179,7 @@ namespace JediBank
             int posX = (Console.WindowWidth - width) / 2;
             int posY = 7;// (Console.WindowHeight - height) / 2;
             Account? Sender = null;
-            Account? Receiver = null;
+            Account? Receiver = new Account();
             decimal? amount = 0;
             Dictionary<decimal?, Account[]> initialOutput = new Dictionary<decimal?, Account[]>{
                     { -1, new Account[] { null}  }
@@ -740,8 +740,8 @@ namespace JediBank
                     X = posX + (width-20)/2,//width/5,
                     Y = posY +  height/2 - 2,
                     Name = "Username",
-                    Text = "Enter username",
-                    Rubric = "Enter username",
+                    Text = language.TranslationTool("Enter username"),
+                    Rubric = language.TranslationTool("Enter username"),
                     OnlyDigits = false,
                     Width=20
                 },
@@ -750,8 +750,8 @@ namespace JediBank
                     X = posX + (width-20)/2,//width/5,
                     Y = posY + height/2 +2,
                     Name = "Password",
-                    Text = "Enter password",
-                    Rubric = "Enter password",
+                    Text = language.TranslationTool("Enter password"),
+                    Rubric = language.TranslationTool("Enter password"),
                     Width=20
                 },
                 new ClickButton
@@ -857,7 +857,7 @@ namespace JediBank
                     Y = posY+5,
                     Width = 20,
                     Name = "RemoveUser",
-                    Text = "Välj användare att ta bort", //language.TranslationTool("Select recipient"),
+                    Text = language.TranslationTool("Select user to remove"),
                     subOptions = ArrayToSubOp(Users.FindAll(x => x.IsAdmin == false).Select(p => p.Name).ToArray())
 
                 },

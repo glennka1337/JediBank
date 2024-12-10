@@ -77,7 +77,15 @@
       "Press any key to continue.": [ "Press any key to continue.", "Tryck på valfri tangent för att fortsätta." ],
       "Create account": [ "Create account", "Skapa konto" ],
       "Language": [ "Language", "Språk" ],
-      "Interest on loan:": [ "Interest on loan:", "Ränta på lån:" ]
+      "Interest on loan:": [ "Interest on loan:", "Ränta på lån:" ],
+      "Type of currency": [ "Type of currency", "Typ av valuta" ],
+      "⚙️ Manage users": [ "⚙️ Manage users", "⚙️ Hantera användare" ],
+      "Add user": [ "Add user", "Skapa användare" ],
+      "Success": [ "Success", "Genomfört" ],
+      "Select user to remove": [ "Select user to remove", "Välj användare att ta bort" ],
+      "Enter username": [ "Enter username", "Ange användarnamn" ],
+      "Enter password": [ "Enter password", "Ange lösenord"]
+
     }
   }
 }
